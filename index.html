@@ -65,9 +65,15 @@
         .difficulty-7 { background: #f8d7da; color: #721c24; }
         .footer { text-align: center; color: white; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.9em; }
         .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .stat-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 15px; text-align: center; color: white; }
+        .stat-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 15px; text-align: center; color: white; cursor: pointer; transition: all 0.3s; }
+        .stat-card:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.4); transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .stat-card.active { background: rgba(102, 126, 234, 0.4); border-color: #667eea; box-shadow: 0 0 20px rgba(102, 126, 234, 0.4); }
         .stat-value { font-size: 2em; font-weight: 700; margin-bottom: 5px; }
         .stat-label { font-size: 0.85em; opacity: 0.9; }
+        .filter-active { display: block; margin-top: 20px; margin-bottom: 20px; text-align: center; }
+        .filter-active-text { color: white; font-size: 1.1em; font-weight: 600; margin-bottom: 10px; }
+        .filter-reset-btn { background: #667eea; color: white; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+        .filter-reset-btn:hover { background: #764ba2; transform: translateY(-2px); }
         #content { display: none; }
         .no-guests { text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.7); font-style: italic; }
     </style>
@@ -95,6 +101,10 @@
             </div>
 
             <div class="stats" id="stats"></div>
+            <div class="filter-active" id="filterActive" style="display: none;">
+                <div class="filter-active-text" id="filterActiveText"></div>
+                <button class="filter-reset-btn" onclick="resetFilter()">📋 View All Guests</button>
+            </div>
             <div class="controls">
                 <button class="refresh-btn" onclick="refreshDashboard()" id="refreshBtn">🔄 Refresh Research</button>
                 <button class="refresh-btn" onclick="clearFavorites()" style="background: #f8d7da; color: #721c24;">❌ Clear Favorites</button>
@@ -145,20 +155,61 @@
             return Math.floor(diffDays / 7);
         }
 
-        function renderDashboard() {
+        let currentFilter = null;
+
+        function renderDashboard(filter = null) {
+            currentFilter = filter;
             const today = new Date();
             
-            const thisWeek = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 0);
-            const lastWeek = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 1);
-            const older = GUESTS.filter(g => getWeekNumber(g.dateAdded) > 1);
+            let thisWeek = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 0);
+            let lastWeek = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 1);
+            let older = GUESTS.filter(g => getWeekNumber(g.dateAdded) > 1);
 
             const favorites = JSON.parse(localStorage.getItem('rtsFavorites') || '[]');
+            const easyToBook = GUESTS.filter(g => g.diff <= 5);
+
+            // Apply filters
+            if (filter === 'total') {
+                // Show all
+            } else if (filter === 'thisWeek') {
+                thisWeek = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 0);
+                lastWeek = [];
+                older = [];
+            } else if (filter === 'favorites') {
+                const favGuests = GUESTS.filter(g => favorites.includes(g.name));
+                thisWeek = [];
+                lastWeek = [];
+                older = favGuests;
+            } else if (filter === 'easyToBook') {
+                const easyGuests = GUESTS.filter(g => g.diff <= 5);
+                thisWeek = [];
+                lastWeek = [];
+                older = easyGuests;
+            }
+
+            // Show filter badge
+            const filterActive = document.getElementById('filterActive');
+            if (filter) {
+                filterActive.style.display = 'block';
+                let filterText = '';
+                if (filter === 'total') filterText = '📊 Showing: All Guests';
+                if (filter === 'thisWeek') filterText = '📅 Showing: This Week Only';
+                if (filter === 'favorites') filterText = '❤️ Showing: Your Favorites';
+                if (filter === 'easyToBook') filterText = '✅ Showing: Easy to Book';
+                document.getElementById('filterActiveText').textContent = filterText;
+            } else {
+                filterActive.style.display = 'none';
+            }
             
+            const totalWeekGuests = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 0).length;
+            const totalFavorites = favorites.length;
+            const totalEasy = GUESTS.filter(g => g.diff <= 5).length;
+
             document.getElementById('stats').innerHTML = `
-                <div class="stat-card"><div class="stat-value">${GUESTS.length}</div><div class="stat-label">Total Guests</div></div>
-                <div class="stat-card"><div class="stat-value">${thisWeek.length}</div><div class="stat-label">This Week</div></div>
-                <div class="stat-card"><div class="stat-value">${favorites.length}</div><div class="stat-label">Favorites</div></div>
-                <div class="stat-card"><div class="stat-value">${GUESTS.filter(g => g.diff <= 5).length}</div><div class="stat-label">Easy to Book</div></div>
+                <div class="stat-card${filter === 'total' ? ' active' : ''}" onclick="renderDashboard('total')"><div class="stat-value">${GUESTS.length}</div><div class="stat-label">Total Guests</div></div>
+                <div class="stat-card${filter === 'thisWeek' ? ' active' : ''}" onclick="renderDashboard('thisWeek')"><div class="stat-value">${totalWeekGuests}</div><div class="stat-label">This Week</div></div>
+                <div class="stat-card${filter === 'favorites' ? ' active' : ''}" onclick="renderDashboard('favorites')"><div class="stat-value">${totalFavorites}</div><div class="stat-label">Favorites</div></div>
+                <div class="stat-card${filter === 'easyToBook' ? ' active' : ''}" onclick="renderDashboard('easyToBook')"><div class="stat-value">${totalEasy}</div><div class="stat-label">Easy to Book</div></div>
             `;
 
             // Render sections
@@ -235,10 +286,15 @@
             document.getElementById('refreshBtn').disabled = true;
             document.getElementById('refreshBtn').textContent = '🔄 Refreshing...';
             setTimeout(() => {
-                renderDashboard();
+                renderDashboard(currentFilter);
                 document.getElementById('refreshBtn').textContent = '🔄 Refresh Research';
                 document.getElementById('refreshBtn').disabled = false;
             }, 500);
+        }
+
+        function resetFilter() {
+            currentFilter = null;
+            renderDashboard();
         }
 
         window.addEventListener('load', renderDashboard);
