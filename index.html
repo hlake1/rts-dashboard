@@ -403,6 +403,57 @@
             document.getElementById('feedbackSubmitBtn').disabled = false;
         }
 
+        // ===== MATON API CONFIG =====
+        const MATON_API_KEY = 'v2.59ylUbxXnCHG848r3iDSo78FhkckmIqSEwMnfTByPtxo-RbOhLZQXtV3lutCcQxk4ecjCiw8-_EVwUHD7vZ3KceW53RtFRhxJiWMdoAjAz_M-Ntbw6ocykue';
+        const SHEETS_ID = '1XB8ulplXEpakKWeXQtU2IO25LCrvNY4qdaDGy4chVkE';
+        const FEEDBACK_SHEET_NAME = 'Feedback';
+
+        async function writeFeedbackToSheets(guestName, reason, notes) {
+            try {
+                const timestamp = new Date().toISOString();
+                
+                // Use Maton API to append row to Feedback sheet using Google Sheets API
+                const response = await fetch(`https://api.maton.ai/google-sheets/v4/spreadsheets/${SHEETS_ID}/values/${FEEDBACK_SHEET_NAME}!A:D:append?valueInputOption=RAW`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${MATON_API_KEY}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        values: [
+                            [
+                                guestName,
+                                reason,
+                                timestamp,
+                                notes || ''
+                            ]
+                        ]
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API error: ${response.statusText}`);
+                }
+
+                const result = await response.json();
+                return { success: true, data: result };
+
+            } catch (error) {
+                console.error('Maton API error:', error);
+                // Graceful fallback: store in localStorage
+                let feedbackLog = JSON.parse(localStorage.getItem('rtsFeedbackLog') || '[]');
+                feedbackLog.push({
+                    guest: guestName,
+                    reason: reason,
+                    notes: notes,
+                    timestamp: new Date().toISOString(),
+                    synced: false
+                });
+                localStorage.setItem('rtsFeedbackLog', JSON.stringify(feedbackLog));
+                return { success: true, offline: true };
+            }
+        }
+
         async function submitFeedback() {
             if (!currentFeedbackGuest || !selectedFeedbackReason) {
                 alert('Please select a reason');
@@ -417,19 +468,14 @@
             submitBtn.textContent = '⏳ Submitting...';
 
             try {
-                // Call the feedback helper if it's initialized
-                let result = { success: false };
-                
-                if (typeof writeFeedbackToSheets !== 'undefined') {
-                    result = await writeFeedbackToSheets(
-                        currentFeedbackGuest,
-                        selectedFeedbackReason,
-                        notes
-                    );
-                }
+                const result = await writeFeedbackToSheets(
+                    currentFeedbackGuest,
+                    selectedFeedbackReason,
+                    notes
+                );
 
-                if (result.success !== false) {
-                    statusDiv.textContent = '✅ Feedback recorded. Thank you!';
+                if (result.success) {
+                    statusDiv.textContent = result.offline ? '✅ Feedback saved locally (will sync)' : '✅ Feedback recorded. Thank you!';
                     statusDiv.className = 'feedback-status success';
                     
                     // Close modal after 1.5 seconds
