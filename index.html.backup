@@ -38,13 +38,9 @@
         .guest-card.transformative { border: 2px solid rgba(102, 126, 234, 0.6); box-shadow: 0 0 20px rgba(102, 126, 234, 0.2), 0 10px 30px rgba(0,0,0,0.2); }
         .guest-card.transformative .guest-name { color: #667eea; }
         
-        .action-buttons { position: absolute; top: 16px; right: 16px; display: flex; gap: 8px; }
-        .favorite-btn { background: none; border: none; font-size: 1.8em; cursor: pointer; transition: transform 0.2s; }
+        .favorite-btn { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.8em; cursor: pointer; transition: transform 0.2s; }
         .favorite-btn:hover { transform: scale(1.2); }
         .favorite-btn.favorited { color: #FFD700; }
-        
-        .feedback-btn { background: none; border: none; font-size: 1.8em; cursor: pointer; transition: transform 0.2s; opacity: 0.6; }
-        .feedback-btn:hover { transform: scale(1.2); opacity: 1; }
         
         .guest-timestamp { font-size: 0.75em; color: #999; margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
         
@@ -80,29 +76,6 @@
         .filter-reset-btn:hover { background: #764ba2; transform: translateY(-2px); }
         #content { display: none; }
         .no-guests { text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.7); font-style: italic; }
-        
-        /* Feedback Modal Styles */
-        .feedback-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
-        .feedback-modal.active { display: flex; }
-        .feedback-modal-content { background: white; border-radius: 12px; padding: 32px; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: slideUp 0.3s ease-out; }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .feedback-modal-title { font-size: 1.5em; font-weight: 700; color: #333; margin-bottom: 8px; }
-        .feedback-modal-subtitle { font-size: 0.95em; color: #666; margin-bottom: 24px; }
-        .feedback-option { display: block; width: 100%; padding: 16px; margin-bottom: 12px; border: 2px solid #e0e5ff; border-radius: 8px; background: white; cursor: pointer; text-align: left; font-size: 1em; font-weight: 500; color: #333; transition: all 0.2s; }
-        .feedback-option:hover { border-color: #667eea; background: #f0f4ff; }
-        .feedback-option:active { transform: translateY(2px); }
-        .feedback-option.selected { border-color: #667eea; background: #667eea; color: white; }
-        .feedback-notes { width: 100%; padding: 12px; margin-top: 16px; margin-bottom: 16px; border: 2px solid #e0e5ff; border-radius: 8px; font-size: 0.95em; font-family: inherit; resize: vertical; min-height: 80px; }
-        .feedback-notes:focus { outline: none; border-color: #667eea; }
-        .feedback-actions { display: flex; gap: 12px; margin-top: 24px; }
-        .feedback-btn-submit { flex: 1; padding: 12px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
-        .feedback-btn-submit:hover:not(:disabled) { background: #764ba2; transform: translateY(-2px); }
-        .feedback-btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-        .feedback-btn-cancel { flex: 1; padding: 12px; background: #f0f4ff; color: #667eea; border: 2px solid #667eea; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
-        .feedback-btn-cancel:hover { background: #667eea; color: white; }
-        .feedback-status { display: none; padding: 12px; border-radius: 8px; margin-top: 12px; text-align: center; font-weight: 600; }
-        .feedback-status.success { background: #d4edda; color: #155724; display: block; }
-        .feedback-status.error { background: #f8d7da; color: #721c24; display: block; }
     </style>
 </head>
 <body>
@@ -160,41 +133,10 @@
         <div class="footer">
             <p>Last updated: <span id="lastUpdate">—</span></p>
             <p>Research-focused guest recommendations for Road to Success Podcast</p>
-            <p style="margin-top: 10px; opacity: 0.7;">💡 Click the ❤️ to save guests • 👎 to send feedback</p>
+            <p style="margin-top: 10px; opacity: 0.7;">💡 Click the ❤️ to save guests to your favorites list</p>
         </div>
     </div>
 
-    <!-- Feedback Modal -->
-    <div class="feedback-modal" id="feedbackModal">
-        <div class="feedback-modal-content">
-            <div class="feedback-modal-title">Guest Feedback</div>
-            <div class="feedback-modal-subtitle">Why are you passing on <strong id="feedbackGuestName"></strong>?</div>
-            
-            <div>
-                <button class="feedback-option" onclick="selectFeedbackReason(this, 'Already booked')">
-                    📅 Already booked
-                </button>
-                <button class="feedback-option" onclick="selectFeedbackReason(this, 'Doesn\\'t fit')">
-                    🎯 Doesn't fit
-                </button>
-                <button class="feedback-option" onclick="selectFeedbackReason(this, 'Oversaturated')">
-                    📊 Oversaturated
-                </button>
-            </div>
-
-            <textarea class="feedback-notes" id="feedbackNotes" placeholder="Optional: Add any notes..."></textarea>
-            
-            <div class="feedback-status" id="feedbackStatus"></div>
-            
-            <div class="feedback-actions">
-                <button class="feedback-btn-submit" id="feedbackSubmitBtn" onclick="submitFeedback()" disabled>Submit Feedback</button>
-                <button class="feedback-btn-cancel" onclick="closeFeedbackModal()">Cancel</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="config.js"></script>
-    <script src="google-sheets-helper.js"></script>
     <script>
         const GUESTS = [
             {name: "Jeffrey Pang (RUN! Motorsports & Media)", desc: "YouTube automotive creator with 264K followers. Drift culture, JDM car builds, cinematic storytelling. Based in Japan, authentic drifter + builder.", insight: "Niche enough to be under-booked on podcasts, big enough to bring viewers. Story-driven narrative (life transformation through drifting). Proven cinematic production quality (videos 9-17 mins, 200K-2.5M views). Zero podcast saturation. Built his dream through persistence—authentic RTS angle.", yt: "https://www.youtube.com/@run_jeff", ig: "", tw: "", web: "", diff: "4", hook: "🏎️ From Chaos to Drift Dreams: How I Found Myself in Japan", dateAdded: "2026-06-09", narrative: true},
@@ -299,12 +241,9 @@
                 const isFavorited = favorites.includes(g.name);
                 return `
                 <div class="guest-card${g.narrative ? ' transformative' : ''}">
-                    <div class="action-buttons">
-                        <button class="favorite-btn${isFavorited ? ' favorited' : ''}" onclick="toggleFavorite('${g.name.replace(/'/g, "\\'")}')">
-                            ${isFavorited ? '❤️' : '🤍'}
-                        </button>
-                        <button class="feedback-btn" onclick="openFeedbackModal('${g.name.replace(/'/g, "\\'")}')">👎</button>
-                    </div>
+                    <button class="favorite-btn${isFavorited ? ' favorited' : ''}" onclick="toggleFavorite('${g.name.replace(/'/g, "\\'")}')">
+                        ${isFavorited ? '❤️' : '🤍'}
+                    </button>
                     <div class="guest-timestamp">Added ${g.dateAdded}</div>
                     ${g.hook ? `<div class="guest-hook">${g.hook}</div>` : ''}
                     <div class="guest-name">${g.name}</div>
@@ -337,7 +276,7 @@
             }
             
             localStorage.setItem('rtsFavorites', JSON.stringify(favorites));
-            renderDashboard(currentFilter);
+            renderDashboard();
         }
 
         function clearFavorites() {
@@ -361,108 +300,6 @@
             currentFilter = null;
             renderDashboard();
         }
-
-        // ===== FEEDBACK SYSTEM =====
-        let currentFeedbackGuest = null;
-        let selectedFeedbackReason = null;
-
-        function openFeedbackModal(guestName) {
-            currentFeedbackGuest = guestName;
-            selectedFeedbackReason = null;
-            document.getElementById('feedbackGuestName').textContent = guestName;
-            document.getElementById('feedbackNotes').value = '';
-            document.getElementById('feedbackStatus').textContent = '';
-            document.getElementById('feedbackStatus').className = 'feedback-status';
-            document.getElementById('feedbackSubmitBtn').disabled = true;
-            
-            // Clear selected reason buttons
-            document.querySelectorAll('.feedback-option').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            
-            document.getElementById('feedbackModal').classList.add('active');
-        }
-
-        function closeFeedbackModal() {
-            document.getElementById('feedbackModal').classList.remove('active');
-            currentFeedbackGuest = null;
-            selectedFeedbackReason = null;
-        }
-
-        function selectFeedbackReason(button, reason) {
-            // Deselect all buttons
-            document.querySelectorAll('.feedback-option').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            
-            // Select clicked button
-            button.classList.add('selected');
-            selectedFeedbackReason = reason;
-            
-            // Enable submit button
-            document.getElementById('feedbackSubmitBtn').disabled = false;
-        }
-
-        async function submitFeedback() {
-            if (!currentFeedbackGuest || !selectedFeedbackReason) {
-                alert('Please select a reason');
-                return;
-            }
-
-            const submitBtn = document.getElementById('feedbackSubmitBtn');
-            const statusDiv = document.getElementById('feedbackStatus');
-            const notes = document.getElementById('feedbackNotes').value;
-
-            submitBtn.disabled = true;
-            submitBtn.textContent = '⏳ Submitting...';
-
-            try {
-                // Call the feedback helper if it's initialized
-                let result = { success: false };
-                
-                if (typeof writeFeedbackToSheets !== 'undefined') {
-                    result = await writeFeedbackToSheets(
-                        currentFeedbackGuest,
-                        selectedFeedbackReason,
-                        notes
-                    );
-                }
-
-                if (result.success !== false) {
-                    statusDiv.textContent = '✅ Feedback recorded. Thank you!';
-                    statusDiv.className = 'feedback-status success';
-                    
-                    // Close modal after 1.5 seconds
-                    setTimeout(() => {
-                        closeFeedbackModal();
-                    }, 1500);
-                } else {
-                    statusDiv.textContent = '⚠️ ' + (result.message || 'Error submitting feedback');
-                    statusDiv.className = 'feedback-status error';
-                }
-            } catch (error) {
-                console.error('Error submitting feedback:', error);
-                statusDiv.textContent = '❌ Error: ' + error.message;
-                statusDiv.className = 'feedback-status error';
-            } finally {
-                submitBtn.textContent = 'Submit Feedback';
-                submitBtn.disabled = selectedFeedbackReason ? false : true;
-            }
-        }
-
-        // Close modal on Escape key
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeFeedbackModal();
-            }
-        });
-
-        // Close modal when clicking outside
-        document.getElementById('feedbackModal').addEventListener('click', (e) => {
-            if (e.target.id === 'feedbackModal') {
-                closeFeedbackModal();
-            }
-        });
 
         window.addEventListener('load', renderDashboard);
     </script>
