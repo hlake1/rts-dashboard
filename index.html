@@ -12,59 +12,60 @@
         header h1 { font-size: 2.5em; margin-bottom: 10px; }
         header p { font-size: 1.1em; opacity: 0.9; }
         .section-header { color: white; font-size: 1.5em; margin: 30px 0 20px 0; }
-        
+
         #loading { text-align: center; padding: 60px 20px; color: white; }
         .loading-spinner { border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid white; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-        
+
         #content { display: none; }
-        
+
         .guests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin: 20px 0; }
-        
-        .guest-card { 
-            background: white; 
-            border-radius: 12px; 
-            padding: 20px; 
+
+        .guest-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            padding-top: 50px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.2);
             position: relative;
             transition: transform 0.2s;
         }
         .guest-card:hover { transform: translateY(-4px); }
         .guest-card.transformative { border: 2px solid #667eea; }
-        
-        .guest-card h3 { color: #667eea; margin-bottom: 10px; }
+        .guest-card h3 { color: #667eea; margin-bottom: 8px; font-size: 1em; }
+        .guest-card .date { font-size: 0.75em; color: #999; margin-bottom: 10px; display: block; }
         .guest-card .desc { color: #666; font-size: 0.9em; margin-bottom: 10px; }
-        .guest-card .insight { font-size: 0.85em; color: #555; background: #f5f5f5; padding: 10px; border-radius: 5px; margin-bottom: 10px; line-height: 1.4; }
-        .guest-card .date { font-size: 0.75em; color: #999; margin-bottom: 15px; display: block; }
+        .guest-card .insight { font-size: 0.85em; color: #555; background: #f5f5f5; padding: 10px; border-radius: 5px; margin-bottom: 12px; line-height: 1.4; }
         .guest-card .difficulty { font-size: 0.85em; color: #667eea; font-weight: 600; }
-        
-        .action-buttons { position: absolute; top: 15px; right: 15px; display: flex; gap: 8px; }
-        .btn-action { background: none; border: none; font-size: 1.5em; cursor: pointer; opacity: 0.6; transition: opacity 0.2s; }
-        .btn-action:hover { opacity: 1; }
-        
+
+        .action-buttons { position: absolute; top: 12px; right: 12px; display: flex; gap: 6px; }
+        .btn-action { background: none; border: none; font-size: 1.4em; cursor: pointer; line-height: 1; padding: 2px; }
+        .btn-fav { opacity: 0.3; transition: opacity 0.2s, transform 0.1s; }
+        .btn-fav:hover { opacity: 0.7; }
+        .btn-fav.active { opacity: 1; transform: scale(1.1); }
+        .btn-feedback { opacity: 0.4; transition: opacity 0.2s; }
+        .btn-feedback:hover { opacity: 1; }
+
+        /* Modal */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
         .modal.show { display: flex; }
-        .modal-content { background: white; border-radius: 12px; padding: 30px; max-width: 500px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
-        .modal h2 { color: #333; margin-bottom: 10px; }
-        .modal p { color: #666; margin-bottom: 20px; font-size: 0.9em; }
-        .reason-buttons { display: grid; gap: 10px; margin-bottom: 20px; }
-        .reason-btn { padding: 12px; border: 2px solid #ddd; background: white; border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 0.9em; }
-        .reason-btn:hover { border-color: #667eea; background: #f5f5f5; }
+        .modal-content { background: white; border-radius: 12px; padding: 30px; max-width: 480px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .modal h2 { color: #333; margin-bottom: 6px; font-size: 1.2em; }
+        .modal .guest-label { color: #667eea; font-weight: 600; font-size: 0.9em; margin-bottom: 20px; display: block; }
+        .reason-buttons { display: grid; gap: 8px; margin-bottom: 16px; }
+        .reason-btn { padding: 10px 14px; border: 2px solid #e0e0e0; background: white; border-radius: 8px; cursor: pointer; transition: all 0.15s; font-size: 0.9em; text-align: left; }
+        .reason-btn:hover { border-color: #667eea; }
         .reason-btn.selected { border-color: #667eea; background: #667eea; color: white; }
-        
-        textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: Arial; margin-bottom: 15px; }
-        
+        textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: inherit; font-size: 0.9em; resize: vertical; margin-bottom: 16px; }
         .modal-buttons { display: flex; gap: 10px; }
-        button { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
-        .btn-primary { background: #667eea; color: white; flex: 1; }
-        .btn-primary:hover { background: #5568d3; }
-        .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
-        .btn-secondary { background: #eee; color: #333; }
-        .btn-secondary:hover { background: #ddd; }
-        
-        .status-message { padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: center; display: none; }
-        .status-success { background: #d4edda; color: #155724; display: block; }
-        .status-error { background: #f8d7da; color: #721c24; display: block; }
+        .btn-cancel { padding: 10px 20px; background: #eee; color: #333; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; }
+        .btn-cancel:hover { background: #ddd; }
+        .btn-submit { padding: 10px 20px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; flex: 1; transition: background 0.2s; }
+        .btn-submit:hover { background: #5568d3; }
+        .btn-submit:disabled { background: #ccc; cursor: not-allowed; }
+        .status-msg { padding: 10px; border-radius: 8px; margin-bottom: 14px; text-align: center; display: none; font-size: 0.9em; }
+        .status-msg.success { background: #d4edda; color: #155724; display: block; }
+        .status-msg.error { background: #f8d7da; color: #721c24; display: block; }
     </style>
 </head>
 <body>
@@ -88,109 +89,119 @@
     <!-- Feedback Modal -->
     <div id="feedbackModal" class="modal">
         <div class="modal-content">
-            <h2>Guest Feedback</h2>
-            <p id="feedbackGuestName"></p>
-            <div class="status-message" id="statusMessage"></div>
-            
-            <p style="margin-bottom: 10px; font-weight: 600;">Why are you marking this guest?</p>
+            <h2>Mark this guest</h2>
+            <span class="guest-label" id="feedbackGuestLabel"></span>
+            <div class="status-msg" id="statusMsg"></div>
+            <p style="font-weight:600; margin-bottom:10px; font-size:0.9em;">Reason:</p>
             <div class="reason-buttons">
-                <button class="reason-btn" onclick="selectReason('Already booked')">Already booked</button>
-                <button class="reason-btn" onclick="selectReason('Doesnt fit')">Doesn't fit</button>
-                <button class="reason-btn" onclick="selectReason('Oversaturated')">Oversaturated</button>
+                <button class="reason-btn" onclick="selectReason(this, 'Already booked')">Already booked</button>
+                <button class="reason-btn" onclick="selectReason(this, 'Doesnt fit')">Doesn't fit</button>
+                <button class="reason-btn" onclick="selectReason(this, 'Oversaturated')">Oversaturated</button>
             </div>
-            
             <textarea id="feedbackNotes" placeholder="Optional notes..." rows="3"></textarea>
-            
             <div class="modal-buttons">
-                <button class="btn-secondary" onclick="closeFeedbackModal()">Cancel</button>
-                <button class="btn-primary" id="feedbackSubmitBtn" onclick="submitFeedback()" disabled>Submit</button>
+                <button class="btn-cancel" onclick="closeFeedbackModal()">Cancel</button>
+                <button class="btn-submit" id="feedbackSubmitBtn" onclick="submitFeedback()" disabled>Submit</button>
             </div>
         </div>
     </div>
 
     <script>
-        let selectedReason = null;
-
+        // ── Data ──────────────────────────────────────────────────────────────
         const GUESTS = [
-            { name: "Jeffrey Pang (RUN! Motorsports & Media)", desc: "YouTube automotive creator with 264K followers", insight: "Niche enough to be under-booked but big enough to bring viewers. Zero podcast saturation.", dateAdded: "2026-06-09", narrative: true, diff: 4 },
-            { name: "Hoovie (Tyler Hoover)", desc: "YouTube entertainer with 2.1M followers, buys exotic cars", insight: "Unmatched entertainment value despite massive audience having zero podcast appearances", dateAdded: "2026-06-04", diff: 5 },
-            { name: "Engineering Explained (Jason Fenske)", desc: "Technical educator explaining car mechanics. 1.5M YouTube followers", insight: "Deep credibility with natural educator style. Highest booking success rate.", dateAdded: "2026-06-04", diff: 3 },
-            { name: "Lord Aleem", desc: "British entrepreneur who built Dubai's supercar rental empire, starting as teenager", insight: "Young, self-made, immigrant-heritage entrepreneur — exactly RTS demographic. NOT yet on RTS.", dateAdded: "2026-06-09", narrative: true, diff: 6 },
-            { name: "Supercar Blondie (Alex Hirschi)", desc: "30M+ social followers, built global automotive media empire. Founded SBX Cars auction platform.", insight: "Female entrepreneur who broke into male-dominated space in foreign country. Unique angle.", dateAdded: "2026-06-09", narrative: true, diff: 8 },
+            { name: "Jeffrey Pang (RUN! Motorsports & Media)", desc: "YouTube automotive creator with 264K followers. Drift culture, JDM builds, cinematic storytelling based in Japan.", insight: "Niche enough to be under-booked but big enough to bring viewers. Zero podcast saturation. Story-driven narrative.", dateAdded: "2026-06-09", narrative: true, diff: 4 },
+            { name: "Hoovie (Tyler Hoover)", desc: "YouTube automotive entertainer with 2.1M followers. Buys cheap exotic cars and documents the restoration/flip process.", insight: "Unmatched entertainment value + business storytelling. Zero podcast appearances despite massive audience.", dateAdded: "2026-06-04", diff: 5 },
+            { name: "Engineering Explained (Jason Fenske)", desc: "Technical automotive educator explaining complex car mechanics accessibly. 1.5M YouTube followers.", insight: "Deep credibility + conversational deep-dive potential. Natural educator. Highest booking success rate.", dateAdded: "2026-06-04", diff: 3 },
+            { name: "Lord Aleem", desc: "British-Pakistani entrepreneur from Birmingham who built one of the UK and Middle East's biggest supercar rental empires, starting as a teenager. Now Dubai-based.", insight: "Young, self-made, immigrant-heritage entrepreneur — exactly the RTS demographic sweet spot. NOT yet on RTS.", dateAdded: "2026-06-09", narrative: true, diff: 6 },
+            { name: "Supercar Blondie (Alex Hirschi)", desc: "Australian-born broadcaster turned global automotive media mogul. 30M+ social followers. Founded SBX Cars, a high-end supercar auction platform.", insight: "Unique angle: female entrepreneur who broke into a male space in a foreign country with zero car expertise. NOT on RTS.", dateAdded: "2026-06-09", narrative: true, diff: 8 },
         ];
 
-        function loadDashboard() {
-            const grid = document.getElementById('guests-grid');
-            const html = GUESTS.map(g => `
-                <div class="guest-card${g.narrative ? ' transformative' : ''}">
-                    <div class="action-buttons">
-                        <button class="btn-action" onclick="openFeedbackModal('${g.name.replace(/'/g, "\\'")}')">👎</button>
-                    </div>
-                    <h3>${g.name}</h3>
-                    <span class="date">Added: ${g.dateAdded}</span>
-                    <p class="desc">${g.desc}</p>
-                    <div class="insight"><strong>Why:</strong> ${g.insight}</div>
-                    <p class="difficulty">Booking Difficulty: ${g.diff}/10</p>
-                </div>
-            `).join('');
+        // ── Favourites ────────────────────────────────────────────────────────
+        function getFavourites() {
+            return JSON.parse(localStorage.getItem('rtsFavourites') || '[]');
+        }
 
-            grid.innerHTML = html;
+        function toggleFavourite(guestName) {
+            const favs = getFavourites();
+            const idx = favs.indexOf(guestName);
+            if (idx > -1) {
+                favs.splice(idx, 1);
+            } else {
+                favs.push(guestName);
+            }
+            localStorage.setItem('rtsFavourites', JSON.stringify(favs));
+            loadDashboard();
+        }
+
+        // ── Render ────────────────────────────────────────────────────────────
+        function loadDashboard() {
+            const favs = getFavourites();
+            const grid = document.getElementById('guests-grid');
+
+            grid.innerHTML = GUESTS.map(function(g) {
+                const isFav = favs.includes(g.name);
+                const safe  = g.name.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
+                return [
+                    '<div class="guest-card' + (g.narrative ? ' transformative' : '') + '">',
+                    '  <div class="action-buttons">',
+                    '    <button class="btn-action btn-fav' + (isFav ? ' active' : '') + '" onclick="toggleFavourite(\'' + safe + '\')" title="' + (isFav ? 'Remove favourite' : 'Add favourite') + '">' + (isFav ? '❤️' : '🤍') + '</button>',
+                    '    <button class="btn-action btn-feedback" onclick="openFeedbackModal(\'' + safe + '\')" title="Mark this guest">👎</button>',
+                    '  </div>',
+                    '  <h3>' + g.name + '</h3>',
+                    '  <span class="date">Added ' + g.dateAdded + '</span>',
+                    '  <p class="desc">' + g.desc + '</p>',
+                    '  <div class="insight"><strong>Why RTS:</strong> ' + g.insight + '</div>',
+                    '  <p class="difficulty">Booking difficulty: ' + g.diff + '/10</p>',
+                    '</div>'
+                ].join('\n');
+            }).join('\n');
+
             document.getElementById('loading').style.display = 'none';
             document.getElementById('content').style.display = 'block';
         }
 
+        // ── Feedback Modal ────────────────────────────────────────────────────
+        var currentFeedbackGuest = null;
+        var selectedReason = null;
+
         function openFeedbackModal(guestName) {
+            currentFeedbackGuest = guestName;
             selectedReason = null;
-            document.getElementById('feedbackGuestName').textContent = `Feedback for: ${guestName}`;
+            document.getElementById('feedbackGuestLabel').textContent = guestName;
             document.getElementById('feedbackNotes').value = '';
-            document.getElementById('statusMessage').className = 'status-message';
+            document.getElementById('statusMsg').className = 'status-msg';
             document.getElementById('feedbackSubmitBtn').disabled = true;
-            document.querySelectorAll('.reason-btn').forEach(btn => btn.classList.remove('selected'));
+            document.querySelectorAll('.reason-btn').forEach(function(b) { b.classList.remove('selected'); });
             document.getElementById('feedbackModal').classList.add('show');
-            document.getElementById('feedbackModal').dataset.guestName = guestName;
         }
 
         function closeFeedbackModal() {
             document.getElementById('feedbackModal').classList.remove('show');
         }
 
-        function selectReason(reason) {
+        function selectReason(btn, reason) {
             selectedReason = reason;
-            document.querySelectorAll('.reason-btn').forEach(btn => btn.classList.remove('selected'));
-            event.target.classList.add('selected');
+            document.querySelectorAll('.reason-btn').forEach(function(b) { b.classList.remove('selected'); });
+            btn.classList.add('selected');
             document.getElementById('feedbackSubmitBtn').disabled = false;
         }
 
-        async function submitFeedback() {
-            if (!selectedReason) return;
-            
-            const guestName = document.getElementById('feedbackModal').dataset.guestName;
-            const notes = document.getElementById('feedbackNotes').value;
-            const statusMsg = document.getElementById('statusMessage');
-            const submitBtn = document.getElementById('feedbackSubmitBtn');
-            
+        function submitFeedback() {
+            if (!selectedReason || !currentFeedbackGuest) return;
+            var notes = document.getElementById('feedbackNotes').value;
+            var statusMsg = document.getElementById('statusMsg');
+            var submitBtn = document.getElementById('feedbackSubmitBtn');
             submitBtn.disabled = true;
-            submitBtn.textContent = '⏳ Submitting...';
-            
+            submitBtn.textContent = 'Saving...';
             try {
-                // Store feedback locally
-                let feedback = JSON.parse(localStorage.getItem('rtsFeedback') || '[]');
-                feedback.push({
-                    guest: guestName,
-                    reason: selectedReason,
-                    notes: notes,
-                    timestamp: new Date().toISOString()
-                });
+                var feedback = JSON.parse(localStorage.getItem('rtsFeedback') || '[]');
+                feedback.push({ guest: currentFeedbackGuest, reason: selectedReason, notes: notes, timestamp: new Date().toISOString() });
                 localStorage.setItem('rtsFeedback', JSON.stringify(feedback));
-                
-                statusMsg.className = 'status-message status-success';
+                statusMsg.className = 'status-msg success';
                 statusMsg.textContent = '✅ Feedback saved!';
-                
-                setTimeout(() => {
-                    closeFeedbackModal();
-                }, 1500);
-            } catch (error) {
-                statusMsg.className = 'status-message status-error';
+                setTimeout(closeFeedbackModal, 1200);
+            } catch(e) {
+                statusMsg.className = 'status-msg error';
                 statusMsg.textContent = '❌ Error saving feedback';
             } finally {
                 submitBtn.textContent = 'Submit';
@@ -198,12 +209,9 @@
             }
         }
 
-        // Close modal on Escape
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') closeFeedbackModal();
-        });
+        document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeFeedbackModal(); });
 
-        // Load on page ready
+        // ── Boot ──────────────────────────────────────────────────────────────
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', loadDashboard);
         } else {
