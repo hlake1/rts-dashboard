@@ -193,9 +193,75 @@
         </div>
     </div>
 
-    <script src="config.js"></script>
-    <script src="google-sheets-helper.js"></script>
     <script>
+        // === CONSOLIDATED CONFIG & HELPERS (previously external) ===
+        
+        // Google Sheets Helper
+        const SHEET_ID = '1XB8ulplXEpakKWeXQtU2IO25LCrvNY4qdaDGy4chVkE';
+        const FEEDBACK_SHEET_NAME = 'Feedback';
+        let APPS_SCRIPT_DEPLOYMENT_URL = null;
+        
+        function initGoogleSheetsHelper(deploymentUrl) {
+            APPS_SCRIPT_DEPLOYMENT_URL = deploymentUrl;
+            console.log('[GoogleSheetsHelper] Initialized with deployment URL');
+        }
+        
+        async function writeFeedbackToSheets(guestName, reason, notes = '') {
+            if (!APPS_SCRIPT_DEPLOYMENT_URL) {
+                console.warn('[GoogleSheetsHelper] Deployment URL not set');
+                return { success: true, offline: true };
+            }
+            try {
+                const timestamp = new Date().toISOString();
+                const payload = {
+                    action: 'addFeedback',
+                    guestName: guestName,
+                    reason: reason,
+                    timestamp: timestamp,
+                    notes: notes
+                };
+                const response = await fetch(APPS_SCRIPT_DEPLOYMENT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                    mode: 'no-cors'
+                });
+                console.log(`[GoogleSheetsHelper] Feedback submitted for "${guestName}"`);
+                return { success: true, timestamp: timestamp };
+            } catch (error) {
+                console.error('[GoogleSheetsHelper] Error:', error);
+                let feedbackLog = JSON.parse(localStorage.getItem('rtsFeedbackLog') || '[]');
+                feedbackLog.push({
+                    guest: guestName,
+                    reason: reason,
+                    notes: notes,
+                    timestamp: new Date().toISOString(),
+                    synced: false
+                });
+                localStorage.setItem('rtsFeedbackLog', JSON.stringify(feedbackLog));
+                return { success: true, offline: true };
+            }
+        }
+        
+        // RTS Config (previously in config.js)
+        const RTS_CONFIG = {
+            feedbackSheetId: '1XB8ulplXEpakKWeXQtU2IO25LCrvNY4qdaDGy4chVkE',
+            feedbackSheetName: 'Feedback',
+            appsScriptDeploymentUrl: null,
+            debug: false
+        };
+        
+        // Initialize on DOM ready
+        document.addEventListener('DOMContentLoaded', () => {
+            if (RTS_CONFIG.appsScriptDeploymentUrl) {
+                initGoogleSheetsHelper(RTS_CONFIG.appsScriptDeploymentUrl);
+                console.log('[RTS Config] Google Sheets integration initialized');
+            } else {
+                console.warn('[RTS Config] Google Apps Script deployment URL not configured');
+            }
+        });
+        
+        // === MAIN DASHBOARD SCRIPT ===
         const GUESTS = [
             {name: "Jeffrey Pang (RUN! Motorsports & Media)", desc: "YouTube automotive creator with 264K followers. Drift culture, JDM car builds, cinematic storytelling. Based in Japan, authentic drifter + builder.", insight: "Niche enough to be under-booked on podcasts, big enough to bring viewers. Story-driven narrative (life transformation through drifting). Proven cinematic production quality (videos 9-17 mins, 200K-2.5M views). Zero podcast saturation. Built his dream through persistence—authentic RTS angle.", yt: "https://www.youtube.com/@run_jeff", ig: "", tw: "", web: "", diff: "4", hook: "🏎️ From Chaos to Drift Dreams: How I Found Myself in Japan", dateAdded: "2026-06-09", narrative: true},
             {name: "Hoovie (Tyler Hoover)", desc: "YouTube automotive entertainer with 2.1M followers, buys cheap exotic cars and documents restoration/flip process", insight: "Unmatched entertainment value + business storytelling (car flipping commerce). Zero podcast appearances despite massive audience.", yt: "https://www.youtube.com/@hooviesgarage", ig: "https://www.instagram.com/hooviegarage", tw: "", web: "", diff: "5", hook: "🔥 Exotic Car Chaos: From $500 Finds to $50K Flips", dateAdded: "2026-06-04"},
