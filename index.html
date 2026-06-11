@@ -6,585 +6,209 @@
     <title>RTS Podcast Research — Guest Intelligence</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%), url('https://yt3.googleusercontent.com/Yy_Zg2AmQ2ZEfwuwLjXFvlNW5JXJk0FmP-oFveW5oski8MPOCd7-RtAXEjAtTuFdA1iDfBNL=s900-c-k-c0x00ffffff-no-rj') center/cover fixed; min-height: 100vh; padding: 20px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%); min-height: 100vh; padding: 20px; }
         .container { max-width: 1200px; margin: 0 auto; }
-        header { text-align: center; color: white; margin-bottom: 40px; }
-        .logo { width: 60px; height: 60px; border-radius: 50%; background: url('https://yt3.googleusercontent.com/Yy_Zg2AmQ2ZEfwuwLjXFvlNW5JXJk0FmP-oFveW5oski8MPOCd7-RtAXEjAtTuFdA1iDfBNL=s900-c-k-c0x00ffffff-no-rj') center/cover; margin: 0 auto 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        header { text-align: center; color: white; margin-bottom: 30px; }
         header h1 { font-size: 2.5em; margin-bottom: 10px; }
-        header p { font-size: 1.1em; opacity: 0.9; margin-bottom: 8px; }
-        .tagline { font-size: 0.95em; opacity: 0.8; font-weight: 500; font-style: italic; }
-        .controls { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
-        .refresh-btn { background: white; color: #667eea; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; font-size: 0.95em; }
-        .refresh-btn:hover { background: #667eea; color: white; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-        .refresh-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .loading { text-align: center; padding: 60px 20px; color: white; }
+        header p { font-size: 1.1em; opacity: 0.9; }
+        .section-header { color: white; font-size: 1.5em; margin: 30px 0 20px 0; }
+        
+        #loading { text-align: center; padding: 60px 20px; color: white; }
         .loading-spinner { border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid white; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
-        .narrative-highlight { background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); border: 2px solid rgba(102, 126, 234, 0.4); border-radius: 12px; padding: 20px; margin-bottom: 30px; color: white; }
-        .narrative-title { font-size: 1.3em; font-weight: 700; margin-bottom: 15px; }
-        .narrative-desc { font-size: 0.95em; line-height: 1.6; opacity: 0.95; margin-bottom: 10px; }
-        .narrative-badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; font-size: 0.85em; font-weight: 600; margin-right: 10px; margin-top: 10px; }
-        
-        .research-section { margin-bottom: 50px; }
-        .section-header { font-size: 1.8em; font-weight: 700; color: white; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 3px solid rgba(255,255,255,0.3); }
-        .section-header.this-week { border-bottom-color: #FFD700; }
-        .section-header.last-week { border-bottom-color: rgba(255,255,255,0.3); }
-        
-        .guests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
-        @media (max-width: 768px) { .guests-grid { grid-template-columns: 1fr; } }
-        .guest-card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s; display: flex; flex-direction: column; position: relative; }
-        .guest-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
-        .guest-card.transformative { border: 2px solid rgba(102, 126, 234, 0.6); box-shadow: 0 0 20px rgba(102, 126, 234, 0.2), 0 10px 30px rgba(0,0,0,0.2); }
-        .guest-card.transformative .guest-name { color: #667eea; }
-        
-        .action-buttons { position: absolute; top: 16px; right: 16px; display: flex; gap: 8px; }
-        .favorite-btn { background: none; border: none; font-size: 1.8em; cursor: pointer; transition: transform 0.2s; }
-        .favorite-btn:hover { transform: scale(1.2); }
-        .favorite-btn.favorited { color: #FFD700; }
-        
-        .feedback-btn { background: none; border: none; font-size: 1.8em; cursor: pointer; transition: transform 0.2s; opacity: 0.6; }
-        .feedback-btn:hover { transform: scale(1.2); opacity: 1; }
-        
-        .guest-timestamp { font-size: 0.75em; color: #999; margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
-        
-        .guest-hook { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 16px; border-radius: 8px; font-size: 1.1em; font-weight: 700; margin-bottom: 16px; line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .guest-card.transformative .guest-hook { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #333; text-shadow: none; }
-        
-        .guest-name { font-size: 1.4em; font-weight: 700; color: #333; margin-bottom: 12px; line-height: 1.3; }
-        .description { font-size: 0.9em; color: #666; margin-bottom: 16px; line-height: 1.5; padding: 12px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #667eea; }
-        .description-label { font-size: 0.75em; text-transform: uppercase; color: #999; letter-spacing: 0.5px; margin-bottom: 4px; font-weight: 600; }
-        .research-insight { font-size: 0.9em; color: #667eea; font-weight: 500; margin-bottom: 16px; padding: 12px; background: #f0f4ff; border-radius: 8px; border-left: 3px solid #764ba2; }
-        .insight-label { font-size: 0.75em; text-transform: uppercase; color: #764ba2; letter-spacing: 0.5px; margin-bottom: 4px; font-weight: 600; }
-        .socials { margin-bottom: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
-        .social-link { display: inline-flex; align-items: center; padding: 8px 12px; background: #f0f4ff; border-radius: 6px; text-decoration: none; color: #667eea; font-size: 0.85em; font-weight: 500; transition: all 0.2s; border: 1px solid #e0e5ff; }
-        .social-link:hover { background: #667eea; color: white; border-color: #667eea; }
-        .social-icon { margin-right: 6px; }
-        .booking-difficulty { margin-top: auto; padding-top: 16px; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-        .difficulty-label { font-size: 0.8em; text-transform: uppercase; color: #999; letter-spacing: 0.5px; }
-        .difficulty-badge { background: #f8f9fa; color: #666; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
-        .difficulty-3 { background: #d4edda; color: #155724; }
-        .difficulty-5 { background: #fff3cd; color: #856404; }
-        .difficulty-6 { background: #fff3cd; color: #856404; }
-        .difficulty-7 { background: #f8d7da; color: #721c24; }
-        .footer { text-align: center; color: white; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.9em; }
-        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .stat-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 15px; text-align: center; color: white; cursor: pointer; transition: all 0.3s; }
-        .stat-card:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.4); transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
-        .stat-card.active { background: rgba(102, 126, 234, 0.4); border-color: #667eea; box-shadow: 0 0 20px rgba(102, 126, 234, 0.4); }
-        .stat-value { font-size: 2em; font-weight: 700; margin-bottom: 5px; }
-        .stat-label { font-size: 0.85em; opacity: 0.9; }
-        .filter-active { display: block; margin-top: 20px; margin-bottom: 20px; text-align: center; }
-        .filter-active-text { color: white; font-size: 1.1em; font-weight: 600; margin-bottom: 10px; }
-        .filter-reset-btn { background: #667eea; color: white; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
-        .filter-reset-btn:hover { background: #764ba2; transform: translateY(-2px); }
         #content { display: none; }
-        .no-guests { text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.7); font-style: italic; }
         
-        /* Feedback Modal Styles */
-        .feedback-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; justify-content: center; align-items: center; }
-        .feedback-modal.active { display: flex; }
-        .feedback-modal-content { background: white; border-radius: 12px; padding: 32px; max-width: 400px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); animation: slideUp 0.3s ease-out; }
-        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-        .feedback-modal-title { font-size: 1.5em; font-weight: 700; color: #333; margin-bottom: 8px; }
-        .feedback-modal-subtitle { font-size: 0.95em; color: #666; margin-bottom: 24px; }
-        .feedback-option { display: block; width: 100%; padding: 16px; margin-bottom: 12px; border: 2px solid #e0e5ff; border-radius: 8px; background: white; cursor: pointer; text-align: left; font-size: 1em; font-weight: 500; color: #333; transition: all 0.2s; }
-        .feedback-option:hover { border-color: #667eea; background: #f0f4ff; }
-        .feedback-option:active { transform: translateY(2px); }
-        .feedback-option.selected { border-color: #667eea; background: #667eea; color: white; }
-        .feedback-notes { width: 100%; padding: 12px; margin-top: 16px; margin-bottom: 16px; border: 2px solid #e0e5ff; border-radius: 8px; font-size: 0.95em; font-family: inherit; resize: vertical; min-height: 80px; }
-        .feedback-notes:focus { outline: none; border-color: #667eea; }
-        .feedback-actions { display: flex; gap: 12px; margin-top: 24px; }
-        .feedback-btn-submit { flex: 1; padding: 12px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
-        .feedback-btn-submit:hover:not(:disabled) { background: #764ba2; transform: translateY(-2px); }
-        .feedback-btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-        .feedback-btn-cancel { flex: 1; padding: 12px; background: #f0f4ff; color: #667eea; border: 2px solid #667eea; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
-        .feedback-btn-cancel:hover { background: #667eea; color: white; }
-        .feedback-status { display: none; padding: 12px; border-radius: 8px; margin-top: 12px; text-align: center; font-weight: 600; }
-        .feedback-status.success { background: #d4edda; color: #155724; display: block; }
-        .feedback-status.error { background: #f8d7da; color: #721c24; display: block; }
+        .guests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin: 20px 0; }
+        
+        .guest-card { 
+            background: white; 
+            border-radius: 12px; 
+            padding: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
+            transition: transform 0.2s;
+        }
+        .guest-card:hover { transform: translateY(-4px); }
+        .guest-card.transformative { border: 2px solid #667eea; }
+        
+        .guest-card h3 { color: #667eea; margin-bottom: 10px; }
+        .guest-card .desc { color: #666; font-size: 0.9em; margin-bottom: 10px; }
+        .guest-card .insight { font-size: 0.85em; color: #555; background: #f5f5f5; padding: 10px; border-radius: 5px; margin-bottom: 10px; line-height: 1.4; }
+        .guest-card .date { font-size: 0.75em; color: #999; margin-bottom: 15px; display: block; }
+        .guest-card .difficulty { font-size: 0.85em; color: #667eea; font-weight: 600; }
+        
+        .action-buttons { position: absolute; top: 15px; right: 15px; display: flex; gap: 8px; }
+        .btn-action { background: none; border: none; font-size: 1.5em; cursor: pointer; opacity: 0.6; transition: opacity 0.2s; }
+        .btn-action:hover { opacity: 1; }
+        
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center; }
+        .modal.show { display: flex; }
+        .modal-content { background: white; border-radius: 12px; padding: 30px; max-width: 500px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .modal h2 { color: #333; margin-bottom: 10px; }
+        .modal p { color: #666; margin-bottom: 20px; font-size: 0.9em; }
+        .reason-buttons { display: grid; gap: 10px; margin-bottom: 20px; }
+        .reason-btn { padding: 12px; border: 2px solid #ddd; background: white; border-radius: 8px; cursor: pointer; transition: all 0.2s; font-size: 0.9em; }
+        .reason-btn:hover { border-color: #667eea; background: #f5f5f5; }
+        .reason-btn.selected { border-color: #667eea; background: #667eea; color: white; }
+        
+        textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-family: Arial; margin-bottom: 15px; }
+        
+        .modal-buttons { display: flex; gap: 10px; }
+        button { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .btn-primary { background: #667eea; color: white; flex: 1; }
+        .btn-primary:hover { background: #5568d3; }
+        .btn-primary:disabled { background: #ccc; cursor: not-allowed; }
+        .btn-secondary { background: #eee; color: #333; }
+        .btn-secondary:hover { background: #ddd; }
+        
+        .status-message { padding: 12px; border-radius: 8px; margin-bottom: 15px; text-align: center; display: none; }
+        .status-success { background: #d4edda; color: #155724; display: block; }
+        .status-error { background: #f8d7da; color: #721c24; display: block; }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="logo"></div>
-            <h1>🎙️ Road to Success Podcast</h1>
-            <p>Guest Research Intelligence</p>
-            <p class="tagline">Hidden gems, unique angles, non-obvious brilliance</p>
+            <h1>🎬 Road To Success — Guest Research</h1>
+            <p>Carefully curated podcast guest recommendations</p>
         </header>
-        <div id="loading" class="loading">
+
+        <div id="loading">
             <div class="loading-spinner"></div>
             <p>Loading guest research...</p>
         </div>
+
         <div id="content">
-            <div class="narrative-highlight">
-                <div class="narrative-title">🎬 Transformative Narrative Strategy</div>
-                <div class="narrative-desc">The real hook that drives 100k+ views isn't follower counts—it's human story. We're hunting guests with a clear arc: <strong>Adversity → Achievement → Reinvention + Authority NOW</strong>. This becomes the episode title. This is what Nadia Adan proved.</div>
-                <div style="margin-top: 12px; font-size: 0.9em; opacity: 0.9;">Example: "From Somali Refugee to Ireland's No.1 Supercar Dealer" — universal, emotional, specific.</div>
-                <div class="narrative-badge">⭐ Focus on TRUE stories, not follower counts</div>
-                <div class="narrative-badge">🎬 Story = Episode Title</div>
-                <div class="narrative-badge">✅ Verified narrative only</div>
-            </div>
-
-            <div class="stats" id="stats"></div>
-            <div class="filter-active" id="filterActive" style="display: none;">
-                <div class="filter-active-text" id="filterActiveText"></div>
-                <button class="filter-reset-btn" onclick="resetFilter()">📋 View All Guests</button>
-            </div>
-            <div class="controls">
-                <button class="refresh-btn" onclick="refreshDashboard()" id="refreshBtn">🔄 Refresh Research</button>
-                <button class="refresh-btn" onclick="clearFavorites()" style="background: #f8d7da; color: #721c24;">❌ Clear Favorites</button>
-            </div>
-
-            <!-- THIS WEEK SECTION -->
-            <div class="research-section">
-                <div class="section-header this-week">📅 This Week's Research</div>
-                <div class="guests-grid" id="thisWeekGrid"></div>
-                <div id="thisWeekEmpty" class="no-guests" style="display: none;">No new research this week yet</div>
-            </div>
-
-            <!-- LAST WEEK SECTION -->
-            <div class="research-section">
-                <div class="section-header last-week">📋 Last Week's Research</div>
-                <div class="guests-grid" id="lastWeekGrid"></div>
-                <div id="lastWeekEmpty" class="no-guests" style="display: none;">No research from last week</div>
-            </div>
-
-            <!-- OLDER RESEARCH SECTION -->
-            <div class="research-section">
-                <div class="section-header" style="border-bottom-color: rgba(255,255,255,0.3);">📚 Earlier Research</div>
-                <div class="guests-grid" id="olderGrid"></div>
-            </div>
-        </div>
-        <div class="footer">
-            <p>Last updated: <span id="lastUpdate">—</span></p>
-            <p>Research-focused guest recommendations for Road to Success Podcast</p>
-            <p style="margin-top: 10px; opacity: 0.7;">💡 Click the ❤️ to save guests • 👎 to send feedback</p>
+            <h2 class="section-header">📅 Recommended Guests</h2>
+            <div class="guests-grid" id="guests-grid"></div>
         </div>
     </div>
 
     <!-- Feedback Modal -->
-    <div class="feedback-modal" id="feedbackModal">
-        <div class="feedback-modal-content">
-            <div class="feedback-modal-title">Guest Feedback</div>
-            <div class="feedback-modal-subtitle">Why are you passing on <strong id="feedbackGuestName"></strong>?</div>
+    <div id="feedbackModal" class="modal">
+        <div class="modal-content">
+            <h2>Guest Feedback</h2>
+            <p id="feedbackGuestName"></p>
+            <div class="status-message" id="statusMessage"></div>
             
-            <div>
-                <button class="feedback-option" onclick="selectFeedbackReason(this, 'Already booked')">
-                    📅 Already booked
-                </button>
-                <button class="feedback-option" onclick="selectFeedbackReason(this, 'Doesn\\'t fit')">
-                    🎯 Doesn't fit
-                </button>
-                <button class="feedback-option" onclick="selectFeedbackReason(this, 'Oversaturated')">
-                    📊 Oversaturated
-                </button>
+            <p style="margin-bottom: 10px; font-weight: 600;">Why are you marking this guest?</p>
+            <div class="reason-buttons">
+                <button class="reason-btn" onclick="selectReason('Already booked')">Already booked</button>
+                <button class="reason-btn" onclick="selectReason('Doesnt fit')">Doesn't fit</button>
+                <button class="reason-btn" onclick="selectReason('Oversaturated')">Oversaturated</button>
             </div>
-
-            <textarea class="feedback-notes" id="feedbackNotes" placeholder="Optional: Add any notes..."></textarea>
             
-            <div class="feedback-status" id="feedbackStatus"></div>
+            <textarea id="feedbackNotes" placeholder="Optional notes..." rows="3"></textarea>
             
-            <div class="feedback-actions">
-                <button class="feedback-btn-submit" id="feedbackSubmitBtn" onclick="submitFeedback()" disabled>Submit Feedback</button>
-                <button class="feedback-btn-cancel" onclick="closeFeedbackModal()">Cancel</button>
+            <div class="modal-buttons">
+                <button class="btn-secondary" onclick="closeFeedbackModal()">Cancel</button>
+                <button class="btn-primary" id="feedbackSubmitBtn" onclick="submitFeedback()" disabled>Submit</button>
             </div>
         </div>
     </div>
 
     <script>
-        console.clear();
-        console.log('🚀 RTS Dashboard script starting...');
-        
-        // === CONSOLIDATED CONFIG & HELPERS (previously external) ===
-        
-        // Google Sheets Helper
-        const SHEET_ID = '1XB8ulplXEpakKWeXQtU2IO25LCrvNY4qdaDGy4chVkE';
-        const FEEDBACK_SHEET_NAME = 'Feedback';
-        let APPS_SCRIPT_DEPLOYMENT_URL = null;
-        
-        function initGoogleSheetsHelper(deploymentUrl) {
-            APPS_SCRIPT_DEPLOYMENT_URL = deploymentUrl;
-            console.log('[GoogleSheetsHelper] Initialized with deployment URL');
-        }
-        
-        async function writeFeedbackToSheets(guestName, reason, notes = '') {
-            if (!APPS_SCRIPT_DEPLOYMENT_URL) {
-                console.warn('[GoogleSheetsHelper] Deployment URL not set');
-                return { success: true, offline: true };
-            }
-            try {
-                const timestamp = new Date().toISOString();
-                const payload = {
-                    action: 'addFeedback',
-                    guestName: guestName,
-                    reason: reason,
-                    timestamp: timestamp,
-                    notes: notes
-                };
-                const response = await fetch(APPS_SCRIPT_DEPLOYMENT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
-                    mode: 'no-cors'
-                });
-                console.log(`[GoogleSheetsHelper] Feedback submitted for "${guestName}"`);
-                return { success: true, timestamp: timestamp };
-            } catch (error) {
-                console.error('[GoogleSheetsHelper] Error:', error);
-                let feedbackLog = JSON.parse(localStorage.getItem('rtsFeedbackLog') || '[]');
-                feedbackLog.push({
-                    guest: guestName,
-                    reason: reason,
-                    notes: notes,
-                    timestamp: new Date().toISOString(),
-                    synced: false
-                });
-                localStorage.setItem('rtsFeedbackLog', JSON.stringify(feedbackLog));
-                return { success: true, offline: true };
-            }
-        }
-        
-        // RTS Config (previously in config.js)
-        const RTS_CONFIG = {
-            feedbackSheetId: '1XB8ulplXEpakKWeXQtU2IO25LCrvNY4qdaDGy4chVkE',
-            feedbackSheetName: 'Feedback',
-            appsScriptDeploymentUrl: null,
-            debug: false
-        };
-        
-        // Initialize on DOM ready
-        document.addEventListener('DOMContentLoaded', () => {
-            if (RTS_CONFIG.appsScriptDeploymentUrl) {
-                initGoogleSheetsHelper(RTS_CONFIG.appsScriptDeploymentUrl);
-                console.log('[RTS Config] Google Sheets integration initialized');
-            } else {
-                console.warn('[RTS Config] Google Apps Script deployment URL not configured');
-            }
-        });
-        
-        // === MAIN DASHBOARD SCRIPT ===
-        console.log('✅ Config loaded, defining GUESTS array...');
-        const GUESTS = [
-            {name: "Jeffrey Pang (RUN! Motorsports & Media)", desc: "YouTube automotive creator with 264K followers. Drift culture, JDM car builds, cinematic storytelling. Based in Japan, authentic drifter + builder.", insight: "Niche enough to be under-booked on podcasts, big enough to bring viewers. Story-driven narrative (life transformation through drifting). Proven cinematic production quality (videos 9-17 mins, 200K-2.5M views). Zero podcast saturation. Built his dream through persistence—authentic RTS angle.", yt: "https://www.youtube.com/@run_jeff", ig: "", tw: "", web: "", diff: "4", hook: "🏎️ From Chaos to Drift Dreams: How I Found Myself in Japan", dateAdded: "2026-06-09", narrative: true},
-            {name: "Hoovie (Tyler Hoover)", desc: "YouTube automotive entertainer with 2.1M followers, buys cheap exotic cars and documents restoration/flip process", insight: "Unmatched entertainment value + business storytelling (car flipping commerce). Zero podcast appearances despite massive audience.", yt: "https://www.youtube.com/@hooviesgarage", ig: "https://www.instagram.com/hooviegarage", tw: "", web: "", diff: "5", hook: "🔥 Exotic Car Chaos: From $500 Finds to $50K Flips", dateAdded: "2026-06-04"},
-            {name: "Engineering Explained (Jason Fenske)", desc: "Technical automotive educator explaining complex car mechanics in accessible way. 1.5M YouTube followers.", insight: "Deep credibility + conversational deep-dive potential (EV tech, engine design). Natural educator. Highest booking success rate.", yt: "https://www.youtube.com/@EngineeringExplained", ig: "", tw: "https://twitter.com/fenskejason", web: "", diff: "3", hook: "⚙️ Making Impossible Car Tech Actually Understandable", dateAdded: "2026-06-04"},
-            {name: "Throttle House (Jonny & Jezza)", desc: "Two independent car reviewers with proven chemistry and storytelling. 600K followers, authentic automotive commentary.", insight: "Natural long-form chemistry, independent creators (not big studio). Reviews + personality mix. Niche UK automotive voice.", yt: "https://www.youtube.com/@ThrottleHouse", ig: "https://www.instagram.com/thethrottlehouse", tw: "", web: "", diff: "6", hook: "🎬 Two Best Friends Breaking Every Car Review Rulebook", dateAdded: "2026-06-04"},
-            {name: "Donut Media (Jared & James)", desc: "High-production automotive education channel blending entertainment with car knowledge. 3.5M YouTube followers.", insight: "Entertainment-first approach with massive loyal audience. Under-tapped on podcast circuit despite huge reach.", yt: "https://www.youtube.com/@DonutMediaOfficial", ig: "https://www.instagram.com/donutmedia", tw: "", web: "", diff: "7", hook: "🎥 The Most Entertaining Car Education on YouTube", dateAdded: "2026-06-04"},
-            {name: "Straight Pipes (Yuri & Jacob)", desc: "Canadian car reviewers with honest opinions and chemistry. 600K followers. Loyal, engaged fanbase.", insight: "Authentic voices with dedicated audience. Review-first approach Ben could explore. Zero podcast saturation.", yt: "https://www.youtube.com/@TheStraightPipes", ig: "", tw: "", web: "", diff: "6", hook: "🍁 Canadians Giving Cars Honest Ratings Others Won't", dateAdded: "2026-06-04"},
-            {name: "Skip Barber Racing School", desc: "Legendary racing school (founded 1975) teaching professional racing techniques. Established institution with deep expertise.", insight: "Insider racing education perspective. Could explore 'what makes a professional driver.' Establishment credibility + practical insight.", yt: "https://www.youtube.com/@skipbarber", ig: "", tw: "", web: "https://www.skipbarber.com", diff: "7", hook: "🏁 50 Years Teaching Legends How to Actually Win", dateAdded: "2026-06-04"},
+        let selectedReason = null;
 
-            {name: "Lord Aleem (Aleem Iqbal)", desc: "British-Pakistani entrepreneur from Birmingham who built one of the UK and Middle East's biggest supercar rental empires, starting as a teenager. Now Dubai-based running a multi-million pound luxury car operation. Known for renting out Bugattis, Lamborghinis, and Ferraris to celebrities worldwide.", insight: "Young, self-made, immigrant-heritage entrepreneur — exactly the RTS demographic sweet spot. His Cars & Money appearance (203K views) proves the appetite. NOT yet on RTS — opportunity to go deeper on the origin story, the Birmingham beginnings, and the Dubai reinvention. Episode title writes itself.", yt: "https://www.youtube.com/@LordAleem", ig: "https://www.instagram.com/lord_aleem/", tw: "", web: "", diff: "6", hook: "👑 From Birmingham Teenager to Dubai's Supercar King", narrative: true, dateAdded: "2026-06-09"},
-            {name: "Supercar Blondie (Alex Hirschi)", desc: "Australian-born broadcaster who moved to Dubai with no automotive background and became the world's most followed car creator (30M+ social followers). Now runs SBX Cars, a high-end supercar auction platform, having built a global media and business empire in a male-dominated industry.", insight: "Unique angle: female automotive entrepreneur who broke into a completely male space, in a foreign country, with zero car expertise — and became the #1 player globally. Reinvention from radio presenter to media mogul to tech/auction founder. NOT on RTS. Platform scale means RTS collab could get serious crossover reach.", yt: "https://www.youtube.com/@SupercarBlondie", ig: "https://www.instagram.com/supercarblondie/", tw: "", web: "https://sbxcars.com", diff: "8", hook: "🌟 From Brisbane Radio to Running the World's Biggest Car Media Empire", narrative: true, dateAdded: "2026-06-09"}
+        const GUESTS = [
+            { name: "Jeffrey Pang (RUN! Motorsports & Media)", desc: "YouTube automotive creator with 264K followers", insight: "Niche enough to be under-booked but big enough to bring viewers. Zero podcast saturation.", dateAdded: "2026-06-09", narrative: true, diff: 4 },
+            { name: "Hoovie (Tyler Hoover)", desc: "YouTube entertainer with 2.1M followers, buys exotic cars", insight: "Unmatched entertainment value despite massive audience having zero podcast appearances", dateAdded: "2026-06-04", diff: 5 },
+            { name: "Engineering Explained (Jason Fenske)", desc: "Technical educator explaining car mechanics. 1.5M YouTube followers", insight: "Deep credibility with natural educator style. Highest booking success rate.", dateAdded: "2026-06-04", diff: 3 },
+            { name: "Lord Aleem", desc: "British entrepreneur who built Dubai's supercar rental empire, starting as teenager", insight: "Young, self-made, immigrant-heritage entrepreneur — exactly RTS demographic. NOT yet on RTS.", dateAdded: "2026-06-09", narrative: true, diff: 6 },
+            { name: "Supercar Blondie (Alex Hirschi)", desc: "30M+ social followers, built global automotive media empire. Founded SBX Cars auction platform.", insight: "Female entrepreneur who broke into male-dominated space in foreign country. Unique angle.", dateAdded: "2026-06-09", narrative: true, diff: 8 },
         ];
 
-        function getWeekNumber(dateStr) {
-            const date = new Date(dateStr + 'T00:00:00Z');
-            const today = new Date();
-            const diffTime = Math.abs(today - date);
-            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-            return Math.floor(diffDays / 7);
-        }
+        function loadDashboard() {
+            const grid = document.getElementById('guests-grid');
+            const html = GUESTS.map(g => `
+                <div class="guest-card${g.narrative ? ' transformative' : ''}">
+                    <div class="action-buttons">
+                        <button class="btn-action" onclick="openFeedbackModal('${g.name.replace(/'/g, "\\'")}')">👎</button>
+                    </div>
+                    <h3>${g.name}</h3>
+                    <span class="date">Added: ${g.dateAdded}</span>
+                    <p class="desc">${g.desc}</p>
+                    <div class="insight"><strong>Why:</strong> ${g.insight}</div>
+                    <p class="difficulty">Booking Difficulty: ${g.diff}/10</p>
+                </div>
+            `).join('');
 
-        let currentFilter = null;
-
-        function renderDashboard(filter = null) {
-            currentFilter = filter;
-            const today = new Date();
-            
-            let thisWeek = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 0);
-            let lastWeek = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 1);
-            let older = GUESTS.filter(g => getWeekNumber(g.dateAdded) > 1);
-
-            const favorites = JSON.parse(localStorage.getItem('rtsFavorites') || '[]');
-            const easyToBook = GUESTS.filter(g => g.diff <= 5);
-
-            // Apply filters
-            if (filter === 'total') {
-                // Show all
-            } else if (filter === 'thisWeek') {
-                thisWeek = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 0);
-                lastWeek = [];
-                older = [];
-            } else if (filter === 'favorites') {
-                const favGuests = GUESTS.filter(g => favorites.includes(g.name));
-                thisWeek = [];
-                lastWeek = [];
-                older = favGuests;
-            } else if (filter === 'easyToBook') {
-                const easyGuests = GUESTS.filter(g => g.diff <= 5);
-                thisWeek = [];
-                lastWeek = [];
-                older = easyGuests;
-            }
-
-            // Show filter badge
-            const filterActive = document.getElementById('filterActive');
-            if (filter) {
-                filterActive.style.display = 'block';
-                let filterText = '';
-                if (filter === 'total') filterText = '📊 Showing: All Guests';
-                if (filter === 'thisWeek') filterText = '📅 Showing: This Week Only';
-                if (filter === 'favorites') filterText = '❤️ Showing: Your Favorites';
-                if (filter === 'easyToBook') filterText = '✅ Showing: Easy to Book';
-                document.getElementById('filterActiveText').textContent = filterText;
-            } else {
-                filterActive.style.display = 'none';
-            }
-            
-            const totalWeekGuests = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 0).length;
-            const totalFavorites = favorites.length;
-            const totalEasy = GUESTS.filter(g => g.diff <= 5).length;
-
-            document.getElementById('stats').innerHTML = `
-                <div class="stat-card${filter === 'total' ? ' active' : ''}" onclick="renderDashboard('total')"><div class="stat-value">${GUESTS.length}</div><div class="stat-label">Total Guests</div></div>
-                <div class="stat-card${filter === 'thisWeek' ? ' active' : ''}" onclick="renderDashboard('thisWeek')"><div class="stat-value">${totalWeekGuests}</div><div class="stat-label">This Week</div></div>
-                <div class="stat-card${filter === 'favorites' ? ' active' : ''}" onclick="renderDashboard('favorites')"><div class="stat-value">${totalFavorites}</div><div class="stat-label">Favorites</div></div>
-                <div class="stat-card${filter === 'easyToBook' ? ' active' : ''}" onclick="renderDashboard('easyToBook')"><div class="stat-value">${totalEasy}</div><div class="stat-label">Easy to Book</div></div>
-            `;
-
-            // Render sections
-            renderGuestSection('thisWeekGrid', 'thisWeekEmpty', thisWeek, favorites);
-            renderGuestSection('lastWeekGrid', 'lastWeekEmpty', lastWeek, favorites);
-            renderGuestSection('olderGrid', null, older, favorites);
-
-            document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+            grid.innerHTML = html;
             document.getElementById('loading').style.display = 'none';
             document.getElementById('content').style.display = 'block';
         }
 
-        function renderGuestSection(gridId, emptyId, guests, favorites) {
-            const grid = document.getElementById(gridId);
-            
-            if (guests.length === 0) {
-                grid.innerHTML = '';
-                if (emptyId) document.getElementById(emptyId).style.display = 'block';
-                return;
-            }
-
-            if (emptyId) document.getElementById(emptyId).style.display = 'none';
-
-            const cards = guests.map(g => {
-                const isFavorited = favorites.includes(g.name);
-                return `
-                <div class="guest-card${g.narrative ? ' transformative' : ''}">
-                    <div class="action-buttons">
-                        <button class="favorite-btn${isFavorited ? ' favorited' : ''}" onclick="toggleFavorite('${g.name.replace(/'/g, "\\'")}')">
-                            ${isFavorited ? '❤️' : '🤍'}
-                        </button>
-                        <button class="feedback-btn" onclick="openFeedbackModal('${g.name.replace(/'/g, "\\'")}')">👎</button>
-                    </div>
-                    <div class="guest-timestamp">Added ${g.dateAdded}</div>
-                    ${g.hook ? `<div class="guest-hook">${g.hook}</div>` : ''}
-                    <div class="guest-name">${g.name}</div>
-                    <div><div class="description-label">Who They Are</div><div class="description">${g.desc}</div></div>
-                    <div><div class="insight-label">Why They're Perfect for RTS</div><div class="research-insight">${g.insight}</div></div>
-                    <div class="socials">
-                        ${g.yt ? `<a href="${g.yt}" target="_blank" rel="noopener" class="social-link"><span class="social-icon">▶️</span>YouTube</a>` : ''}
-                        ${g.ig ? `<a href="${g.ig}" target="_blank" rel="noopener" class="social-link"><span class="social-icon">📸</span>Instagram</a>` : ''}
-                        ${g.tw ? `<a href="${g.tw}" target="_blank" rel="noopener" class="social-link"><span class="social-icon">𝕏</span>Twitter</a>` : ''}
-                        ${g.web ? `<a href="${g.web}" target="_blank" rel="noopener" class="social-link"><span class="social-icon">🌐</span>Website</a>` : ''}
-                    </div>
-                    <div class="booking-difficulty">
-                        <span class="difficulty-label">Booking Difficulty</span>
-                        <span class="difficulty-badge difficulty-${g.diff}">${g.diff}/10</span>
-                    </div>
-                </div>
-            `}).join('');
-
-            grid.innerHTML = cards;
-        }
-
-        function toggleFavorite(guestName) {
-            let favorites = JSON.parse(localStorage.getItem('rtsFavorites') || '[]');
-            const index = favorites.indexOf(guestName);
-            
-            if (index > -1) {
-                favorites.splice(index, 1);
-            } else {
-                favorites.push(guestName);
-            }
-            
-            localStorage.setItem('rtsFavorites', JSON.stringify(favorites));
-            renderDashboard(currentFilter);
-        }
-
-        function clearFavorites() {
-            if (confirm('Clear all favorites? This cannot be undone.')) {
-                localStorage.removeItem('rtsFavorites');
-                renderDashboard();
-            }
-        }
-
-        function refreshDashboard() {
-            document.getElementById('refreshBtn').disabled = true;
-            document.getElementById('refreshBtn').textContent = '🔄 Refreshing...';
-            setTimeout(() => {
-                renderDashboard(currentFilter);
-                document.getElementById('refreshBtn').textContent = '🔄 Refresh Research';
-                document.getElementById('refreshBtn').disabled = false;
-            }, 500);
-        }
-
-        function resetFilter() {
-            currentFilter = null;
-            renderDashboard();
-        }
-
-        // ===== FEEDBACK SYSTEM =====
-        let currentFeedbackGuest = null;
-        let selectedFeedbackReason = null;
-
         function openFeedbackModal(guestName) {
-            currentFeedbackGuest = guestName;
-            selectedFeedbackReason = null;
-            document.getElementById('feedbackGuestName').textContent = guestName;
+            selectedReason = null;
+            document.getElementById('feedbackGuestName').textContent = `Feedback for: ${guestName}`;
             document.getElementById('feedbackNotes').value = '';
-            document.getElementById('feedbackStatus').textContent = '';
-            document.getElementById('feedbackStatus').className = 'feedback-status';
+            document.getElementById('statusMessage').className = 'status-message';
             document.getElementById('feedbackSubmitBtn').disabled = true;
-            
-            // Clear selected reason buttons
-            document.querySelectorAll('.feedback-option').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            
-            document.getElementById('feedbackModal').classList.add('active');
+            document.querySelectorAll('.reason-btn').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('feedbackModal').classList.add('show');
+            document.getElementById('feedbackModal').dataset.guestName = guestName;
         }
 
         function closeFeedbackModal() {
-            document.getElementById('feedbackModal').classList.remove('active');
-            currentFeedbackGuest = null;
-            selectedFeedbackReason = null;
+            document.getElementById('feedbackModal').classList.remove('show');
         }
 
-        function selectFeedbackReason(button, reason) {
-            // Deselect all buttons
-            document.querySelectorAll('.feedback-option').forEach(btn => {
-                btn.classList.remove('selected');
-            });
-            
-            // Select clicked button
-            button.classList.add('selected');
-            selectedFeedbackReason = reason;
-            
-            // Enable submit button
+        function selectReason(reason) {
+            selectedReason = reason;
+            document.querySelectorAll('.reason-btn').forEach(btn => btn.classList.remove('selected'));
+            event.target.classList.add('selected');
             document.getElementById('feedbackSubmitBtn').disabled = false;
         }
 
-        // ===== MATON API CONFIG (Using Maton for Google Sheets integration) =====
-        const MATON_API_KEY = 'v2.59ylUbxXnCHG848r3iDSo78FhkckmIqSEwMnfTByPtxo-RbOhLZQXtV3lutCcQxk4ecjCiw8-_EVwUHD7vZ3KceW53RtFRhxJiWMdoAjAz_M-Ntbw6ocykue';
-        // NOTE: SHEETS_ID and FEEDBACK_SHEET_NAME already defined above, don't redeclare!
-
-        // Override the original writeFeedbackToSheets with Maton API version
-        async function writeFeedbackToSheets(guestName, reason, notes) {
-            try {
-                const timestamp = new Date().toISOString();
-                
-                // Use Maton API to append row to Feedback sheet using Google Sheets API
-                const response = await fetch(`https://api.maton.ai/google-sheets/v4/spreadsheets/${SHEETS_ID}/values/${FEEDBACK_SHEET_NAME}!A:D:append?valueInputOption=RAW`, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${MATON_API_KEY}`,
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        values: [
-                            [
-                                guestName,
-                                reason,
-                                timestamp,
-                                notes || ''
-                            ]
-                        ]
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`API error: ${response.statusText}`);
-                }
-
-                const result = await response.json();
-                return { success: true, data: result };
-
-            } catch (error) {
-                console.error('Maton API error:', error);
-                // Graceful fallback: store in localStorage
-                let feedbackLog = JSON.parse(localStorage.getItem('rtsFeedbackLog') || '[]');
-                feedbackLog.push({
-                    guest: guestName,
-                    reason: reason,
-                    notes: notes,
-                    timestamp: new Date().toISOString(),
-                    synced: false
-                });
-                localStorage.setItem('rtsFeedbackLog', JSON.stringify(feedbackLog));
-                return { success: true, offline: true };
-            }
-        }
-
         async function submitFeedback() {
-            if (!currentFeedbackGuest || !selectedFeedbackReason) {
-                alert('Please select a reason');
-                return;
-            }
-
-            const submitBtn = document.getElementById('feedbackSubmitBtn');
-            const statusDiv = document.getElementById('feedbackStatus');
+            if (!selectedReason) return;
+            
+            const guestName = document.getElementById('feedbackModal').dataset.guestName;
             const notes = document.getElementById('feedbackNotes').value;
-
+            const statusMsg = document.getElementById('statusMessage');
+            const submitBtn = document.getElementById('feedbackSubmitBtn');
+            
             submitBtn.disabled = true;
             submitBtn.textContent = '⏳ Submitting...';
-
+            
             try {
-                const result = await writeFeedbackToSheets(
-                    currentFeedbackGuest,
-                    selectedFeedbackReason,
-                    notes
-                );
-
-                if (result.success) {
-                    statusDiv.textContent = result.offline ? '✅ Feedback saved locally (will sync)' : '✅ Feedback recorded. Thank you!';
-                    statusDiv.className = 'feedback-status success';
-                    
-                    // Close modal after 1.5 seconds
-                    setTimeout(() => {
-                        closeFeedbackModal();
-                    }, 1500);
-                } else {
-                    statusDiv.textContent = '⚠️ ' + (result.message || 'Error submitting feedback');
-                    statusDiv.className = 'feedback-status error';
-                }
+                // Store feedback locally
+                let feedback = JSON.parse(localStorage.getItem('rtsFeedback') || '[]');
+                feedback.push({
+                    guest: guestName,
+                    reason: selectedReason,
+                    notes: notes,
+                    timestamp: new Date().toISOString()
+                });
+                localStorage.setItem('rtsFeedback', JSON.stringify(feedback));
+                
+                statusMsg.className = 'status-message status-success';
+                statusMsg.textContent = '✅ Feedback saved!';
+                
+                setTimeout(() => {
+                    closeFeedbackModal();
+                }, 1500);
             } catch (error) {
-                console.error('Error submitting feedback:', error);
-                statusDiv.textContent = '❌ Error: ' + error.message;
-                statusDiv.className = 'feedback-status error';
+                statusMsg.className = 'status-message status-error';
+                statusMsg.textContent = '❌ Error saving feedback';
             } finally {
-                submitBtn.textContent = 'Submit Feedback';
-                submitBtn.disabled = selectedFeedbackReason ? false : true;
+                submitBtn.textContent = 'Submit';
+                submitBtn.disabled = false;
             }
         }
 
-        // Close modal on Escape key
+        // Close modal on Escape
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                closeFeedbackModal();
-            }
+            if (e.key === 'Escape') closeFeedbackModal();
         });
 
-        // Close modal when clicking outside
-        document.getElementById('feedbackModal').addEventListener('click', (e) => {
-            if (e.target.id === 'feedbackModal') {
-                closeFeedbackModal();
-            }
-        });
-
-        console.log('✅ All functions defined, waiting for page load...');
-        window.addEventListener('load', () => {
-            console.log('🎬 Window load event fired, calling renderDashboard');
-            renderDashboard();
-        });
+        // Load on page ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', loadDashboard);
+        } else {
+            loadDashboard();
+        }
     </script>
 </body>
 </html>
