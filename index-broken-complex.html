@@ -473,11 +473,11 @@
             document.getElementById('feedbackSubmitBtn').disabled = false;
         }
 
-        // ===== MATON API CONFIG =====
+        // ===== MATON API CONFIG (Using Maton for Google Sheets integration) =====
         const MATON_API_KEY = 'v2.59ylUbxXnCHG848r3iDSo78FhkckmIqSEwMnfTByPtxo-RbOhLZQXtV3lutCcQxk4ecjCiw8-_EVwUHD7vZ3KceW53RtFRhxJiWMdoAjAz_M-Ntbw6ocykue';
-        const SHEETS_ID = '1XB8ulplXEpakKWeXQtU2IO25LCrvNY4qdaDGy4chVkE';
-        const FEEDBACK_SHEET_NAME = 'Feedback';
+        // NOTE: SHEETS_ID and FEEDBACK_SHEET_NAME already defined above, don't redeclare!
 
+        // Override the original writeFeedbackToSheets with Maton API version
         async function writeFeedbackToSheets(guestName, reason, notes) {
             try {
                 const timestamp = new Date().toISOString();
