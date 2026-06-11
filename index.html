@@ -41,7 +41,8 @@
             transition: transform 0.2s;
         }
         .guest-card:hover { transform: translateY(-4px); }
-        .guest-card.transformative { border: 2px solid #667eea; }
+        .guest-card.transformative { border: 2px solid #667eea; box-shadow: 0 0 0 4px rgba(102,126,234,0.12), 0 10px 30px rgba(0,0,0,0.2); }
+        .narrative-badge { display: inline-block; background: linear-gradient(135deg, #667eea, #764ba2); color: white; font-size: 0.7em; font-weight: 700; padding: 3px 9px; border-radius: 20px; margin-bottom: 10px; letter-spacing: 0.4px; }
         .guest-card h3 { color: #667eea; margin-bottom: 8px; font-size: 1em; }
         .guest-card .date { font-size: 0.75em; color: #999; margin-bottom: 10px; display: block; }
         .guest-card .desc { color: #666; font-size: 0.9em; margin-bottom: 10px; }
@@ -200,6 +201,7 @@
                     '    <button class="btn-action btn-fav' + (isFav ? ' active' : '') + '" onclick="toggleFavourite(\'' + safe + '\')" title="' + (isFav ? 'Remove favourite' : 'Add favourite') + '">' + (isFav ? '❤️' : '🤍') + '</button>',
                     '    <button class="btn-action btn-feedback" onclick="openFeedbackModal(\'' + safe + '\')" title="Mark this guest">👎</button>',
                     '  </div>',
+                    (g.narrative ? '  <span class="narrative-badge">⭐ Transformative Story</span>' : ''),
                     '  <h3>' + g.name + '</h3>',
                     '  <span class="date">Added ' + g.dateAdded + '</span>',
                     '  <p class="desc">' + g.desc + '</p>',
