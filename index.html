@@ -19,6 +19,16 @@
 
         #content { display: none; }
 
+        .stats-bar { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+        .stat-card { background: rgba(255,255,255,0.2); border-radius: 10px; padding: 14px 20px; color: white; cursor: pointer; transition: background 0.2s; flex: 1; min-width: 100px; text-align: center; border: 2px solid transparent; }
+        .stat-card:hover { background: rgba(255,255,255,0.3); }
+        .stat-card.active { background: white; color: #667eea; border-color: white; }
+        .stat-card.active .stat-value { color: #667eea; }
+        .stat-card.active .stat-label { color: #888; }
+        .stat-value { font-size: 1.8em; font-weight: 700; display: block; }
+        .stat-label { font-size: 0.8em; opacity: 0.85; margin-top: 2px; display: block; }
+        .stat-card.active .stat-label { opacity: 1; }
+
         .guests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; margin: 20px 0; }
 
         .guest-card {
@@ -40,9 +50,9 @@
 
         .action-buttons { position: absolute; top: 12px; right: 12px; display: flex; gap: 6px; }
         .btn-action { background: none; border: none; font-size: 1.4em; cursor: pointer; line-height: 1; padding: 2px; }
-        .btn-fav { opacity: 0.3; transition: opacity 0.2s, transform 0.1s; }
-        .btn-fav:hover { opacity: 0.7; }
-        .btn-fav.active { opacity: 1; transform: scale(1.1); }
+        .btn-fav { opacity: 1; background: white; border: 2px solid #ddd !important; border-radius: 6px; padding: 3px 5px !important; transition: border-color 0.2s, transform 0.1s; }
+        .btn-fav:hover { border-color: #e75480 !important; }
+        .btn-fav.active { border-color: #e75480 !important; background: #fff0f3; transform: scale(1.1); }
         .btn-feedback { opacity: 0.4; transition: opacity 0.2s; }
         .btn-feedback:hover { opacity: 1; }
 
@@ -81,7 +91,8 @@
         </div>
 
         <div id="content">
-            <h2 class="section-header">📅 Recommended Guests</h2>
+            <div class="stats-bar" id="stats-bar"></div>
+            <h2 class="section-header" id="section-label">📅 All Guests</h2>
             <div class="guests-grid" id="guests-grid"></div>
         </div>
     </div>
@@ -116,6 +127,14 @@
             { name: "Supercar Blondie (Alex Hirschi)", desc: "Australian-born broadcaster turned global automotive media mogul. 30M+ social followers. Founded SBX Cars, a high-end supercar auction platform.", insight: "Unique angle: female entrepreneur who broke into a male space in a foreign country with zero car expertise. NOT on RTS.", dateAdded: "2026-06-09", narrative: true, diff: 8 },
         ];
 
+        // ── Filter state ──────────────────────────────────────────────────────
+        var activeFilter = 'all';
+
+        function setFilter(filter) {
+            activeFilter = filter;
+            loadDashboard();
+        }
+
         // ── Favourites ────────────────────────────────────────────────────────
         function getFavourites() {
             return JSON.parse(localStorage.getItem('rtsFavourites') || '[]');
@@ -136,9 +155,43 @@
         // ── Render ────────────────────────────────────────────────────────────
         function loadDashboard() {
             const favs = getFavourites();
+
+            // Stats bar
+            var totalFavs = favs.length;
+            var statsBar = document.getElementById('stats-bar');
+            var stats = [
+                { key: 'all',       label: 'All Guests',  value: GUESTS.length },
+                { key: 'favourites', label: 'Favourites',  value: totalFavs },
+                { key: 'easy',      label: 'Easy to Book', value: GUESTS.filter(function(g){ return g.diff <= 5; }).length },
+            ];
+            statsBar.innerHTML = stats.map(function(s) {
+                return '<div class="stat-card' + (activeFilter === s.key ? ' active' : '') + '" onclick="setFilter(\'' + s.key + '\')">' +
+                    '<span class="stat-value">' + s.value + '</span>' +
+                    '<span class="stat-label">' + s.label + '</span>' +
+                    '</div>';
+            }).join('');
+
+            // Section label
+            var labels = { all: '📅 All Guests', favourites: '❤️ Favourites', easy: '✅ Easy to Book' };
+            document.getElementById('section-label').textContent = labels[activeFilter];
+
+            // Filter guests
+            var visible = GUESTS.filter(function(g) {
+                if (activeFilter === 'favourites') return favs.includes(g.name);
+                if (activeFilter === 'easy') return g.diff <= 5;
+                return true;
+            });
+
             const grid = document.getElementById('guests-grid');
 
-            grid.innerHTML = GUESTS.map(function(g) {
+            if (visible.length === 0) {
+                grid.innerHTML = '<p style="color:white;opacity:0.8;padding:20px 0;">No guests in this view yet.</p>';
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('content').style.display = 'block';
+                return;
+            }
+
+            grid.innerHTML = visible.map(function(g) {
                 const isFav = favs.includes(g.name);
                 const safe  = g.name.replace(/\\/g, '\\\\').replace(/'/g, "\\'");
                 return [
