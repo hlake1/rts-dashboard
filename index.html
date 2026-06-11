@@ -194,6 +194,9 @@
     </div>
 
     <script>
+        console.clear();
+        console.log('🚀 RTS Dashboard script starting...');
+        
         // === CONSOLIDATED CONFIG & HELPERS (previously external) ===
         
         // Google Sheets Helper
@@ -262,6 +265,7 @@
         });
         
         // === MAIN DASHBOARD SCRIPT ===
+        console.log('✅ Config loaded, defining GUESTS array...');
         const GUESTS = [
             {name: "Jeffrey Pang (RUN! Motorsports & Media)", desc: "YouTube automotive creator with 264K followers. Drift culture, JDM car builds, cinematic storytelling. Based in Japan, authentic drifter + builder.", insight: "Niche enough to be under-booked on podcasts, big enough to bring viewers. Story-driven narrative (life transformation through drifting). Proven cinematic production quality (videos 9-17 mins, 200K-2.5M views). Zero podcast saturation. Built his dream through persistence—authentic RTS angle.", yt: "https://www.youtube.com/@run_jeff", ig: "", tw: "", web: "", diff: "4", hook: "🏎️ From Chaos to Drift Dreams: How I Found Myself in Japan", dateAdded: "2026-06-09", narrative: true},
             {name: "Hoovie (Tyler Hoover)", desc: "YouTube automotive entertainer with 2.1M followers, buys cheap exotic cars and documents restoration/flip process", insight: "Unmatched entertainment value + business storytelling (car flipping commerce). Zero podcast appearances despite massive audience.", yt: "https://www.youtube.com/@hooviesgarage", ig: "https://www.instagram.com/hooviegarage", tw: "", web: "", diff: "5", hook: "🔥 Exotic Car Chaos: From $500 Finds to $50K Flips", dateAdded: "2026-06-04"},
@@ -576,7 +580,11 @@
             }
         });
 
-        window.addEventListener('load', renderDashboard);
+        console.log('✅ All functions defined, waiting for page load...');
+        window.addEventListener('load', () => {
+            console.log('🎬 Window load event fired, calling renderDashboard');
+            renderDashboard();
+        });
     </script>
 </body>
 </html>
