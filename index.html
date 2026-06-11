@@ -93,7 +93,13 @@
 
         <div id="content">
             <div class="stats-bar" id="stats-bar"></div>
-            <h2 class="section-header" id="section-label">📅 All Guests</h2>
+            <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:10px;">
+                <h2 class="section-header" id="section-label" style="margin:0;">📅 All Guests</h2>
+                <div style="display:flex; align-items:center; gap:14px;">
+                    <span id="last-updated" style="color:rgba(255,255,255,0.7); font-size:0.85em;"></span>
+                    <button id="refresh-btn" onclick="refreshDashboard()" style="background:white; color:#667eea; border:none; padding:8px 16px; border-radius:8px; cursor:pointer; font-weight:600; font-size:0.85em; transition:opacity 0.2s;">🔄 Refresh</button>
+                </div>
+            </div>
             <div class="guests-grid" id="guests-grid"></div>
         </div>
     </div>
@@ -213,6 +219,13 @@
 
             document.getElementById('loading').style.display = 'none';
             document.getElementById('content').style.display = 'block';
+            updateTimestamp();
+        }
+
+        function updateTimestamp() {
+            var now = new Date();
+            var time = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            document.getElementById('last-updated').textContent = 'Last updated ' + time;
         }
 
         // ── Feedback Modal ────────────────────────────────────────────────────
@@ -265,6 +278,18 @@
         }
 
         document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeFeedbackModal(); });
+
+        // ── Refresh ───────────────────────────────────────────────────────────
+        function refreshDashboard() {
+            var btn = document.getElementById('refresh-btn');
+            btn.textContent = '⏳ Refreshing...';
+            btn.disabled = true;
+            setTimeout(function() {
+                loadDashboard();
+                btn.textContent = '🔄 Refresh';
+                btn.disabled = false;
+            }, 600);
+        }
 
         // ── Boot ──────────────────────────────────────────────────────────────
         if (document.readyState === 'loading') {
