@@ -41,7 +41,9 @@
         .guest-card.flipped .guest-photo { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
         .guest-photo-img { width: 100%; max-width: 280px; height: 280px; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
         .swipe-hint { font-size: 0.75em; color: #999; text-align: center; margin-top: 12px; font-style: italic; }
-        .guest-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        @media (hover: hover) {
+            .guest-info, .guest-photo { cursor: pointer; }
+        }        .guest-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         .guest-card.transformative { border: 2px solid rgba(102, 126, 234, 0.6); box-shadow: 0 0 20px rgba(102, 126, 234, 0.2), 0 10px 30px rgba(0,0,0,0.2); }
         .guest-card.transformative .guest-name { color: #667eea; }
         
@@ -320,23 +322,47 @@
 
             grid.innerHTML = cards;
             
-            // Add swipe functionality
+            // Add swipe/click functionality (works on mobile & laptop)
             document.querySelectorAll('[data-swipe-card]').forEach(card => {
                 let touchStartX = 0;
                 let touchEndX = 0;
+                let mouseDownX = 0;
+                let mouseUpX = 0;
                 
+                // Touch events (mobile/tablet)
                 card.addEventListener('touchstart', (e) => {
                     touchStartX = e.changedTouches[0].screenX;
                 }, false);
                 
                 card.addEventListener('touchend', (e) => {
                     touchEndX = e.changedTouches[0].screenX;
-                    handleSwipe(card);
+                    handleSwipe(card, touchStartX, touchEndX);
                 }, false);
                 
-                function handleSwipe(element) {
-                    const swipeThreshold = 50;
-                    const diff = touchStartX - touchEndX;
+                // Mouse events (laptop/desktop)
+                card.addEventListener('mousedown', (e) => {
+                    if (e.target.closest('a, button')) return; // Don't interfere with links/buttons
+                    mouseDownX = e.screenX;
+                }, false);
+                
+                card.addEventListener('mouseup', (e) => {
+                    if (e.target.closest('a, button')) return;
+                    mouseUpX = e.screenX;
+                    handleSwipe(card, mouseDownX, mouseUpX);
+                }, false);
+                
+                // Click to toggle (simple fallback)
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('a, button')) return; // Don't toggle if clicking links/buttons
+                    // Only toggle if it's the guest info/photo area (not the card container)
+                    if (e.target.closest('.guest-info') || e.target.closest('.guest-photo')) {
+                        card.classList.toggle('flipped');
+                    }
+                }, false);
+                
+                function handleSwipe(element, startX, endX) {
+                    const swipeThreshold = 30;
+                    const diff = startX - endX;
                     
                     if (Math.abs(diff) > swipeThreshold) {
                         if (diff > 0) {
