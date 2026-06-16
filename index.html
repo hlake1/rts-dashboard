@@ -207,6 +207,16 @@
                 thisWeek = [];
                 lastWeek = [];
                 older = easyGuests;
+            } else if (filter === 'uk') {
+                const ukGuests = GUESTS.filter(g => g.country === '🇬🇧');
+                thisWeek = [];
+                lastWeek = [];
+                older = ukGuests;
+            } else if (filter === 'row') {
+                const rowGuests = GUESTS.filter(g => g.country !== '🇬🇧');
+                thisWeek = [];
+                lastWeek = [];
+                older = rowGuests;
             }
 
             // Show filter badge
@@ -218,6 +228,8 @@
                 if (filter === 'thisWeek') filterText = '📅 Showing: This Week Only';
                 if (filter === 'favorites') filterText = '❤️ Showing: Your Favorites';
                 if (filter === 'easyToBook') filterText = '✅ Showing: Easy to Book';
+                if (filter === 'uk') filterText = '🇬🇧 Showing: UK Only';
+                if (filter === 'row') filterText = '🌍 Showing: Rest of World';
                 document.getElementById('filterActiveText').textContent = filterText;
             } else {
                 filterActive.style.display = 'none';
@@ -226,12 +238,16 @@
             const totalWeekGuests = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 0).length;
             const totalFavorites = favorites.length;
             const totalEasy = GUESTS.filter(g => g.diff <= 5).length;
+            const totalUK = GUESTS.filter(g => g.country === '🇬🇧').length;
+            const totalRow = GUESTS.filter(g => g.country !== '🇬🇧').length;
 
             document.getElementById('stats').innerHTML = `
                 <div class="stat-card${filter === 'total' ? ' active' : ''}" onclick="renderDashboard('total')"><div class="stat-value">${GUESTS.length}</div><div class="stat-label">Total Guests</div></div>
                 <div class="stat-card${filter === 'thisWeek' ? ' active' : ''}" onclick="renderDashboard('thisWeek')"><div class="stat-value">${totalWeekGuests}</div><div class="stat-label">This Week</div></div>
                 <div class="stat-card${filter === 'favorites' ? ' active' : ''}" onclick="renderDashboard('favorites')"><div class="stat-value">${totalFavorites}</div><div class="stat-label">Favorites</div></div>
                 <div class="stat-card${filter === 'easyToBook' ? ' active' : ''}" onclick="renderDashboard('easyToBook')"><div class="stat-value">${totalEasy}</div><div class="stat-label">Easy to Book</div></div>
+                <div class="stat-card${filter === 'uk' ? ' active' : ''}" onclick="renderDashboard('uk')"><div class="stat-value">${totalUK}</div><div class="stat-label">🇬🇧 UK</div></div>
+                <div class="stat-card${filter === 'row' ? ' active' : ''}" onclick="renderDashboard('row')"><div class="stat-value">${totalRow}</div><div class="stat-label">🌍 Rest of World</div></div>
             `;
 
             // Render sections
