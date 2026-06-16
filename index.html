@@ -339,7 +339,7 @@
                 const cardId = `card-${idx}-${Math.random().toString(36).substr(2, 9)}`;
                 return `
                 <div class="guest-card${g.narrative ? ' transformative' : ''}" id="${cardId}" data-swipe-card="true">
-                    <button class="feedback-btn" onclick="openFeedbackModal('${g.name.replace(/'/g, "\\'")}'")>👎</button>
+                    <button class="feedback-btn" onclick="openFeedbackModal('${g.name.replace(/'/g, "\\'")}')">👎</button>
                     <button class="favorite-btn${isFavorited ? ' favorited' : ''}" onclick="toggleFavorite('${g.name.replace(/'/g, "\\'")}')">
                         ${isFavorited ? '❤️' : '🤍'}
                     </button>
