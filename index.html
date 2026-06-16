@@ -45,7 +45,7 @@
             .guest-info, .guest-photo { cursor: pointer; }
         }
         
-        .feedback-btn { position: absolute; top: 16px; left: 16px; background: none; border: none; font-size: 1.6em; cursor: pointer; transition: transform 0.2s; z-index: 10; }
+        .feedback-btn { position: absolute; top: 16px; right: 56px; background: none; border: none; font-size: 1.6em; cursor: pointer; transition: transform 0.2s; z-index: 10; }
         .feedback-btn:hover { transform: scale(1.2); }
         .feedback-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 1000; align-items: center; justify-content: center; }
         .feedback-modal.active { display: flex; }
@@ -174,6 +174,29 @@
             <p>Last updated: <span id="lastUpdate">—</span></p>
             <p>Research-focused guest recommendations for Road to Success Podcast</p>
             <p style="margin-top: 10px; opacity: 0.7;">💡 Click the ❤️ to save guests to your favorites list</p>
+        </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="feedback-modal">
+        <div class="feedback-modal-content">
+            <div class="feedback-modal-title">Feedback: <span id="feedbackGuestName"></span></div>
+            <div class="feedback-modal-subtitle">Help us improve this guest suggestion</div>
+            
+            <div id="feedbackStatus" class="feedback-status"></div>
+            
+            <div class="feedback-options">
+                <button class="feedback-option" onclick="selectFeedbackReason(this, 'Not a good fit')">❌ Not a good fit for RTS</button>
+                <button class="feedback-option" onclick="selectFeedbackReason(this, 'Already been on show')">📺 Already appeared on RTS</button>
+                <button class="feedback-option" onclick="selectFeedbackReason(this, 'Other issue')">⚠️ Other issue</button>
+            </div>
+            
+            <textarea id="feedbackNotes" class="feedback-notes" placeholder="Additional notes (optional)..."></textarea>
+            
+            <div class="feedback-actions">
+                <button id="feedbackSubmitBtn" class="feedback-btn-submit" onclick="submitFeedback()" disabled>Submit Feedback</button>
+                <button class="feedback-btn-cancel" onclick="closeFeedbackModal()">Cancel</button>
+            </div>
         </div>
     </div>
 
