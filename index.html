@@ -33,14 +33,28 @@
         
         .guests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
         @media (max-width: 768px) { .guests-grid { grid-template-columns: 1fr; } }
-        .guest-card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s; display: flex; flex-direction: column; position: relative; }
+        .guest-card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s; display: flex; flex-direction: column; position: relative; cursor: grab; user-select: none; }
+        .guest-card.flipped { background: #f0f0f0; }
+        .guest-info { display: flex; flex-direction: column; flex: 1; }
+        .guest-photo { display: none; text-align: center; }
+        .guest-card.flipped .guest-info { display: none; }
+        .guest-card.flipped .guest-photo { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
+        .guest-photo-img { width: 100%; max-width: 280px; height: 280px; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .swipe-hint { font-size: 0.75em; color: #999; text-align: center; margin-top: 12px; font-style: italic; }
         .guest-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
         .guest-card.transformative { border: 2px solid rgba(102, 126, 234, 0.6); box-shadow: 0 0 20px rgba(102, 126, 234, 0.2), 0 10px 30px rgba(0,0,0,0.2); }
         .guest-card.transformative .guest-name { color: #667eea; }
         
-        .favorite-btn { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.8em; cursor: pointer; transition: transform 0.2s; }
+        .favorite-btn { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.8em; cursor: pointer; transition: transform 0.2s; z-index: 10; }
         .favorite-btn:hover { transform: scale(1.2); }
-        .favorite-btn.favorited { color: #FFD700; }
+
+        .guest-card.flipped { background: #f0f0f0; }
+        .guest-info { display: flex; flex-direction: column; flex: 1; }
+        .guest-photo { display: none; text-align: center; }
+        .guest-card.flipped .guest-info { display: none; }
+        .guest-card.flipped .guest-photo { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
+        .guest-photo-img { width: 100%; max-width: 280px; height: 280px; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .swipe-hint { font-size: 0.75em; color: #999; text-align: center; margin-top: 12px; font-style: italic; }        .favorite-btn.favorited { color: #FFD700; }
         
         .guest-timestamp { font-size: 0.75em; color: #999; margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
         
@@ -139,20 +153,20 @@
 
     <script>
         const GUESTS = [
-            {name: "Jeffrey Pang (RUN! Motorsports & Media)", country: "🇯🇵", desc: "YouTube automotive creator with 264K followers. Drift culture, JDM car builds, cinematic storytelling. Based in Japan, authentic drifter + builder.", insight: "Niche enough to be under-booked on podcasts, big enough to bring viewers. Story-driven narrative (life transformation through drifting). Proven cinematic production quality (videos 9-17 mins, 200K-2.5M views). Zero podcast saturation. Built his dream through persistence—authentic RTS angle.", yt: "https://www.youtube.com/@run_jeff", ig: "", tw: "", web: "", diff: "4", hook: "🏎️ From Chaos to Drift Dreams: How I Found Myself in Japan", dateAdded: "2026-06-09", narrative: true},
-            {name: "Hoovie (Tyler Hoover)", country: "🇺🇸", desc: "YouTube automotive entertainer with 2.1M followers, buys cheap exotic cars and documents restoration/flip process", insight: "Unmatched entertainment value + business storytelling (car flipping commerce). Zero podcast appearances despite massive audience.", yt: "https://www.youtube.com/@hooviesgarage", ig: "https://www.instagram.com/hooviegarage", tw: "", web: "", diff: "5", hook: "🔥 Exotic Car Chaos: From $500 Finds to $50K Flips", dateAdded: "2026-06-04"},
-            {name: "Engineering Explained (Jason Fenske)", country: "🇺🇸", desc: "Technical automotive educator explaining complex car mechanics in accessible way. 1.5M YouTube followers.", insight: "Deep credibility + conversational deep-dive potential (EV tech, engine design). Natural educator. Highest booking success rate.", yt: "https://www.youtube.com/@EngineeringExplained", ig: "", tw: "https://twitter.com/fenskejason", web: "", diff: "3", hook: "⚙️ Making Impossible Car Tech Actually Understandable", dateAdded: "2026-06-04"},
+            {name: "Jeffrey Pang (RUN! Motorsports & Media)", country: "🇯🇵", photo: "https://yt3.googleusercontent.com/hJ-8H0qVqO87ZJ7Th6vIRKr_VIM6mS9rJxF8bEdL0-3K9Db0oJ3LLz9ZLVZkQw=s176-c-k-c0x00ffffff-no-rj", desc: "YouTube automotive creator with 264K followers. Drift culture, JDM car builds, cinematic storytelling. Based in Japan, authentic drifter + builder.", insight: "Niche enough to be under-booked on podcasts, big enough to bring viewers. Story-driven narrative (life transformation through drifting). Proven cinematic production quality (videos 9-17 mins, 200K-2.5M views). Zero podcast saturation. Built his dream through persistence—authentic RTS angle.", yt: "https://www.youtube.com/@run_jeff", ig: "", tw: "", web: "", diff: "4", hook: "🏎️ From Chaos to Drift Dreams: How I Found Myself in Japan", dateAdded: "2026-06-09", narrative: true},
+            {name: "Hoovie (Tyler Hoover)", country: "🇺🇸", photo: "https://yt3.googleusercontent.com/ytc/AKedOLTfR_3-TsAMrMWw3d0CtF8aViFV4ZO_9JKT0w=s176-c-k-c0x00ffffff-no-rj", desc: "YouTube automotive entertainer with 2.1M followers, buys cheap exotic cars and documents restoration/flip process", insight: "Unmatched entertainment value + business storytelling (car flipping commerce). Zero podcast appearances despite massive audience.", yt: "https://www.youtube.com/@hooviesgarage", ig: "https://www.instagram.com/hooviegarage", tw: "", web: "", diff: "5", hook: "🔥 Exotic Car Chaos: From $500 Finds to $50K Flips", dateAdded: "2026-06-04"},
+            {name: "Engineering Explained (Jason Fenske)", country: "🇺🇸", photo: "https://yt3.googleusercontent.com/eZHQ0rXMgExIXe52gCEkspfvFvvMXBXKl5zVkYPdx_-fkePW7YdkIq5hOLGf4Q=s176-c-k-c0x00ffffff-no-rj", desc: "Technical automotive educator explaining complex car mechanics in accessible way. 1.5M YouTube followers.", insight: "Deep credibility + conversational deep-dive potential (EV tech, engine design). Natural educator. Highest booking success rate.", yt: "https://www.youtube.com/@EngineeringExplained", ig: "", tw: "https://twitter.com/fenskejason", web: "", diff: "3", hook: "⚙️ Making Impossible Car Tech Actually Understandable", dateAdded: "2026-06-04"},
             {name: "Throttle House (Jonny & Jezza)", country: "🇨🇦", desc: "Two independent car reviewers with proven chemistry and storytelling. 600K followers, authentic automotive commentary.", insight: "Natural long-form chemistry, independent creators (not big studio). Reviews + personality mix. Niche UK automotive voice.", yt: "https://www.youtube.com/@ThrottleHouse", ig: "https://www.instagram.com/thethrottlehouse", tw: "", web: "", diff: "6", hook: "🎬 Two Best Friends Breaking Every Car Review Rulebook", dateAdded: "2026-06-04"},
             {name: "Donut Media (Jared & James)", country: "🇺🇸", desc: "High-production automotive education channel blending entertainment with car knowledge. 3.5M YouTube followers.", insight: "Entertainment-first approach with massive loyal audience. Under-tapped on podcast circuit despite huge reach.", yt: "https://www.youtube.com/@DonutMediaOfficial", ig: "https://www.instagram.com/donutmedia", tw: "", web: "", diff: "7", hook: "🎥 The Most Entertaining Car Education on YouTube", dateAdded: "2026-06-04"},
             {name: "Straight Pipes (Yuri & Jacob)", country: "🇨🇦", desc: "Canadian car reviewers with honest opinions and chemistry. 600K followers. Loyal, engaged fanbase.", insight: "Authentic voices with dedicated audience. Review-first approach Ben could explore. Zero podcast saturation.", yt: "https://www.youtube.com/@TheStraightPipes", ig: "", tw: "", web: "", diff: "6", hook: "🍁 Canadians Giving Cars Honest Ratings Others Won't", dateAdded: "2026-06-04"},
-            {name: "Skip Barber Racing School", country: "🇺🇸", desc: "Legendary racing school (founded 1975) teaching professional racing techniques. Established institution with deep expertise.", insight: "Insider racing education perspective. Could explore 'what makes a professional driver.' Establishment credibility + practical insight.", yt: "https://www.youtube.com/@skipbarber", ig: "", tw: "", web: "https://www.skipbarber.com", diff: "7", hook: "🏁 50 Years Teaching Legends How to Actually Win", dateAdded: "2026-06-04"},
+            {name: "Skip Barber Racing School", country: "🇺🇸", photo: "https://yt3.googleusercontent.com/ytc/AKedOLSLz0RJ6kVNfFqUP7VrJu_Q8EoKc0sWYCqS=s176-c-k-c0x00ffffff-no-rj", desc: "Legendary racing school (founded 1975) teaching professional racing techniques. Established institution with deep expertise.", insight: "Insider racing education perspective. Could explore 'what makes a professional driver.' Establishment credibility + practical insight.", yt: "https://www.youtube.com/@skipbarber", ig: "", tw: "", web: "https://www.skipbarber.com", diff: "7", hook: "🏁 50 Years Teaching Legends How to Actually Win", dateAdded: "2026-06-04"},
 
-            {name: "Edd China", country: "🇬🇧", desc: "Mechanical engineer and UK TV icon who spent 13 series as the beloved Wheeler Dealers mechanic. Left the show in 2017 in a public split with Discovery/Mike Brewer over format changes that reduced hands-on mechanical content. Now runs Workshop Diaries on YouTube and his own Grease Junkie workshop.", insight: "The most glaring gap in RTS history: Mike Brewer has appeared TWICE on RTS (and Edd China came up both times as the elephant in the room). RTS can finally get THE other side — the mechanic who walked away from one of TV's most successful car shows because of principles. That's an adversity arc that writes itself. Not on any major UK podcasts. Very accessible creator. The ONLY Wheeler Dealers-world guest RTS hasn't had.", yt: "https://www.youtube.com/@eddchina", ig: "https://www.instagram.com/eddchina/", tw: "", web: "", diff: "5", hook: "🔧 The Wheeler Dealers Mechanic Who Walked Away — And Built Something Better", narrative: true, dateAdded: "2026-06-11"},
+            {name: "Edd China", country: "🇬🇧", photo: "https://yt3.googleusercontent.com/ytc/AKedOLSR_3J7S0WN6X3UhLZmE7h0UHMHfqNTKk6g=s176-c-k-c0x00ffffff-no-rj", desc: "Mechanical engineer and UK TV icon who spent 13 series as the beloved Wheeler Dealers mechanic. Left the show in 2017 in a public split with Discovery/Mike Brewer over format changes that reduced hands-on mechanical content. Now runs Workshop Diaries on YouTube and his own Grease Junkie workshop.", insight: "The most glaring gap in RTS history: Mike Brewer has appeared TWICE on RTS (and Edd China came up both times as the elephant in the room). RTS can finally get THE other side — the mechanic who walked away from one of TV's most successful car shows because of principles. That's an adversity arc that writes itself. Not on any major UK podcasts. Very accessible creator. The ONLY Wheeler Dealers-world guest RTS hasn't had.", yt: "https://www.youtube.com/@eddchina", ig: "https://www.instagram.com/eddchina/", tw: "", web: "", diff: "5", hook: "🔧 The Wheeler Dealers Mechanic Who Walked Away — And Built Something Better", narrative: true, dateAdded: "2026-06-11"},
             {name: "Supercar Blondie (Alex Hirschi)", country: "🇦🇪", desc: "Australian-born broadcaster who moved to Dubai with no automotive background and became the world's most followed car creator (30M+ social followers). Now runs SBX Cars, a high-end supercar auction platform, having built a global media and business empire in a male-dominated industry.", insight: "Unique angle: female automotive entrepreneur who broke into a completely male space, in a foreign country, with zero car expertise — and became the #1 player globally. Reinvention from radio presenter to media mogul to tech/auction founder. NOT on RTS. Platform scale means RTS collab could get serious crossover reach.", yt: "https://www.youtube.com/@SupercarBlondie", ig: "https://www.instagram.com/supercarblondie/", tw: "", web: "https://sbxcars.com", diff: "8", hook: "🌟 From Brisbane Radio to Running the World's Biggest Car Media Empire", narrative: true, dateAdded: "2026-06-09"},
 
-            {name: "Ahmed Amwell", country: "🇦🇪", desc: "Dubai-based supercar rental entrepreneur who built one of the UAE's most notorious luxury car empires from scratch — and got himself blacklisted by multiple Ferrari dealerships in the process. Known for renting Lamborghinis, Bugattis and Ferraris to the ultra-wealthy, and for a Cars & Money episode that racked up 770K views: 'Dubai's No.1 Supercar Renter on Being BANNED From Ferrari'.", insight: "Cars & Money's highest-viewed automotive entrepreneur episode in recent memory (770K views) was THIS guy. That's a direct proof-of-concept that the RTS audience wants this story. RTS can go deeper on his origin: how do you build a supercar empire from zero in Dubai? What does it take to get banned from Ferrari — and how do you turn that into a brand? The hook writes itself. NOT on RTS. Dubai-based but very accessible via Instagram DMs.", yt: "", ig: "https://www.instagram.com/ahmedamwell/", tw: "", web: "", diff: "6", hook: "🚫 Dubai's Most Banned Supercar Man: Ferrari Kicked Him Out, So He Built His Own Empire", narrative: true, dateAdded: "2026-06-10"},
+            {name: "Ahmed Amwell", country: "🇦🇪", photo: "https://scontent.cdninstagram.com/v/t51.2885-19/44884218_321945085055034_2246369589734186496_n.jpg", desc: "Dubai-based supercar rental entrepreneur who built one of the UAE's most notorious luxury car empires from scratch — and got himself blacklisted by multiple Ferrari dealerships in the process. Known for renting Lamborghinis, Bugattis and Ferraris to the ultra-wealthy, and for a Cars & Money episode that racked up 770K views: 'Dubai's No.1 Supercar Renter on Being BANNED From Ferrari'.", insight: "Cars & Money's highest-viewed automotive entrepreneur episode in recent memory (770K views) was THIS guy. That's a direct proof-of-concept that the RTS audience wants this story. RTS can go deeper on his origin: how do you build a supercar empire from zero in Dubai? What does it take to get banned from Ferrari — and how do you turn that into a brand? The hook writes itself. NOT on RTS. Dubai-based but very accessible via Instagram DMs.", yt: "", ig: "https://www.instagram.com/ahmedamwell/", tw: "", web: "", diff: "6", hook: "🚫 Dubai's Most Banned Supercar Man: Ferrari Kicked Him Out, So He Built His Own Empire", narrative: true, dateAdded: "2026-06-10"},
 
-            {name: "Jon Olsson", country: "🇸🇪", desc: "Swedish professional freestyle skier — multiple X Games medals, Alpine Ski World Cup victories — who walked away from elite sport and reinvented himself as one of the world's most iconic custom supercar builders. His modified Lamborghinis and Rolls-Royces went globally viral. Now runs a lifestyle and content creator business spanning car builds, adventure, and apparel.", insight: "The adversity arc is textbook RTS: reached the pinnacle of one world (professional skiing), had to walk away, then rebuilt identity from scratch through pure passion for cars. Built an international following without being born into money or the automotive industry. Almost zero UK podcast appearances — predominantly Scandinavian/European media. This is a genuinely fresh face with a proven story. Booking difficulty moderate — very accessible creator who does interviews regularly.", yt: "https://www.youtube.com/@JonOlsson", ig: "https://www.instagram.com/jonolsson/", tw: "", web: "", diff: "5", hook: "🎿 From X Games Champion to Building the World's Most Iconic Custom Supercars", narrative: true, dateAdded: "2026-06-10"},
+            {name: "Jon Olsson", country: "🇸🇪", photo: "https://yt3.googleusercontent.com/ytc/AKedOLTfDRjKzI7UJ0D0sGnV2NzPKXMVbcX7Vc-z=s176-c-k-c0x00ffffff-no-rj", desc: "Swedish professional freestyle skier — multiple X Games medals, Alpine Ski World Cup victories — who walked away from elite sport and reinvented himself as one of the world's most iconic custom supercar builders. His modified Lamborghinis and Rolls-Royces went globally viral. Now runs a lifestyle and content creator business spanning car builds, adventure, and apparel.", insight: "The adversity arc is textbook RTS: reached the pinnacle of one world (professional skiing), had to walk away, then rebuilt identity from scratch through pure passion for cars. Built an international following without being born into money or the automotive industry. Almost zero UK podcast appearances — predominantly Scandinavian/European media. This is a genuinely fresh face with a proven story. Booking difficulty moderate — very accessible creator who does interviews regularly.", yt: "https://www.youtube.com/@JonOlsson", ig: "https://www.instagram.com/jonolsson/", tw: "", web: "", diff: "5", hook: "🎿 From X Games Champion to Building the World's Most Iconic Custom Supercars", narrative: true, dateAdded: "2026-06-10"},
 
             {name: "Alex Kersten (Car Throttle Founder)", country: "🇬🇧", desc: "Founded Car Throttle in 2011 as a young automotive enthusiast with zero industry contacts and built it into one of the UK's biggest automotive media companies — 3M+ YouTube subscribers, millions of monthly readers, a full editorial and video team. Sold the business to Autovia/Dennis Publishing in a successful multi-million exit. The platform he created spawned some of the most prominent UK automotive creators — including AutoAlex and Top Dead Center (Edwin & Will) — all of whom have since appeared on Road to Success. Alex himself has never been on.", insight: "The most striking gap in RTS history: Three Car Throttle alumni have appeared on this podcast (AutoAlex, Edwin & Will from Top Dead Center), but the man who built the entire platform has never been invited. Alex's adversity arc: started as a teenage car obsessive with no money, no contacts, and no industry connections — built a media empire from his bedroom that shaped UK automotive YouTube culture — then sold it for millions. The RTS angle writes itself: he's the architect behind multiple stories Ben Quirke has already told. No personal YouTube channel means zero podcast saturation. Completely fresh interview.", yt: "", ig: "https://www.instagram.com/alexkersten/", tw: "https://twitter.com/alexkersten", web: "", diff: "5", hook: "🏗️ He Built Car Throttle From His Bedroom — Three Of His Own Team Were On This Podcast Before He Was", dateAdded: "2026-06-14", narrative: true},
 
@@ -271,13 +285,15 @@
 
             if (emptyId) document.getElementById(emptyId).style.display = 'none';
 
-            const cards = guests.map(g => {
+            const cards = guests.map((g, idx) => {
                 const isFavorited = favorites.includes(g.name);
+                const cardId = `card-${idx}-${Math.random().toString(36).substr(2, 9)}`;
                 return `
-                <div class="guest-card${g.narrative ? ' transformative' : ''}">
+                <div class="guest-card${g.narrative ? ' transformative' : ''}" id="${cardId}" data-swipe-card="true">
                     <button class="favorite-btn${isFavorited ? ' favorited' : ''}" onclick="toggleFavorite('${g.name.replace(/'/g, "\\'")}')">
                         ${isFavorited ? '❤️' : '🤍'}
                     </button>
+                    <div class="guest-info">
                     <div class="guest-timestamp">Added ${g.dateAdded}</div>
                     ${g.hook ? `<div class="guest-hook">${g.hook}</div>` : ''}
                     <div class="guest-name">${g.country ? g.country + ' ' : ''}${g.name}</div>
@@ -294,9 +310,45 @@
                         <span class="difficulty-badge difficulty-${g.diff}">${g.diff}/10</span>
                     </div>
                 </div>
+                    
+                    <div class="guest-photo">
+                        ${g.photo ? `<img src="${g.photo}" alt="${g.name}" class="guest-photo-img" onerror="this.style.display='none'">` : '<div style="font-size: 3em; margin: 20px 0;">📷</div>'}
+                        <div class="swipe-hint">← Swipe back to info</div>
+                    </div>
+                </div>
             `}).join('');
 
             grid.innerHTML = cards;
+            
+            // Add swipe functionality
+            document.querySelectorAll('[data-swipe-card]').forEach(card => {
+                let touchStartX = 0;
+                let touchEndX = 0;
+                
+                card.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, false);
+                
+                card.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe(card);
+                }, false);
+                
+                function handleSwipe(element) {
+                    const swipeThreshold = 50;
+                    const diff = touchStartX - touchEndX;
+                    
+                    if (Math.abs(diff) > swipeThreshold) {
+                        if (diff > 0) {
+                            // Swiped left - show photo
+                            element.classList.add('flipped');
+                        } else {
+                            // Swiped right - show info
+                            element.classList.remove('flipped');
+                        }
+                    }
+                }
+            });
         }
 
         function toggleFavorite(guestName) {
