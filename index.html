@@ -100,48 +100,287 @@
         .guests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
         @media (max-width: 768px) { .guests-grid { grid-template-columns: 1fr; } }
 
-        /* === GUEST CARDS === */
+        /* === GUEST CARDS — COMPACT POSTER STYLE === */
+        .guests-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
         .guest-card {
-            background: var(--bg-elev); border-radius: 14px; padding: 24px;
+            background: var(--bg-elev); border-radius: 14px; padding: 0;
             border: 1px solid var(--border);
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
             transition: all 0.25s ease;
             display: flex; flex-direction: column; position: relative;
-            cursor: grab; user-select: none;
+            cursor: pointer; user-select: none; overflow: hidden;
         }
         .guest-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-6px);
             border-color: var(--border-strong);
-            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6), 0 0 0 1px var(--border-strong);
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.7), 0 0 0 1px var(--border-strong);
         }
-        .guest-card.flipped { background: var(--bg-elev-2); }
-        .guest-info { display: flex; flex-direction: column; flex: 1; }
-        .guest-photo { display: none; text-align: center; }
-        .guest-card.flipped .guest-info { display: none; }
-        .guest-card.flipped .guest-photo { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
-        .guest-photo-img { width: 100%; max-width: 280px; height: 280px; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 0 1px var(--border-strong); }
-        .swipe-hint { font-size: 0.75em; color: var(--text-faint); text-align: center; margin-top: 12px; font-style: italic; }
-        @media (hover: hover) {
-            .guest-info, .guest-photo { cursor: pointer; }
+        .guest-card:hover .card-image img { transform: scale(1.05); }
+        .guest-card:hover .card-image::after { opacity: 1; }
+
+        /* Card hero image */
+        .card-image {
+            position: relative; width: 100%; aspect-ratio: 4/5;
+            overflow: hidden; background: var(--bg-elev-2);
+        }
+        .card-image img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 0.4s ease;
+            display: block;
+        }
+        .card-image::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.5) 75%, rgba(0,0,0,0.95) 100%);
+            pointer-events: none; z-index: 1;
+        }
+        .card-image::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, transparent 60%, rgba(255, 122, 26, 0.15) 100%);
+            pointer-events: none; z-index: 1; opacity: 0; transition: opacity 0.3s;
+        }
+        .card-overlay {
+            position: absolute; left: 0; right: 0; bottom: 0;
+            padding: 16px 18px 14px; z-index: 2;
+            display: flex; flex-direction: column; gap: 6px;
+        }
+        .card-country {
+            position: absolute; top: 12px; left: 12px;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px);
+            padding: 4px 10px; border-radius: 999px;
+            font-size: 0.85em; z-index: 3;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .card-name {
+            font-size: 1.1em; font-weight: 700; color: var(--text);
+            line-height: 1.25; letter-spacing: -0.01em;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+        }
+        .card-hook-mini {
+            font-size: 0.78em; color: var(--orange);
+            font-weight: 600; line-height: 1.35;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+            overflow: hidden; max-height: 2.7em;
+        }
+
+        /* Card body (under image) */
+        .card-body {
+            padding: 14px 16px; display: flex; flex-direction: column;
+            gap: 10px; flex: 1;
+        }
+        .card-teaser {
+            font-size: 0.82em; color: var(--text-dim); line-height: 1.5;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .card-footer-row {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: auto; padding-top: 8px; border-top: 1px solid var(--border);
+            gap: 8px;
+        }
+        .card-diff-mini {
+            font-size: 0.7em; padding: 4px 9px; border-radius: 999px;
+            font-weight: 700; letter-spacing: 0.03em;
+            background: var(--bg-elev-2); color: var(--text-dim); border: 1px solid var(--border);
+        }
+        .card-diff-mini.d3 { background: rgba(74, 222, 128, 0.12); color: #4ade80; border-color: rgba(74, 222, 128, 0.3); }
+        .card-diff-mini.d4 { background: rgba(74, 222, 128, 0.12); color: #4ade80; border-color: rgba(74, 222, 128, 0.3); }
+        .card-diff-mini.d5 { background: var(--orange-dim); color: var(--orange); border-color: rgba(255, 122, 26, 0.3); }
+        .card-diff-mini.d6 { background: var(--orange-dim); color: var(--orange); border-color: rgba(255, 122, 26, 0.3); }
+        .card-diff-mini.d7 { background: rgba(248, 113, 113, 0.1); color: #f87171; border-color: rgba(248, 113, 113, 0.3); }
+        .card-diff-mini.d8 { background: rgba(248, 113, 113, 0.1); color: #f87171; border-color: rgba(248, 113, 113, 0.3); }
+        .card-diff-mini.d9 { background: rgba(248, 113, 113, 0.15); color: #f87171; border-color: rgba(248, 113, 113, 0.4); }
+        .card-open-hint {
+            font-size: 0.7em; color: var(--text-faint); font-weight: 600;
+            letter-spacing: 0.05em; text-transform: uppercase;
         }
 
         /* === TRANSFORMATIVE (highlighted guest) === */
         .guest-card.transformative {
-            border: 1px solid rgba(255, 122, 26, 0.4);
+            border: 1px solid rgba(255, 122, 26, 0.45);
             box-shadow: 0 0 0 1px rgba(255, 122, 26, 0.2), 0 8px 32px rgba(255, 122, 26, 0.15), 0 12px 36px rgba(0,0,0,0.6);
         }
         .guest-card.transformative:hover {
-            border-color: rgba(255, 122, 26, 0.6);
-            box-shadow: 0 0 0 1px rgba(255, 122, 26, 0.4), 0 12px 40px rgba(255, 122, 26, 0.25), 0 16px 48px rgba(0,0,0,0.7);
+            border-color: rgba(255, 122, 26, 0.7);
+            box-shadow: 0 0 0 1px rgba(255, 122, 26, 0.4), 0 16px 44px rgba(255, 122, 26, 0.25), 0 16px 48px rgba(0,0,0,0.7);
         }
-        .guest-card.transformative .guest-name { color: var(--orange); }
+        .guest-card.transformative .card-name { color: var(--orange); }
+        .narrative-flag {
+            position: absolute; top: 12px; right: 12px; z-index: 3;
+            background: var(--orange); color: #0a0a0a;
+            padding: 4px 10px; border-radius: 999px;
+            font-size: 0.65em; font-weight: 800;
+            text-transform: uppercase; letter-spacing: 0.08em;
+            box-shadow: 0 4px 12px rgba(255, 122, 26, 0.5);
+        }
 
-        /* === FEEDBACK + FAVORITE BUTTONS === */
-        .feedback-btn { position: absolute; top: 16px; right: 56px; background: none; border: none; font-size: 1.5em; cursor: pointer; transition: transform 0.2s; z-index: 10; opacity: 0.7; }
-        .feedback-btn:hover { transform: scale(1.15); opacity: 1; }
-        .favorite-btn { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.7em; cursor: pointer; transition: transform 0.2s; z-index: 10; opacity: 0.6; filter: grayscale(1); }
-        .favorite-btn:hover { transform: scale(1.15); opacity: 1; filter: grayscale(0); }
-        .favorite-btn.favorited { color: var(--orange); opacity: 1; filter: none; }
+        /* === DETAIL MODAL (full-screen guest view) === */
+        .detail-modal {
+            display: none; position: fixed; inset: 0;
+            background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px);
+            z-index: 2000; align-items: flex-start; justify-content: center;
+            padding: 20px; overflow-y: auto;
+        }
+        .detail-modal.active { display: flex; }
+        .detail-content {
+            background: var(--bg-elev); border: 1px solid var(--border-strong);
+            border-radius: 20px; max-width: 720px; width: 100%;
+            margin: 20px auto; position: relative;
+            box-shadow: 0 24px 80px rgba(0,0,0,0.8);
+            overflow: hidden;
+        }
+        .detail-close {
+            position: absolute; top: 16px; right: 16px; z-index: 10;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: var(--text); width: 40px; height: 40px;
+            border-radius: 50%; cursor: pointer;
+            font-size: 1.2em; font-weight: 700;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+        }
+        .detail-close:hover { background: var(--orange); color: #0a0a0a; border-color: var(--orange); transform: scale(1.05); }
+
+        .detail-hero {
+            position: relative; width: 100%; aspect-ratio: 16/9;
+            background: var(--bg-elev-2); overflow: hidden;
+        }
+        .detail-hero img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        .detail-hero::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,0.7) 80%, rgba(20,20,20,1) 100%);
+        }
+        .detail-hero-overlay {
+            position: absolute; left: 0; right: 0; bottom: 0;
+            padding: 24px 32px; z-index: 2;
+        }
+        .detail-country-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+            padding: 6px 14px; border-radius: 999px;
+            font-size: 0.85em; margin-bottom: 12px;
+            border: 1px solid rgba(255,255,255,0.15);
+        }
+        .detail-name {
+            font-size: 1.9em; font-weight: 800; color: var(--text);
+            line-height: 1.1; letter-spacing: -0.02em;
+            text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+            margin-bottom: 8px;
+        }
+        .detail-hook {
+            font-size: 1em; color: var(--orange); font-weight: 600;
+            line-height: 1.4; text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+        }
+
+        .detail-body { padding: 28px 32px 32px; }
+        .detail-section { margin-bottom: 28px; }
+        .detail-section:last-child { margin-bottom: 0; }
+        .detail-section-label {
+            font-size: 0.72em; color: var(--orange); font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.12em;
+            margin-bottom: 10px; display: flex; align-items: center; gap: 8px;
+        }
+        .detail-section-label::before {
+            content: ''; width: 14px; height: 2px; background: var(--orange);
+        }
+        .detail-section-text {
+            font-size: 0.95em; color: var(--text-dim); line-height: 1.65;
+        }
+        .detail-section-text strong { color: var(--text); font-weight: 600; }
+
+        .detail-outreach-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 10px; margin-top: 4px;
+        }
+        .detail-outreach-link {
+            display: flex; align-items: center; gap: 10px;
+            padding: 14px 16px; background: var(--bg-elev-2);
+            border: 1px solid var(--border); border-radius: 12px;
+            text-decoration: none; color: var(--text);
+            font-size: 0.9em; font-weight: 600;
+            transition: all 0.2s;
+        }
+        .detail-outreach-link:hover {
+            background: var(--orange); color: #0a0a0a;
+            border-color: var(--orange); transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 122, 26, 0.3);
+        }
+        .detail-outreach-icon { font-size: 1.3em; }
+
+        .detail-meta-row {
+            display: flex; flex-wrap: wrap; gap: 12px; align-items: center;
+            padding: 16px 0; border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border); margin: 24px 0;
+        }
+        .detail-meta-item {
+            display: flex; flex-direction: column; gap: 2px;
+            padding: 0 16px; border-right: 1px solid var(--border);
+            flex: 1; min-width: 120px;
+        }
+        .detail-meta-item:last-child { border-right: none; }
+        .detail-meta-item:first-child { padding-left: 0; }
+        .detail-meta-label {
+            font-size: 0.7em; color: var(--text-faint);
+            text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700;
+        }
+        .detail-meta-value {
+            font-size: 1em; color: var(--text); font-weight: 700;
+        }
+        .detail-meta-value.orange { color: var(--orange); }
+        .detail-meta-value.green { color: #4ade80; }
+        .detail-meta-value.red { color: #f87171; }
+
+        .detail-actions {
+            display: flex; gap: 12px; margin-top: 24px;
+        }
+        .detail-action-btn {
+            flex: 1; padding: 14px 20px; border-radius: 999px;
+            border: 1px solid var(--border-strong); background: transparent;
+            color: var(--text); font-size: 0.9em; font-weight: 600;
+            cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .detail-action-btn:hover { background: rgba(255,255,255,0.05); }
+        .detail-action-btn.favorite.favorited {
+            background: var(--orange-dim); border-color: var(--orange); color: var(--orange);
+        }
+
+        @media (max-width: 600px) {
+            .detail-modal { padding: 0; }
+            .detail-content { border-radius: 0; margin: 0; min-height: 100vh; }
+            .detail-body { padding: 22px 20px 28px; }
+            .detail-hero-overlay { padding: 20px; }
+            .detail-name { font-size: 1.5em; }
+            .detail-meta-item { padding: 8px 12px; border-right: none; border-bottom: 1px solid var(--border); flex: 1 1 100%; }
+            .detail-meta-item:last-child { border-bottom: none; }
+        }
+
+        /* === FEEDBACK + FAVORITE BUTTONS (floating on compact card) === */
+        .feedback-btn {
+            position: absolute; top: 12px; right: 56px; z-index: 4;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;
+            width: 36px; height: 36px;
+            font-size: 1em; cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .feedback-btn:hover { transform: scale(1.1); background: rgba(0,0,0,0.85); }
+        .favorite-btn {
+            position: absolute; top: 12px; right: 12px; z-index: 4;
+            background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 50%;
+            width: 36px; height: 36px;
+            font-size: 1em; cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; justify-content: center;
+            filter: grayscale(1); opacity: 0.85;
+        }
+        .favorite-btn:hover { transform: scale(1.1); opacity: 1; filter: grayscale(0); }
+        .favorite-btn.favorited {
+            background: var(--orange); border-color: var(--orange);
+            opacity: 1; filter: none;
+        }
 
         /* === FEEDBACK MODAL === */
         .feedback-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(8px); z-index: 1000; align-items: center; justify-content: center; }
@@ -324,6 +563,9 @@
         </div>
     </div>
 
+    <!-- Guest Detail Modal (full-screen view) -->
+    <div id="detailModal" class="detail-modal" onclick="if(event.target===this) closeGuestDetail()"></div>
+
     <!-- Feedback Modal -->
     <div id="feedbackModal" class="feedback-modal">
         <div class="feedback-modal-content">
@@ -496,95 +738,131 @@
 
             if (emptyId) document.getElementById(emptyId).style.display = 'none';
 
-            const cards = guests.map((g, idx) => {
+            const escName = (s) => (s || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+
+            const cards = guests.map((g) => {
                 const isFavorited = favorites.includes(g.name);
-                const cardId = `card-${idx}-${Math.random().toString(36).substr(2, 9)}`;
+                const hookText = g.hook || '';
+                // Strip leading emoji from hook for the mini display (cleaner look on small card)
+                const hookClean = hookText.replace(/^[\p{Extended_Pictographic}\s]+/u, '').trim();
+                const teaser = hookClean || g.desc.split('.')[0] + '.';
                 return `
-                <div class="guest-card${g.narrative ? ' transformative' : ''}" id="${cardId}" data-swipe-card="true">
-                    <button class="feedback-btn" onclick="openFeedbackModal('${g.name.replace(/'/g, "\\'")}')">👎</button>
-                    <button class="favorite-btn${isFavorited ? ' favorited' : ''}" onclick="toggleFavorite('${g.name.replace(/'/g, "\\'")}')">
-                        ${isFavorited ? '❤️' : '🤍'}
-                    </button>
-                    <div class="guest-info">
-                    <div class="guest-timestamp">Added ${g.dateAdded}</div>
-                    ${g.hook ? `<div class="guest-hook">${g.hook}</div>` : ''}
-                    <div class="guest-name">${g.country ? g.country + ' ' : ''}${g.name}</div>
-                    <div><div class="description-label">Who They Are</div><div class="description">${g.desc}</div></div>
-                    <div><div class="insight-label">Why They're Perfect for RTS</div><div class="research-insight">${g.insight}</div></div>
-                    <div class="socials">
-                        ${g.yt ? `<a href="${g.yt}" target="_blank" rel="noopener" class="social-link"><span class="social-icon">▶️</span>YouTube</a>` : ''}
-                        ${g.ig ? `<a href="${g.ig}" target="_blank" rel="noopener" class="social-link"><span class="social-icon">📸</span>Instagram</a>` : ''}
-                        ${g.tw ? `<a href="${g.tw}" target="_blank" rel="noopener" class="social-link"><span class="social-icon">𝕏</span>Twitter</a>` : ''}
-                        ${g.web ? `<a href="${g.web}" target="_blank" rel="noopener" class="social-link"><span class="social-icon">🌐</span>Website</a>` : ''}
+                <div class="guest-card${g.narrative ? ' transformative' : ''}" data-guest-name="${escName(g.name)}" onclick="openGuestDetail('${escName(g.name)}')">
+                    ${g.narrative ? '<div class="narrative-flag">✨ Hook</div>' : ''}
+                    ${g.country ? `<div class="card-country">${g.country}</div>` : ''}
+                    <button class="feedback-btn" onclick="event.stopPropagation(); openFeedbackModal('${escName(g.name)}')" title="Not a fit">👎</button>
+                    <button class="favorite-btn${isFavorited ? ' favorited' : ''}" onclick="event.stopPropagation(); toggleFavorite('${escName(g.name)}')" title="Save">${isFavorited ? '❤️' : '🤍'}</button>
+                    <div class="card-image">
+                        ${g.photo
+                            ? `<img src="${g.photo}" alt="${g.name}" loading="lazy" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(g.name)}&background=ff7a1a&color=0a0a0a&size=400&font-size=0.4&bold=true'">`
+                            : `<img src="https://ui-avatars.com/api/?name=${encodeURIComponent(g.name)}&background=ff7a1a&color=0a0a0a&size=400&font-size=0.4&bold=true" alt="${g.name}">`}
                     </div>
-                    <div class="booking-difficulty">
-                        <span class="difficulty-label">Booking Difficulty</span>
-                        <span class="difficulty-badge difficulty-${g.diff}">${g.diff}/10</span>
+                    <div class="card-body">
+                        <div class="card-name">${g.name}</div>
+                        <div class="card-teaser">${teaser}</div>
+                        <div class="card-footer-row">
+                            <span class="card-diff-mini d${g.diff}">Booking ${g.diff}/10</span>
+                            <span class="card-open-hint">Tap →</span>
+                        </div>
                     </div>
                 </div>
-                    
-                    <div class="guest-photo">
-                        ${g.photo ? `<img src="${g.photo}" alt="${g.name}" class="guest-photo-img" onerror="this.style.display='none'">` : '<div style="font-size: 3em; margin: 20px 0;">📷</div>'}
-                        <div class="swipe-hint">← Swipe back to info</div>
-                    </div>
-                </div>
-            `}).join('');
+            `;
+            }).join('');
 
             grid.innerHTML = cards;
-            
-            // Add swipe/click functionality (works on mobile & laptop)
-            document.querySelectorAll('[data-swipe-card]').forEach(card => {
-                let touchStartX = 0;
-                let touchEndX = 0;
-                let mouseDownX = 0;
-                let mouseUpX = 0;
-                
-                // Touch events (mobile/tablet)
-                card.addEventListener('touchstart', (e) => {
-                    touchStartX = e.changedTouches[0].screenX;
-                }, false);
-                
-                card.addEventListener('touchend', (e) => {
-                    touchEndX = e.changedTouches[0].screenX;
-                    handleSwipe(card, touchStartX, touchEndX);
-                }, false);
-                
-                // Mouse events (laptop/desktop)
-                card.addEventListener('mousedown', (e) => {
-                    if (e.target.closest('a, button')) return; // Don't interfere with links/buttons
-                    mouseDownX = e.screenX;
-                }, false);
-                
-                card.addEventListener('mouseup', (e) => {
-                    if (e.target.closest('a, button')) return;
-                    mouseUpX = e.screenX;
-                    handleSwipe(card, mouseDownX, mouseUpX);
-                }, false);
-                
-                // Click to toggle (simple fallback)
-                card.addEventListener('click', (e) => {
-                    if (e.target.closest('a, button')) return; // Don't toggle if clicking links/buttons
-                    // Only toggle if it's the guest info/photo area (not the card container)
-                    if (e.target.closest('.guest-info') || e.target.closest('.guest-photo')) {
-                        card.classList.toggle('flipped');
-                    }
-                }, false);
-                
-                function handleSwipe(element, startX, endX) {
-                    const swipeThreshold = 30;
-                    const diff = startX - endX;
-                    
-                    if (Math.abs(diff) > swipeThreshold) {
-                        if (diff > 0) {
-                            // Swiped left - show photo
-                            element.classList.add('flipped');
-                        } else {
-                            // Swiped right - show info
-                            element.classList.remove('flipped');
-                        }
-                    }
-                }
-            });
+        }
+
+        // === DETAIL MODAL: open full guest view ===
+        function openGuestDetail(guestName) {
+            const g = GUESTS.find(x => x.name === guestName);
+            if (!g) return;
+            const favorites = JSON.parse(localStorage.getItem('rtsFavorites') || '[]');
+            const isFav = favorites.includes(g.name);
+
+            const diffLabel = g.diff <= 4 ? 'Easy' : (g.diff <= 6 ? 'Moderate' : 'Challenge');
+            const diffColor = g.diff <= 4 ? 'green' : (g.diff <= 6 ? 'orange' : 'red');
+
+            const outreachLinks = [
+                g.ig && { label: 'Instagram DM', icon: '📸', url: g.ig, note: 'Best for direct contact' },
+                g.tw && { label: 'Twitter/X', icon: '𝕏', url: g.tw, note: 'Quick public ping' },
+                g.web && { label: 'Website', icon: '🌐', url: g.web, note: 'Contact page / agent' },
+                g.yt && { label: 'YouTube', icon: '▶️', url: g.yt, note: 'Business email in About' }
+            ].filter(Boolean);
+
+            const photo = g.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(g.name)}&background=ff7a1a&color=0a0a0a&size=800&font-size=0.4&bold=true`;
+
+            const modalHtml = `
+                <div class="detail-content">
+                    <button class="detail-close" onclick="closeGuestDetail()" aria-label="Close">✕</button>
+                    <div class="detail-hero">
+                        <img src="${photo}" alt="${g.name}" onerror="this.src='https://ui-avatars.com/api/?name=${encodeURIComponent(g.name)}&background=ff7a1a&color=0a0a0a&size=800&font-size=0.4&bold=true'">
+                        <div class="detail-hero-overlay">
+                            ${g.country ? `<div class="detail-country-badge">${g.country} · Added ${g.dateAdded}</div>` : ''}
+                            <div class="detail-name">${g.name}</div>
+                            ${g.hook ? `<div class="detail-hook">${g.hook}</div>` : ''}
+                        </div>
+                    </div>
+                    <div class="detail-body">
+                        <div class="detail-meta-row">
+                            <div class="detail-meta-item">
+                                <div class="detail-meta-label">Booking</div>
+                                <div class="detail-meta-value ${diffColor}">${g.diff}/10 · ${diffLabel}</div>
+                            </div>
+                            <div class="detail-meta-item">
+                                <div class="detail-meta-label">RTS Fit</div>
+                                <div class="detail-meta-value orange">${g.narrative ? '✨ Transformative Story' : 'Strong Match'}</div>
+                            </div>
+                            <div class="detail-meta-item">
+                                <div class="detail-meta-label">RTS History</div>
+                                <div class="detail-meta-value">Never Appeared</div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <div class="detail-section-label">Who They Are</div>
+                            <div class="detail-section-text">${g.desc}</div>
+                        </div>
+
+                        <div class="detail-section">
+                            <div class="detail-section-label">Why They're Perfect for RTS</div>
+                            <div class="detail-section-text">${g.insight}</div>
+                        </div>
+
+                        ${outreachLinks.length ? `
+                        <div class="detail-section">
+                            <div class="detail-section-label">How to Reach Out</div>
+                            <div class="detail-outreach-grid">
+                                ${outreachLinks.map(o => `
+                                    <a href="${o.url}" target="_blank" rel="noopener" class="detail-outreach-link" title="${o.note}">
+                                        <span class="detail-outreach-icon">${o.icon}</span>
+                                        <span>${o.label}</span>
+                                    </a>
+                                `).join('')}
+                            </div>
+                        </div>` : ''}
+
+                        <div class="detail-actions">
+                            <button class="detail-action-btn favorite ${isFav ? 'favorited' : ''}" onclick="toggleFavorite('${(g.name).replace(/'/g, "\\'")}'); openGuestDetail('${(g.name).replace(/'/g, "\\'")}');">
+                                ${isFav ? '❤️ Saved' : '🤍 Save Guest'}
+                            </button>
+                            <button class="detail-action-btn" onclick="closeGuestDetail(); openFeedbackModal('${(g.name).replace(/'/g, "\\'")}');">
+                                👎 Not a Fit
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            const modal = document.getElementById('detailModal');
+            modal.innerHTML = modalHtml;
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeGuestDetail() {
+            const modal = document.getElementById('detailModal');
+            modal.classList.remove('active');
+            modal.innerHTML = '';
+            document.body.style.overflow = '';
         }
 
         function toggleFavorite(guestName) {
@@ -719,6 +997,14 @@
         // Close modal when clicking outside
         document.getElementById('feedbackModal')?.addEventListener('click', (e) => {
             if (e.target.id === 'feedbackModal') closeFeedbackModal();
+        });
+
+        // Global ESC handler for detail modal
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                const detail = document.getElementById('detailModal');
+                if (detail && detail.classList.contains('active')) closeGuestDetail();
+            }
         });
 
         window.addEventListener('load', renderDashboard);
