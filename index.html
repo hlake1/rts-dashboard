@@ -347,6 +347,55 @@
             background: var(--orange-dim); border-color: var(--orange); color: var(--orange);
         }
 
+        /* === EMAIL DRAFT PANEL === */
+        .email-draft-panel {
+            display: none; padding: 28px 32px; border-top: 1px solid var(--border);
+            background: linear-gradient(135deg, var(--bg-elev-2) 0%, var(--bg-elev) 100%);
+        }
+        .email-draft-panel.active { display: block; }
+        .email-draft-title {
+            font-size: 0.9em; color: var(--orange); font-weight: 700;
+            text-transform: uppercase; letter-spacing: 0.12em;
+            margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+        }
+        .email-draft-title::before {
+            content: ''; width: 14px; height: 2px; background: var(--orange);
+        }
+        .email-preview {
+            background: var(--bg); border: 1px solid var(--border);
+            border-radius: 12px; padding: 18px 20px; font-size: 0.9em;
+            line-height: 1.7; color: var(--text-dim); margin-bottom: 16px;
+            font-family: 'Courier New', monospace; max-height: 400px; overflow-y: auto;
+            white-space: pre-wrap; word-wrap: break-word;
+        }
+        .email-blank {
+            background: var(--orange-dim); color: var(--orange);
+            padding: 2px 6px; border-radius: 4px; font-weight: 600;
+            border: 1px solid rgba(255, 122, 26, 0.5);
+        }
+        .email-help-text {
+            font-size: 0.8em; color: var(--text-faint); margin-bottom: 16px;
+            padding: 12px 14px; background: rgba(255, 122, 26, 0.06); border-left: 2px solid var(--orange);
+            border-radius: 6px;
+        }
+        .email-help-text strong { color: var(--orange); }
+        .email-actions {
+            display: flex; gap: 12px; margin-top: 16px;
+        }
+        .email-copy-btn {
+            flex: 1; padding: 12px 20px; background: var(--orange); color: #0a0a0a;
+            border: none; border-radius: 999px; cursor: pointer; font-weight: 700;
+            font-size: 0.9em; transition: all 0.2s;
+        }
+        .email-copy-btn:hover { background: var(--orange-hot); transform: translateY(-2px); }
+        .email-copy-btn.copied { background: #4ade80; }
+        .email-close-btn {
+            flex: 1; padding: 12px 20px; background: transparent; color: var(--text);
+            border: 1px solid var(--border-strong); border-radius: 999px; cursor: pointer;
+            font-weight: 600; font-size: 0.9em; transition: all 0.2s;
+        }
+        .email-close-btn:hover { background: rgba(255,255,255,0.05); }
+
         @media (max-width: 600px) {
             .detail-modal { padding: 0; }
             .detail-content { border-radius: 0; margin: 0; min-height: 100vh; }
@@ -355,6 +404,8 @@
             .detail-name { font-size: 1.5em; }
             .detail-meta-item { padding: 8px 12px; border-right: none; border-bottom: 1px solid var(--border); flex: 1 1 100%; }
             .detail-meta-item:last-child { border-bottom: none; }
+            .email-preview { font-size: 0.85em; max-height: 300px; }
+            .email-actions { flex-direction: column; }
         }
 
         /* === FEEDBACK + FAVORITE BUTTONS (floating on compact card) === */
@@ -842,12 +893,24 @@
                         </div>` : ''}
 
                         <div class="detail-actions">
+                            <button class="detail-action-btn" onclick="openEmailDraft('${(g.name).replace(/'/g, "\\'")}');">
+                                📄 Draft Email
+                            </button>
                             <button class="detail-action-btn favorite ${isFav ? 'favorited' : ''}" onclick="toggleFavorite('${(g.name).replace(/'/g, "\\'")}'); openGuestDetail('${(g.name).replace(/'/g, "\\'")}');">
-                                ${isFav ? '❤️ Saved' : '🤍 Save Guest'}
+                                ${isFav ? '❤️ Saved' : '🤍 Save'}
                             </button>
                             <button class="detail-action-btn" onclick="closeGuestDetail(); openFeedbackModal('${(g.name).replace(/'/g, "\\'")}');">
-                                👎 Not a Fit
+                                👎 Not Fit
                             </button>
+                        </div>
+                        <div class="email-draft-panel" id="emailPanel_${g.name.replace(/[^a-z0-9]/gi, '_')}">
+                            <div class="email-draft-title">📄 Outreach Email Draft</div>
+                            <div class="email-help-text">Replace the <strong>[BLANKS]</strong> below and copy to send. Most of the email is ready to go.</div>
+                            <div class="email-preview" id="emailPreview_${g.name.replace(/[^a-z0-9]/gi, '_')}"></div>
+                            <div class="email-actions">
+                                <button class="email-copy-btn" onclick="copyEmailToClipboard('${g.name.replace(/[^a-z0-9]/gi, '_')}')">📋 Copy to Clipboard</button>
+                                <button class="email-close-btn" onclick="closeEmailDraft('${g.name.replace(/[^a-z0-9]/gi, '_')}')">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -863,6 +926,109 @@
             modal.classList.remove('active');
             modal.innerHTML = '';
             document.body.style.overflow = '';
+        }
+
+        // === EMAIL DRAFT FUNCTIONS ===
+        function getSafeId(name) {
+            return name.replace(/[^a-z0-9]/gi, '_');
+        }
+
+        function getRandomGuests(excludeName, count = 3) {
+            // Get random guests from GUESTS array, excluding the current guest
+            const filtered = GUESTS.filter(g => g.name !== excludeName);
+            const shuffled = filtered.sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, count).map(g => g.name);
+        }
+
+        function openEmailDraft(guestName) {
+            const g = GUESTS.find(x => x.name === guestName);
+            if (!g) return;
+
+            const safeId = getSafeId(guestName);
+            const panelId = `emailPanel_${safeId}`;
+            const previewId = `emailPreview_${safeId}`;
+
+            // Get 2-3 random notable guests for credibility
+            const notableGuests = getRandomGuests(guestName, 3);
+            const notableList = notableGuests.join(', ');
+
+            // Build the email template
+            const emailText = `Hi ${g.name},
+
+I hope you're well?
+
+I'm reaching out with an opportunity from The Road To Success podcast.
+
+[EVENT/TIMING - e.g., "Ahead of your event this weekend" or "With your upcoming project"]
+
+The show regularly ranks No.1 on automotive charts and we've had some notable guests including ${notableList}. For one recent episode, we opened the back of our mobile podcast studio to capture unique content.
+
+We'd love to do something similar with you [LOCATION/ANGLE - e.g., "at your studio/workshop/location to showcase your work"].
+
+The show focuses on the positive aspects of your journey to success, offering a relaxed and professional environment for an open conversation.
+
+[OPTIONAL: "Benedict would happily donate [CHARITY/AMOUNT - e.g., "£3,000 to the charity of your choice"] to thank you for this opportunity."]
+
+Interviews take 60 minutes. Would this week work? We're flexible on days and timing.
+
+We think this opportunity presents itself at the perfect time.
+
+Let me know if this could be possible?
+
+Thanks,
+Oriana`;
+
+            // Display in preview
+            const preview = document.getElementById(previewId);
+            if (preview) {
+                // Escape and highlight blanks
+                const displayText = emailText
+                    .replace(/\[([^\]]+)\]/g, '<span class="email-blank">[$1]</span>');
+                preview.innerHTML = displayText;
+            }
+
+            // Store email text for copying (plain version)
+            window.emailDraftText = emailText;
+
+            // Show the panel
+            const panel = document.getElementById(panelId);
+            if (panel) {
+                panel.classList.add('active');
+                // Scroll into view
+                setTimeout(() => {
+                    panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }, 100);
+            }
+        }
+
+        function closeEmailDraft(safeId) {
+            const panelId = `emailPanel_${safeId}`;
+            const panel = document.getElementById(panelId);
+            if (panel) {
+                panel.classList.remove('active');
+            }
+        }
+
+        function copyEmailToClipboard(safeId) {
+            const emailText = window.emailDraftText;
+            if (!emailText) return;
+
+            // Copy to clipboard
+            navigator.clipboard.writeText(emailText).then(() => {
+                // Show success feedback
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = '✅ Copied!';
+                btn.classList.add('copied');
+
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('copied');
+                }, 2000);
+            }).catch(err => {
+                console.error('Failed to copy:', err);
+                alert('Copy failed. Please try again.');
+            });
         }
 
         function toggleFavorite(guestName) {
