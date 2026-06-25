@@ -687,6 +687,57 @@
             
         ];
 
+        // === PAST RTS GUESTS (for email credibility) ===
+        // Curated list of the most recognizable past Road To Success guests.
+        // Used by the email draft feature to provide social proof.
+        // Source: /data/.openclaw/workspace/memory/podcast-guests.md (151 episodes verified)
+        const PAST_RTS_GUESTS = [
+            // ⭐ Tier 1: Global / household names
+            "Jay Leno",
+            "Jodie Kidd",
+            "Ant Anstead",
+            "Chip Foose",
+            "Ben Collins (The Stig)",
+            "Colin Furze",
+            "Magnus Walker",
+            "Tiff Needell",
+            "Andy Wilman",
+            "Guenther Steiner",
+            // ⭐ Tier 2: Major automotive/motorsport names
+            "Mike Brewer",
+            "Susie Wolff",
+            "Mat Watson (CarWow)",
+            "Karun Chandhok",
+            "Will Buxton",
+            "Rachel Brookes",
+            "Simon Lazenby",
+            "Nicki Shields",
+            "Henry Catchpole",
+            "Valentino Balboni",
+            "Ian Callum",
+            "Otmar Szafnauer",
+            "Billy Monger",
+            "Dave Kindig (Bitchin' Rides)",
+            "Jonny Smith (Late Brake Show)",
+            // ⭐ Tier 3: YouTube heavyweights
+            "Mat Armstrong",
+            "Shmee150",
+            "AutoAlex",
+            "Larry Chen",
+            "Misha Charoudin",
+            "Jamie Officially Gassed",
+            "Tavarish",
+            "Salomondrin",
+            "VinWiki",
+            "Mark Moss (Autobrite)",
+            // ⭐ Tier 4: Industry insiders
+            "Matt Farah",
+            "Tom Hartley",
+            "Richard Porter (Top Gear)",
+            "Carl Hartley",
+            "Brabus CEO"
+        ];
+
         function getWeekNumber(dateStr) {
             const date = new Date(dateStr + 'T00:00:00Z');
             const today = new Date();
@@ -933,11 +984,20 @@
             return name.replace(/[^a-z0-9]/gi, '_');
         }
 
-        function getRandomGuests(excludeName, count = 3) {
-            // Get random guests from GUESTS array, excluding the current guest
-            const filtered = GUESTS.filter(g => g.name !== excludeName);
-            const shuffled = filtered.sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, count).map(g => g.name);
+        function getRandomPastGuests(count = 3) {
+            // Get random NOTABLE PAST RTS guests for email credibility
+            // (people who have actually been on the podcast, not future suggestions)
+            // Weighted toward the top of the list (Tier 1 most likely to appear).
+            const pool = [...PAST_RTS_GUESTS];
+            const selected = [];
+            for (let i = 0; i < count && pool.length > 0; i++) {
+                // Weight toward earlier (more notable) entries: square the index range
+                const r = Math.random() * Math.random(); // bias toward 0
+                const idx = Math.floor(r * pool.length);
+                selected.push(pool[idx]);
+                pool.splice(idx, 1); // no duplicates
+            }
+            return selected;
         }
 
         function openEmailDraft(guestName) {
@@ -948,9 +1008,13 @@
             const panelId = `emailPanel_${safeId}`;
             const previewId = `emailPreview_${safeId}`;
 
-            // Get 2-3 random notable guests for credibility
-            const notableGuests = getRandomGuests(guestName, 3);
-            const notableList = notableGuests.join(', ');
+            // Get 2-3 random NOTABLE PAST RTS guests for credibility
+            // (real past guests, not dashboard suggestions)
+            const notableGuests = getRandomPastGuests(3);
+            // Format: "X, Y and Z" (Oxford-comma-free, more natural for email)
+            const notableList = notableGuests.length >= 2
+                ? notableGuests.slice(0, -1).join(', ') + ' and ' + notableGuests[notableGuests.length - 1]
+                : notableGuests[0] || '';
 
             // Build the email template
             const emailText = `Hi ${g.name},
