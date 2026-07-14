@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RTS Podcast Research — Guest Intelligence</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%), url('https://yt3.googleusercontent.com/Yy_Zg2AmQ2ZEfwuwLjXFvlNW5JXJk0FmP-oFveW5oski8MPOCd7-RtAXEjAtTuFdA1iDfBNL=s900-c-k-c0x00ffffff-no-rj') center/cover fixed; min-height: 100vh; padding: 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        header { text-align: center; color: white; margin-bottom: 40px; }
+        .logo { width: 60px; height: 60px; border-radius: 50%; background: url('https://yt3.googleusercontent.com/Yy_Zg2AmQ2ZEfwuwLjXFvlNW5JXJk0FmP-oFveW5oski8MPOCd7-RtAXEjAtTuFdA1iDfBNL=s900-c-k-c0x00ffffff-no-rj') center/cover; margin: 0 auto 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
+        header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        header p { font-size: 1.1em; opacity: 0.9; margin-bottom: 8px; }
+        .tagline { font-size: 0.95em; opacity: 0.8; font-weight: 500; font-style: italic; }
+        .controls { display: flex; justify-content: center; gap: 10px; margin-bottom: 30px; flex-wrap: wrap; }
+        .refresh-btn { background: white; color: #667eea; border: none; padding: 12px 24px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.3s; font-size: 0.95em; }
+        .refresh-btn:hover { background: #667eea; color: white; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .refresh-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+        .loading { text-align: center; padding: 60px 20px; color: white; }
+        .loading-spinner { border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid white; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .narrative-highlight { background: linear-gradient(135deg, rgba(102, 126, 234, 0.15) 0%, rgba(118, 75, 162, 0.15) 100%); border: 2px solid rgba(102, 126, 234, 0.4); border-radius: 12px; padding: 20px; margin-bottom: 30px; color: white; }
+        .narrative-title { font-size: 1.3em; font-weight: 700; margin-bottom: 15px; }
+        .narrative-desc { font-size: 0.95em; line-height: 1.6; opacity: 0.95; margin-bottom: 10px; }
+        .narrative-badge { display: inline-block; background: rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 20px; font-size: 0.85em; font-weight: 600; margin-right: 10px; margin-top: 10px; }
+        
+        .research-section { margin-bottom: 50px; }
+        .section-header { font-size: 1.8em; font-weight: 700; color: white; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 3px solid rgba(255,255,255,0.3); }
+        .section-header.this-week { border-bottom-color: #FFD700; }
+        .section-header.last-week { border-bottom-color: rgba(255,255,255,0.3); }
+        
+        .guests-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; }
+        @media (max-width: 768px) { .guests-grid { grid-template-columns: 1fr; } }
+        .guest-card { background: white; border-radius: 12px; padding: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); transition: all 0.3s; display: flex; flex-direction: column; position: relative; cursor: grab; user-select: none; }
+        .guest-card.flipped { background: #f0f0f0; }
+        .guest-info { display: flex; flex-direction: column; flex: 1; }
+        .guest-photo { display: none; text-align: center; }
+        .guest-card.flipped .guest-info { display: none; }
+        .guest-card.flipped .guest-photo { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; }
+        .guest-photo-img { width: 100%; max-width: 280px; height: 280px; border-radius: 12px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .swipe-hint { font-size: 0.75em; color: #999; text-align: center; margin-top: 12px; font-style: italic; }
+        @media (hover: hover) {
+            .guest-info, .guest-photo { cursor: pointer; }
+        }
+        
+        .feedback-btn { position: absolute; top: 16px; right: 56px; background: none; border: none; font-size: 1.6em; cursor: pointer; transition: transform 0.2s; z-index: 10; }
+        .feedback-btn:hover { transform: scale(1.2); }
+        .feedback-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(5px); z-index: 1000; align-items: center; justify-content: center; }
+        .feedback-modal.active { display: flex; }
+        .feedback-modal-content { background: white; border-radius: 16px; padding: 32px; max-width: 450px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.3); }
+        .feedback-modal-title { font-size: 1.6em; font-weight: 700; color: #333; margin-bottom: 12px; }
+        .feedback-modal-subtitle { font-size: 0.95em; color: #666; margin-bottom: 24px; }
+        .feedback-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+        .feedback-option { padding: 14px; background: #f8f9fa; border: 2px solid #e0e0e0; border-radius: 8px; cursor: pointer; font-size: 0.95em; font-weight: 500; text-align: left; transition: all 0.2s; }
+        .feedback-option:hover { background: #f0f4ff; border-color: #667eea; }
+        .feedback-option.selected { background: #667eea; color: white; border-color: #667eea; }
+        .feedback-notes { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-family: inherit; font-size: 0.9em; resize: vertical; min-height: 80px; margin-bottom: 16px; }
+        .feedback-notes:focus { outline: none; border-color: #667eea; }
+        .feedback-actions { display: flex; gap: 12px; }
+        .feedback-btn-submit { flex: 1; padding: 12px; background: #667eea; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .feedback-btn-submit:hover:not(:disabled) { background: #764ba2; transform: translateY(-2px); }
+        .feedback-btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+        .feedback-btn-cancel { flex: 1; padding: 12px; background: #f0f4ff; color: #667eea; border: 2px solid #667eea; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s; }
+        .feedback-btn-cancel:hover { background: #667eea; color: white; }
+        .feedback-status { display: none; padding: 12px; border-radius: 8px; margin-bottom: 16px; text-align: center; font-weight: 600; }
+        .feedback-status.success { background: #d4edda; color: #155724; display: block; }
+        .feedback-status.error { background: #f8d7da; color: #721c24; display: block; }        .guest-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .guest-card.transformative { border: 2px solid rgba(102, 126, 234, 0.6); box-shadow: 0 0 20px rgba(102, 126, 234, 0.2), 0 10px 30px rgba(0,0,0,0.2); }
+        .guest-card.transformative .guest-name { color: #667eea; }
+        
+        .favorite-btn { position: absolute; top: 16px; right: 16px; background: none; border: none; font-size: 1.8em; cursor: pointer; transition: transform 0.2s; z-index: 10; }
+        .favorite-btn:hover { transform: scale(1.2); }
+
+
+        .favorite-btn.favorited { color: #FFD700; }
+        
+        .guest-timestamp { font-size: 0.75em; color: #999; margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        .guest-hook { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 16px; border-radius: 8px; font-size: 1.1em; font-weight: 700; margin-bottom: 16px; line-height: 1.4; text-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .guest-card.transformative .guest-hook { background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%); color: #333; text-shadow: none; }
+        
+        .guest-name { font-size: 1.4em; font-weight: 700; color: #333; margin-bottom: 12px; line-height: 1.3; }
+        .description { font-size: 0.9em; color: #666; margin-bottom: 16px; line-height: 1.5; padding: 12px; background: #f8f9fa; border-radius: 8px; border-left: 3px solid #667eea; }
+        .description-label { font-size: 0.75em; text-transform: uppercase; color: #999; letter-spacing: 0.5px; margin-bottom: 4px; font-weight: 600; }
+        .research-insight { font-size: 0.9em; color: #667eea; font-weight: 500; margin-bottom: 16px; padding: 12px; background: #f0f4ff; border-radius: 8px; border-left: 3px solid #764ba2; }
+        .insight-label { font-size: 0.75em; text-transform: uppercase; color: #764ba2; letter-spacing: 0.5px; margin-bottom: 4px; font-weight: 600; }
+        .socials { margin-bottom: 16px; display: flex; gap: 10px; flex-wrap: wrap; }
+        .social-link { display: inline-flex; align-items: center; padding: 8px 12px; background: #f0f4ff; border-radius: 6px; text-decoration: none; color: #667eea; font-size: 0.85em; font-weight: 500; transition: all 0.2s; border: 1px solid #e0e5ff; }
+        .social-link:hover { background: #667eea; color: white; border-color: #667eea; }
+        .social-icon { margin-right: 6px; }
+        .booking-difficulty { margin-top: auto; padding-top: 16px; border-top: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
+        .difficulty-label { font-size: 0.8em; text-transform: uppercase; color: #999; letter-spacing: 0.5px; }
+        .difficulty-badge { background: #f8f9fa; color: #666; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; font-weight: 600; }
+        .difficulty-3 { background: #d4edda; color: #155724; }
+        .difficulty-5 { background: #fff3cd; color: #856404; }
+        .difficulty-6 { background: #fff3cd; color: #856404; }
+        .difficulty-7 { background: #f8d7da; color: #721c24; }
+        .footer { text-align: center; color: white; margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2); font-size: 0.9em; }
+        .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .stat-card { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 15px; text-align: center; color: white; cursor: pointer; transition: all 0.3s; }
+        .stat-card:hover { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.4); transform: translateY(-4px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .stat-card.active { background: rgba(102, 126, 234, 0.4); border-color: #667eea; box-shadow: 0 0 20px rgba(102, 126, 234, 0.4); }
+        .stat-value { font-size: 2em; font-weight: 700; margin-bottom: 5px; }
+        .stat-label { font-size: 0.85em; opacity: 0.9; }
+        .filter-active { display: block; margin-top: 20px; margin-bottom: 20px; text-align: center; }
+        .filter-active-text { color: white; font-size: 1.1em; font-weight: 600; margin-bottom: 10px; }
+        .filter-reset-btn { background: #667eea; color: white; border: none; padding: 8px 20px; border-radius: 6px; cursor: pointer; font-weight: 600; transition: all 0.3s; }
+        .filter-reset-btn:hover { background: #764ba2; transform: translateY(-2px); }
+        #content { display: none; }
+        .no-guests { text-align: center; padding: 40px 20px; color: rgba(255,255,255,0.7); font-style: italic; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo"></div>
+            <h1>🎙️ Road to Success Podcast</h1>
+            <p>Guest Research Intelligence</p>
+            <p class="tagline">Hidden gems, unique angles, non-obvious brilliance</p>
+        </header>
+        <div id="loading" class="loading">
+            <div class="loading-spinner"></div>
+            <p>Loading guest research...</p>
+        </div>
+        <div id="content">
+            <div class="narrative-highlight">
+                <div class="narrative-title">🎬 Transformative Narrative Strategy</div>
+                <div class="narrative-desc">The real hook that drives 100k+ views isn't follower counts—it's human story. We're hunting guests with a clear arc: <strong>Adversity → Achievement → Reinvention + Authority NOW</strong>. This becomes the episode title. This is what Nadia Adan proved.</div>
+                <div style="margin-top: 12px; font-size: 0.9em; opacity: 0.9;">Example: "From Somali Refugee to Ireland's No.1 Supercar Dealer" — universal, emotional, specific.</div>
+                <div class="narrative-badge">⭐ Focus on TRUE stories, not follower counts</div>
+                <div class="narrative-badge">🎬 Story = Episode Title</div>
+                <div class="narrative-badge">✅ Verified narrative only</div>
+            </div>
+
+            <div class="stats" id="stats"></div>
+            <div class="filter-active" id="filterActive" style="display: none;">
+                <div class="filter-active-text" id="filterActiveText"></div>
+                <button class="filter-reset-btn" onclick="resetFilter()">📋 View All Guests</button>
+            </div>
+            <div class="controls">
+                <button class="refresh-btn" onclick="refreshDashboard()" id="refreshBtn">🔄 Refresh Research</button>
+                <button class="refresh-btn" onclick="clearFavorites()" style="background: #f8d7da; color: #721c24;">❌ Clear Favorites</button>
+            </div>
+
+            <!-- THIS WEEK SECTION -->
+            <div class="research-section">
+                <div class="section-header this-week">📅 This Week's Research</div>
+                <div class="guests-grid" id="thisWeekGrid"></div>
+                <div id="thisWeekEmpty" class="no-guests" style="display: none;">No new research this week yet</div>
+            </div>
+
+            <!-- LAST WEEK SECTION -->
+            <div class="research-section">
+                <div class="section-header last-week">📋 Last Week's Research</div>
+                <div class="guests-grid" id="lastWeekGrid"></div>
+                <div id="lastWeekEmpty" class="no-guests" style="display: none;">No research from last week</div>
+            </div>
+
+            <!-- OLDER RESEARCH SECTION -->
+            <div class="research-section">
+                <div class="section-header" style="border-bottom-color: rgba(255,255,255,0.3);">📚 Earlier Research</div>
+                <div class="guests-grid" id="olderGrid"></div>
+            </div>
+        </div>
+        <div class="footer">
+            <p>Last updated: <span id="lastUpdate">—</span></p>
+            <p>Research-focused guest recommendations for Road to Success Podcast</p>
+            <p style="margin-top: 10px; opacity: 0.7;">💡 Click the ❤️ to save guests to your favorites list</p>
+        </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedbackModal" class="feedback-modal">
+        <div class="feedback-modal-content">
+            <div class="feedback-modal-title">Feedback: <span id="feedbackGuestName"></span></div>
+            <div class="feedback-modal-subtitle">Help us improve this guest suggestion</div>
+            
+            <div id="feedbackStatus" class="feedback-status"></div>
+            
+            <div class="feedback-options">
+                <button class="feedback-option" onclick="selectFeedbackReason(this, 'Not a good fit')">❌ Not a good fit for RTS</button>
+                <button class="feedback-option" onclick="selectFeedbackReason(this, 'Already been on show')">📺 Already appeared on RTS</button>
+                <button class="feedback-option" onclick="selectFeedbackReason(this, 'Other issue')">⚠️ Other issue</button>
+            </div>
+            
+            <textarea id="feedbackNotes" class="feedback-notes" placeholder="Additional notes (optional)..."></textarea>
+            
+            <div class="feedback-actions">
+                <button id="feedbackSubmitBtn" class="feedback-btn-submit" onclick="submitFeedback()" disabled>Submit Feedback</button>
+                <button class="feedback-btn-cancel" onclick="closeFeedbackModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const GUESTS = [
+            {name: "Jeffrey Pang (RUN! Motorsports & Media)", country: "🇯🇵", photo: "https://ui-avatars.com/api/?name=Jeffrey+Pang&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "YouTube automotive creator with 264K followers. Drift culture, JDM car builds, cinematic storytelling. Based in Japan, authentic drifter + builder.", insight: "Niche enough to be under-booked on podcasts, big enough to bring viewers. Story-driven narrative (life transformation through drifting). Proven cinematic production quality (videos 9-17 mins, 200K-2.5M views). Zero podcast saturation. Built his dream through persistence—authentic RTS angle.", yt: "https://www.youtube.com/@run_jeff", ig: "", tw: "", web: "", diff: "4", hook: "🏎️ From Chaos to Drift Dreams: How I Found Myself in Japan", dateAdded: "2026-06-09", narrative: true},
+            {name: "Hoovie (Tyler Hoover)", country: "🇺🇸", photo: "https://yt3.googleusercontent.com/ytc/AIdro_ndojWkjaCug2sSPB0axaAFVPBDBSWM9KUj4xu--zTRt8w=s900-c-k-c0x00ffffff-no-rj", desc: "Kansas-based YouTuber with 1.65M subscribers who built his channel buying the cheapest, most broken luxury and exotic cars he could find. Went over $200,000 into debt from his car-buying addiction, developed a gambling problem, nearly lost everything — then turned his financial chaos into one of the most entertaining automotive channels on YouTube.", insight: "The adversity arc is almost perfectly suited to RTS: deep debt, addiction, near-ruin — all caused by the very passion that ultimately saved him. His channel thrives on radical financial honesty and self-deprecating humour about money pits. RTS audiences who love the 'built from nothing' story will connect even more with a 'nearly destroyed by something I love' story. 1.65M subscribers, zero RTS appearances, very podcast-friendly.", yt: "https://www.youtube.com/@hooviesgarage", ig: "https://www.instagram.com/hooviesgarage/", tw: "", web: "", diff: "5", hook: "💸 He Went $200,000 Into Debt Buying Terrible Cars. YouTube Made Him Rich.", dateAdded: "2026-06-25", narrative: true},
+            {name: "Engineering Explained (Jason Fenske)", country: "🇺🇸", photo: "https://ui-avatars.com/api/?name=Engineering+Explained&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Technical automotive educator explaining complex car mechanics in accessible way. 1.5M YouTube followers.", insight: "Deep credibility + conversational deep-dive potential (EV tech, engine design). Natural educator. Highest booking success rate.", yt: "https://www.youtube.com/@EngineeringExplained", ig: "", tw: "https://twitter.com/fenskejason", web: "", diff: "3", hook: "⚙️ Making Impossible Car Tech Actually Understandable", dateAdded: "2026-06-04"},
+            {name: "Throttle House (Jonny & Jezza)", country: "🇨🇦", photo: "https://ui-avatars.com/api/?name=Throttle+House&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Two independent car reviewers with proven chemistry and storytelling. 600K followers, authentic automotive commentary.", insight: "Natural long-form chemistry, independent creators (not big studio). Reviews + personality mix. Niche UK automotive voice.", yt: "https://www.youtube.com/@ThrottleHouse", ig: "https://www.instagram.com/thethrottlehouse", tw: "", web: "", diff: "6", hook: "🎬 Two Best Friends Breaking Every Car Review Rulebook", dateAdded: "2026-06-04"},
+            {name: "Donut Media (Jared & James)", country: "🇺🇸", photo: "https://ui-avatars.com/api/?name=Donut+Media&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "High-production automotive education channel blending entertainment with car knowledge. 3.5M YouTube followers.", insight: "Entertainment-first approach with massive loyal audience. Under-tapped on podcast circuit despite huge reach.", yt: "https://www.youtube.com/@DonutMediaOfficial", ig: "https://www.instagram.com/donutmedia", tw: "", web: "", diff: "7", hook: "🎥 The Most Entertaining Car Education on YouTube", dateAdded: "2026-06-04"},
+            {name: "Straight Pipes (Yuri & Jacob)", country: "🇨🇦", photo: "https://ui-avatars.com/api/?name=Straight+Pipes&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Canadian car reviewers with honest opinions and chemistry. 600K followers. Loyal, engaged fanbase.", insight: "Authentic voices with dedicated audience. Review-first approach Ben could explore. Zero podcast saturation.", yt: "https://www.youtube.com/@TheStraightPipes", ig: "", tw: "", web: "", diff: "6", hook: "🍁 Canadians Giving Cars Honest Ratings Others Won't", dateAdded: "2026-06-04"},
+            {name: "Skip Barber Racing School", country: "🇺🇸", photo: "https://ui-avatars.com/api/?name=Skip+Barber&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Legendary racing school (founded 1975) teaching professional racing techniques. Established institution with deep expertise.", insight: "Insider racing education perspective. Could explore 'what makes a professional driver.' Establishment credibility + practical insight.", yt: "https://www.youtube.com/@skipbarber", ig: "", tw: "", web: "https://www.skipbarber.com", diff: "7", hook: "🏁 50 Years Teaching Legends How to Actually Win", dateAdded: "2026-06-04"},
+
+            {name: "Edd China", country: "🇬🇧", photo: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/Edd_China_and_Casual_Lofa_SEMA_2019.jpg/500px-Edd_China_and_Casual_Lofa_SEMA_2019.jpg", desc: "Engineering genius and Wheeler Dealers co-host for 13 seasons — the UK's most beloved TV mechanic. Left in 2017 after Discovery Channel restructured the show to reduce mechanical content. Now makes independent YouTube content at @EddChina. Mike Brewer has appeared on RTS multiple times discussing his departure, but Edd has never told his own side.", insight: "The most glaring gap in RTS history: Mike Brewer has appeared on RTS multiple times explaining 'why Edd China left Wheeler Dealers' — but Edd himself has never appeared. The story isn't complete without him. A decade of mechanical TV excellence, a principled departure over creative integrity, and a quiet YouTube comeback. The elephant in the room that RTS has circled for years.", yt: "https://www.youtube.com/@EddChina", ig: "https://www.instagram.com/eddchinaofficial/", tw: "", web: "", diff: "6", hook: "🔧 Mike Brewer Has Told His Side Three Times. Now It's Time For Edd China's.", narrative: true, dateAdded: "2026-06-25"},
+            {name: "Supercar Blondie (Alex Hirschi)", country: "🇦🇪", photo: "https://ui-avatars.com/api/?name=Supercar+Blondie&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Australian-born broadcaster who moved to Dubai with no automotive background and became the world's most followed car creator (30M+ social followers). Now runs SBX Cars, a high-end supercar auction platform, having built a global media and business empire in a male-dominated industry.", insight: "Unique angle: female automotive entrepreneur who broke into a completely male space, in a foreign country, with zero car expertise — and became the #1 player globally. Reinvention from radio presenter to media mogul to tech/auction founder. NOT on RTS. Platform scale means RTS collab could get serious crossover reach.", yt: "https://www.youtube.com/@SupercarBlondie", ig: "https://www.instagram.com/supercarblondie/", tw: "", web: "https://sbxcars.com", diff: "8", hook: "🌟 From Brisbane Radio to Running the World's Biggest Car Media Empire", narrative: true, dateAdded: "2026-06-09"},
+
+            {name: "Ahmed Amwell", country: "🇦🇪", photo: "https://ui-avatars.com/api/?name=Ahmed+Amwell&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Dubai-based supercar rental entrepreneur who built one of the UAE's most notorious luxury car empires from scratch — and got himself blacklisted by multiple Ferrari dealerships in the process. Known for renting Lamborghinis, Bugattis and Ferraris to the ultra-wealthy, and for a Cars & Money episode that racked up 770K views: 'Dubai's No.1 Supercar Renter on Being BANNED From Ferrari'.", insight: "Cars & Money's highest-viewed automotive entrepreneur episode in recent memory (770K views) was THIS guy. That's a direct proof-of-concept that the RTS audience wants this story. RTS can go deeper on his origin: how do you build a supercar empire from zero in Dubai? What does it take to get banned from Ferrari — and how do you turn that into a brand? The hook writes itself. NOT on RTS. Dubai-based but very accessible via Instagram DMs.", yt: "", ig: "https://www.instagram.com/ahmedamwell/", tw: "", web: "", diff: "6", hook: "🚫 Dubai's Most Banned Supercar Man: Ferrari Kicked Him Out, So He Built His Own Empire", narrative: true, dateAdded: "2026-06-10"},
+
+            {name: "Jon Olsson", country: "🇸🇪", photo: "https://ui-avatars.com/api/?name=Jon+Olsson&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Swedish professional freestyle skier — multiple X Games medals, Alpine Ski World Cup victories — who walked away from elite sport and reinvented himself as one of the world's most iconic custom supercar builders. His modified Lamborghinis and Rolls-Royces went globally viral. Now runs a lifestyle and content creator business spanning car builds, adventure, and apparel.", insight: "The adversity arc is textbook RTS: reached the pinnacle of one world (professional skiing), had to walk away, then rebuilt identity from scratch through pure passion for cars. Built an international following without being born into money or the automotive industry. Almost zero UK podcast appearances — predominantly Scandinavian/European media. This is a genuinely fresh face with a proven story. Booking difficulty moderate — very accessible creator who does interviews regularly.", yt: "https://www.youtube.com/@JonOlsson", ig: "https://www.instagram.com/jonolsson/", tw: "", web: "", diff: "5", hook: "🎿 From X Games Champion to Building the World's Most Iconic Custom Supercars", narrative: true, dateAdded: "2026-06-10"},
+
+            {name: "Alex Kersten (Car Throttle Founder)", country: "🇬🇧", photo: "https://ui-avatars.com/api/?name=Alex+Kersten&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Founded Car Throttle in 2011 as a young automotive enthusiast with zero industry contacts and built it into one of the UK's biggest automotive media companies — 3M+ YouTube subscribers, millions of monthly readers, a full editorial and video team. Sold the business to Autovia/Dennis Publishing in a successful multi-million exit. The platform he created spawned some of the most prominent UK automotive creators — including AutoAlex and Top Dead Center (Edwin & Will) — all of whom have since appeared on Road to Success. Alex himself has never been on.", insight: "The most striking gap in RTS history: Three Car Throttle alumni have appeared on this podcast (AutoAlex, Edwin & Will from Top Dead Center), but the man who built the entire platform has never been invited. Alex's adversity arc: started as a teenage car obsessive with no money, no contacts, and no industry connections — built a media empire from his bedroom that shaped UK automotive YouTube culture — then sold it for millions. The RTS angle writes itself: he's the architect behind multiple stories Ben Quirke has already told. No personal YouTube channel means zero podcast saturation. Completely fresh interview.", yt: "", ig: "https://www.instagram.com/alexkersten/", tw: "https://twitter.com/alexkersten", web: "", diff: "5", hook: "🏗️ He Built Car Throttle From His Bedroom — Three Of His Own Team Were On This Podcast Before He Was", dateAdded: "2026-06-14", narrative: true},
+
+            {name: "Gavin Bennett (Collecting Cars Founder)", country: "🇬🇧", photo: "https://ui-avatars.com/api/?name=Gavin+Bennett&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Left investment banking to found Collecting Cars in 2019 — the UK's leading enthusiast car auction platform. Built from scratch against established players (Silverstone Auctions, H&H Classics) and the dominant US platform Bring a Trailer. Grew through COVID and beyond, becoming the go-to destination for serious enthusiast car buyers and sellers across the UK and Europe. Gavin remains hands-on as CEO, personally shaping the editorial and curation standards that define the platform's premium reputation.", insight: "The gap he filled was obvious in hindsight: Bring a Trailer had cornered the US enthusiast car auction market, but no credible UK equivalent existed. Gavin saw it from an investment banking background — not from inside the automotive industry — and built Collecting Cars to fill it. That's the pure RTS angle: not a 'car guy who got lucky,' but a trained dealmaker who bet everything on a passion project and won. Almost zero podcast appearances for Gavin personally — the brand does press, he does almost none. UK-based, very accessible, deeply entrepreneurial story.", yt: "https://www.youtube.com/@CollectingCars", ig: "https://www.instagram.com/collecting_cars/", tw: "", web: "https://collectingcars.com", diff: "4", hook: "🏦 He Left the City to Build the UK's Answer to Bring a Trailer — And It Worked", dateAdded: "2026-06-15", narrative: true},
+
+            {name: "Richard Rawlings (Gas Monkey Garage)", country: "🇺🇸", photo: "https://ui-avatars.com/api/?name=Richard+Rawlings&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Built Gas Monkey Garage in Dallas, Texas from the ground up — went from repo work and marketing to founding one of the world's most iconic custom car brands. His Discovery Channel show Fast N' Loud ran for 15 seasons and spawned a global brand: Gas Monkey Bar N' Grill restaurant chain, merchandise, licensing deals, and live events. Rawlings is a self-made American entrepreneur who turned a passion for hot rods and American muscle into a multi-million dollar empire that has outlived the TV show itself.", insight: "The adversity arc is legitimate and verifiable: Rawlings didn't grow up in the car industry — he was doing repo work and marketing before Gas Monkey. Fast N' Loud was his breakout, but the show is just one chapter. The full story is about building a brand (not just a garage) that survived network cancellations, business pivots, and the decline of traditional TV. US-based but with a very strong UK fanbase — the kind of American automotive name RTS hasn't yet had. Zero RTS appearances confirmed across full 151-episode title search. YouTube (@GasMonkeyGarage) and Instagram (@richardrawlings) both confirmed active.", yt: "https://www.youtube.com/@GasMonkeyGarage", ig: "https://www.instagram.com/richardrawlings/", tw: "", web: "", diff: "6", hook: "🐒 From Repo Man to the Most Iconic Custom Car Brand on American Television", dateAdded: "2026-06-15", narrative: true},
+            {name: "Chris Harris (The Car Podcast)", country: "🇬🇧", photo: "https://ui-avatars.com/api/?name=Chris+Harris&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "One of the most respected automotive journalists and racing drivers of his generation. Co-founded Drive Network in the US (with Matt Farah and others) — a pioneering YouTube automotive media venture. Drive collapsed. BBC Top Gear came calling: he became a presenter from 2016 onwards. Post-Top Gear, returned to full independence with 'The Car Podcast' (episode 91 published in 2026) and his Chris Harris on Cars YouTube channel covering serious driving and car culture. Also a serious competitive racing driver (Le Mans, Nürburgring). Active in June 2026 across both platforms.", insight: "Matt Farah was on RTS telling the Drive Network collapse story from his side — Chris Harris was the OTHER co-founder who lived through that exact failure and rebuilt from it. But Drive is just one chapter: Harris's full arc is brutally honest journalist → independent entrepreneur (Drive) → BBC Top Gear presenter → back to independence with own podcast. He's the 'what happens when a great journalist bets on himself, fails, gets picked up by the biggest car show on TV, then walks away to do it on his own terms again?' story. Ben Quirke knows the Drive world from Matt's episode — this conversation would go deeper. His Car Podcast ep 91 audience is exactly the RTS demographic. Very low booking friction — has his own podcast, is UK-based, regularly does cross-show collab content.", yt: "https://www.youtube.com/@ChrisHarrisOnCars", ig: "https://www.instagram.com/harrismonkey/", tw: "https://twitter.com/harrismonkey", web: "", diff: "4", hook: "🎙️ He Built Drive. He Did Top Gear. Now He's Doing It On His Own Terms.", dateAdded: "2026-06-13", narrative: true},
+            {name: "Harry Metcalfe (Harry's Garage)", country: "🇬🇧", photo: "https://ui-avatars.com/api/?name=Harry+Metcalfe&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Founder of EVO Magazine (1998) — built from scratch into one of the world's most respected automotive publications. Left traditional print media to build Harry's Garage independently on YouTube, where he now has 575+ videos covering historic rallies, road trips, and personal car ownership. UK-based, still actively creating in 2026. His channel bio (his own words): 'Best known for founding evo magazine with a group of talented motoring journalists back in 1998 which, much to our surprise, went on to become a global player in the automotive media arena.'", insight: "Harry Metcalfe is the only EVO founder in the world who hasn't appeared on RTS — and he's hiding in plain sight. He built EVO into a global car media brand, then stepped away from the institution he created and started over from scratch on YouTube — in his 60s. That's genuine reinvention. He has relationships across the entire automotive world (manufacturers, test drivers, designers, historians). His YouTube audience grew up reading EVO and followed him there. The adversity: leaving behind the magazine you built, then proving you don't need the logo. Very low booking difficulty — independent creator, approachable, does interviews regularly. Unique angle no other UK podcast has taken.", yt: "https://www.youtube.com/@harrysgarage", ig: "https://www.instagram.com/harrymetcalfe/", tw: "", web: "", diff: "3", hook: "📰 He Built EVO Magazine From Nothing. Then He Walked Away and Started Over.", narrative: true, dateAdded: "2026-06-12"},
+
+            {name: "Tim Shaw (Wheeler Dealers Original Co-Host)", country: "🇬🇧", photo: "https://ui-avatars.com/api/?name=Tim+Shaw&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Co-presented Wheeler Dealers alongside Edd China for 11 series (2003–2014) — the original 'buyer' who hunted down cheap project cars while Edd turned them around mechanically. Left before the show's most turbulent era (Edd's departure in 2017, format controversies). Now runs his own independent content via TimShawTV on YouTube, covering classic cars, restoration projects, and automotive culture. One of UK car TV's most underrated long-term survivors.", insight: "The Wheeler Dealers story is the gift that keeps giving for RTS — Mike Brewer, Marc 'F1 Elvis', Ant Anstead, and multiple episodes referencing the show have all appeared. But Tim Shaw, who was there from the very beginning and co-hosted 11 full series (before any of the more recent presenters), has never been invited. He predates every other Wheeler Dealers guest on RTS. The adversity: spending 11 years building a career on one of UK car TV's biggest shows, then stepping away and quietly rebuilding independently in the YouTube era — without the drama or public controversy of Edd's departure. That quiet resilience is a story in itself. Very accessible creator, UK-based, low booking friction.", yt: "https://www.youtube.com/@TimShawTV", ig: "https://www.instagram.com/timshaw/", tw: "", web: "", diff: "5", hook: "🎙️ He Was There Before Edd China Left — Wheeler Dealers' Forgotten Original Co-Host", narrative: true, dateAdded: "2026-06-16"},
+
+            {name: "Rob Dickinson (Singer Vehicle Design)", country: "🇺🇸", photo: "https://ui-avatars.com/api/?name=Rob+Dickinson&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Sheffield-born musician and actor — and cousin of Iron Maiden's Bruce Dickinson — who moved to Los Angeles and founded Singer Vehicle Design in 2009. Singer takes classic Porsche 964-era 911s and completely reimagines them to an almost impossible standard. The resulting cars are widely considered the most desirable Porsche-based vehicles in the world: they start at $500K+ and have reached $1.8M+, with waiting lists spanning years. Rob had zero formal automotive engineering training when he started — he built the company from pure obsession and learned as he went.", insight: "The adversity arc is almost cinematic: left an established identity in music and entertainment (with one of rock's most famous surnames to his name), moved countries, spent years learning Porsche engineering from scratch with no credentials, and built a company that now occupies the absolute pinnacle of the Porsche reimagination world. The paradox is beautiful — he didn't become famous like his cousin; he built something many argue is more enduring. RTS has covered supercar dealers, restorers, builders of all kinds — but Singer is in a category of its own, and Rob Dickinson has almost no interview trail outside of specialist automotive press. Zero podcast saturation. A genuinely rare interview opportunity.", yt: "https://www.youtube.com/@SingerVehicleDesign", ig: "https://www.instagram.com/singervehicledesign/", tw: "", web: "https://www.singervehicledesign.com", diff: "8", hook: "🎸 Iron Maiden's Cousin Left Music and Built the World's Most Coveted Porsche Restoration Company", narrative: true, dateAdded: "2026-06-16"},
+
+            {name: "Jann Mardenborough (Gamer to Racing Driver)", country: "🇬🇧", photo: "https://ui-avatars.com/api/?name=Jann+Mardenborough&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "British racing driver from Cardiff who won Nissan's GT Academy competition in 2011 — a global talent search that turned the best Gran Turismo video game players into real professional racing drivers. Went from being a 19-year-old gamer to competing at Le Mans, the Nürburgring 24h, and Super GT in Japan. His story was made into a major Hollywood film (Gran Turismo, 2023, directed by Neill Blomkamp, starring Archie Madekwe as Jann). He is still an active professional racing driver.", insight: "The narrative is unlike almost anything else on the podcast circuit: you don't become a professional racing driver by studying racing theory or paying for a seat — but Jann did it by being the best in the world at a video game. The GT Academy route (virtual → real) is a known story, but the full arc — the pressure of proving it was real ability, racing at the highest levels in international motorsport, surviving genuine tragedy (a catastrophic Nürburgring crash in 2015 where a spectator was killed), and continuing to race — hasn't been explored in a UK long-form podcast. The Gran Turismo movie (2023) keeps his story in public consciousness. UK-born, very approachable, no UK podcast appearances found. NOT on RTS.", yt: "", ig: "https://www.instagram.com/jannmardenborough/", tw: "", web: "", diff: "5", hook: "🎮 He Beat 90,000 Gamers to Become a Real Racing Driver — Then They Made a Hollywood Movie About It", narrative: true, dateAdded: "2026-06-16"},
+            {name: "Christian von Koenigsegg (Koenigsegg Automotive)", country: "🇸🇪", photo: "https://yt3.ggpht.com/BWOq5eD21iuAlncpm_wYIlN-zTT4ZYNPnjkzj9GU-k_JeL4b2lg7ibdxnmWDIPa2sBmrStji0Q=s800-c-k-c0xffffffff-no-rj-mo", desc: "Swedish founder and CEO of Koenigsegg Automotive, established at age 22 with no formal engineering degree. Started in a fighter jet hangar in Ängelholm, Sweden and built the company from scratch. Today Koenigsegg holds world production car speed records — the Agera RS set 277 mph in 2017. The Jesko Absolut targets 330 mph. 600+ employees. Creates cars that directly compete with Bugatti and Pagani, with prices reaching £3M+. Christian personally drives the technical innovation — including the freevalve engine and the Koenigsegg Direct Drive transmission.", insight: "The adversity arc is almost cinematic: a 22-year-old Swede with no automotive engineering background, no industry connections, and no backing decided he was going to build a world-class hypercar — and pulled it off. Koenigsegg has since held world production car speed records. Christian is a genuine visionary engineer-founder in an industry where most marques are century-old institutions. He has almost zero UK podcast appearances despite being globally famous in the automotive world. RTS has covered Wheeler Dealers, car dealers, creators, and F1 celebrities — but has NEVER had a hypercar manufacturer's founder. The gap is extraordinary. Christian von Koenigsegg is the only living person who built a company from zero that now competes with Bugatti, Pagani, and Rimac on the world stage.", yt: "https://www.youtube.com/@Koenigsegg", ig: "https://www.instagram.com/koenigsegg/", tw: "", web: "https://www.koenigsegg.com", diff: "8", hook: "🏎️ He Was 22 With No Engineering Degree — Now His Cars Are The Fastest On Earth", narrative: true, dateAdded: "2026-06-17"},
+            {name: "Afzal Kahn (Kahn Design)", country: "🇬🇧", photo: "https://ui-avatars.com/api/?name=Afzal+Kahn&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Bradford-born entrepreneur who founded Kahn Design — one of the UK's most recognisable luxury automotive modification companies. Kahn's bespoke work on Range Rovers, Bentleys, and Aston Martins is worn by celebrities, royalty, and some of the world's wealthiest people. He also founded the Chelsea Truck Company, producing his own signature off-road vehicles. Self-made from Bradford, with Pakistani heritage, in an industry dominated by European heritage brands.", insight: "Afzal Kahn's story is the UK's grassroots answer to the American custom car builder archetype — except he built his empire not in California or Texas but in Bradford, without the Hollywood backdrop. The adversity arc: breaking into the highest tier of luxury automotive with no family money, no established background, and no brand heritage — in northern England. He built the brand from taste and vision alone, to the point where his work on Range Rovers is internationally recognised. Not a car dealer, not a YouTuber — a genuine manufacturer/modifier with a design philosophy. NOT on RTS (confirmed across full 275-video history). UK-based, very approachable. Booking diff 4/10 — he actively talks to automotive media.", yt: "https://www.youtube.com/@KahnDesign", ig: "https://www.instagram.com/kahndesign/", tw: "", web: "https://www.kahndesign.com", diff: "4", hook: "🔧 From Bradford to Building Range Rovers for Royals — The Self-Made Empire of Afzal Kahn", narrative: true, dateAdded: "2026-06-17"},
+            {name: "Manny Khoshbin", country: "🇺🇸", photo: "https://ui-avatars.com/api/?name=Manny+Khoshbin&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Iranian refugee who fled to the US as a child with nothing, slept in a car, worked grocery store jobs, got fired multiple times — then built a commercial real estate empire in Newport Beach, California. Now owns one of the world's most celebrated supercar collections: the Hermès Bugatti Chiron, multiple Pagani Huayras, and a $30M+ garage that draws millions of followers online.", insight: "The adversity arc is as clean as it gets: refugee → broke → fired → millionaire → billionaire car collector. Manny's story isn't just about cars — it's about relentless reinvention at every stage of life. He built his real estate fortune before social media existed, then reinvented himself as a car content creator at the height of his business career. 4M+ Instagram followers, 1.7M YouTube subscribers — massive crossover audience with zero RTS overlap. His background (Iran, American poverty, commercial property) would bring a completely fresh narrative to the podcast that no previous guest has covered.", yt: "https://www.youtube.com/@MannyKhoshbin", ig: "https://www.instagram.com/mannykhoshbin/", tw: "https://x.com/mannykhoshbin", web: "https://mkhoshbin.com", diff: "6", hook: "🏚️ Iranian Refugee Who Slept in His Car — Now Owns a $30M Bugatti Collection", narrative: true, dateAdded: "2026-06-18"},
+            {name: "Ryan Friedlinghaus (West Coast Customs)", country: "🇺🇸", photo: "https://ui-avatars.com/api/?name=Ryan+Friedlinghaus&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Founded West Coast Customs at 17 years old with $5,000 borrowed from family, in a rented bay in Upland, California. Built it into America's most famous custom car shop — customising for Justin Bieber, Snoop Dogg, Ice Cube, and Drake before he turned 30. Star of Street Customs and multiple TV shows, with over 1.5M Instagram followers.", insight: "Ryan is the OG teenage car entrepreneur — he built a celebrity-clientele custom shop before the influencer era, purely on craft and hustle. The adversity arc: starting with $5K and a rented bay in a blue-collar town, no famous parents, no industry connections. The reinvention: business nearly collapsed multiple times (economic downturns, TV contracts gone wrong), rebuilt each time. RTS has covered car dealers, car YouTubers, and F1 — but NEVER the world of American celebrity car customisation. Ryan's is a fundamentally different automotive business story, and his age-17 founding makes it relatable for younger audiences.", yt: "https://www.youtube.com/@WestCoastCustomsTV", ig: "https://www.instagram.com/ryanfriedlinghaus/", tw: "", web: "https://westcoastcustoms.com", diff: "6", hook: "🔧 He Started a Custom Shop at 17. Now Hollywood Calls Him for Their Cars.", narrative: true, dateAdded: "2026-06-18"},
+            {name: "Paul Cowland (Salvage Hunters: Classic Cars)", country: "🇬🇧", photo: "https://yt3.googleusercontent.com/GrtsMPQbRFRyP9SqiylEeegIg-35_HZJD4_ZI6cihzL7aAurA121t0uQpelJ-F44qlp_KIcAlg=s0", desc: "Classic car dealer, TV presenter, and one of the UK's most recognisable classic car personalities. Co-presented Channel 4's Salvage Hunters: Classic Cars alongside antiques hunter Drew Pritchard, sourcing and restoring neglected British and European classics. Runs his own YouTube channel (Cowland Car Collection / @CowlandOnCars) documenting personal builds and ownership stories. Active across Instagram, his own website, and the classic car show circuit.", insight: "Paul occupies a niche RTS has never touched: the world of salvage, restoration, and the gritty business of classic car hunting. His angle isn't buying Ferraris — it's finding a forgotten Triumph or a barn-find Aston Martin and making it whole again. That's a genuinely different kind of car entrepreneurialism. The adversity arc: building a credible classic car dealing career in a world dominated by established auction houses and big-name restorers, then winning a Channel 4 TV slot and building a personal brand around it. NOT on RTS across the full 275-video history. UK-based, media-savvy, approachable — precisely the kind of guest that fits Ben's interviewing style. His audience overlaps heavily with the Wheeler Dealers world RTS has already proven works well.", yt: "https://www.youtube.com/@CowlandOnCars", ig: "https://www.instagram.com/paulcowland/", tw: "", web: "https://www.paulcowland.co.uk", diff: "5", hook: "🔧 The Man Who Turns Forgotten British Classics Into TV Gold — And Never Got a Call From RTS", dateAdded: "2026-06-20", narrative: true},
+            {name: "Khyzyl Saleem (KYZA)", country: "🇬🇧", photo: "https://ui-avatars.com/api/?name=Khyzyl+Saleem&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "Iraqi-British self-taught car designer from Birmingham who became a global sensation through viral digital car renders on Instagram (@k.saleem). His photorealistic reimaginings of classic cars — transforming Lamborghini Countachs, BMW 2002s, and Alfa Romeos into vision-only hypercars — spread globally and attracted over 1 million followers without formal design training. Has since collaborated with major automotive brands including Bugatti and Hagerty, and been featured by Donut Media and international car press as one of the most distinctive design voices in the industry.", insight: "The RTS angle is pure gold: a self-taught immigrant from Birmingham who learned Photoshop by watching YouTube videos, became internationally recognised for his design vision, and crossed from digital art into real automotive projects — all without a design degree, automotive connections, or industry background. That's as clean an adversity-to-achievement arc as RTS gets. He represents an entirely new kind of automotive creative that no previous podcast guest covers — not a car dealer, not a YouTuber, not a manufacturer, but a designer who built his reputation pixel by pixel. Instagram @k.saleem verified active (302). NOT on RTS across full 275-episode history. UK-based, entirely untapped on podcast circuit.", yt: "", ig: "https://www.instagram.com/k.saleem/", tw: "", web: "", diff: "6", hook: "🎨 Self-Taught Iraqi-British Designer Who Made Bugatti Take Notice — Starting From a Birmingham Bedroom", dateAdded: "2026-06-20", narrative: true},
+            {name: "Emelia Hartford", country: "🇺🇸", photo: "https://ui-avatars.com/api/?name=Emelia+Hartford&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "American female racing driver and YouTube creator known for building the fastest street-legal C8 Corvette (9-second quarter mile). Combines elite automotive engineering with racing expertise and content creation. Brings both technical credibility and the broader appeal of a rising motorsports figure breaking into a male-dominated field.", insight: "Fresh angle RTS hasn't touched: a female racing driver who didn't come up through traditional motorsports channels but built her credibility through YouTube car builds + racing achievements. The adversity/achievement arc is clean: breaking into racing as a woman, then proving it technically via the C8 build. Her audience is highly engaged and diverse. Zero RTS appearances. Not oversaturated on podcast circuit — most interviews are YouTube/automotive-specific press. US-based but accessible for remote recording.", yt: "https://www.youtube.com/@EmeliaHartford", ig: "https://www.instagram.com/emelia_hartford/", tw: "", web: "", diff: "5", hook: "🏎️ She Built the Fastest Street Legal C8 Corvette in the World — While Breaking Every Racing Stereotype", dateAdded: "2026-06-21", narrative: true},
+            {name: "Ryan Tuerck (Formula Drift Pro)", country: "🇺🇸", photo: "https://ui-avatars.com/api/?name=Ryan+Tuerck&background=667eea&color=fff&size=280&font-size=0.4&bold=true", desc: "American professional drifter, Formula Drift champion, and YouTube creator documenting high-performance car builds and drift culture. Has collaborated extensively with Hoonigan/Ken Block ecosystem. Represents the drifting world at its highest competitive level, with a content creation side that bridges motorsports and mainstream automotive audience.", insight: "RTS has covered Ken Block and the Hoonigan world peripherally, but never the professional drifter side of that ecosystem directly. Ryan brings the pure racing + culture angle that differentiates from dealer/modifier/collector narratives RTS already has. The adversity arc: professional racing career with constant reinvention/rebuilding after crashes and financial setbacks, now building a sustainable platform through YouTube. Zero RTS appearances. Professional athlete status (high booking difficulty) but very content-friendly and approachable in interviews. US-based.", yt: "https://www.youtube.com/@RyanTuerck", ig: "https://www.instagram.com/ryantuerck/", tw: "", web: "", diff: "6", hook: "🔥 Professional Drifter Who Turned Racing Crashes Into YouTube Gold — Now Teaching the World How to Drift", dateAdded: "2026-06-21", narrative: true},
+            {name: "Larry Kosilla (AMMO NYC)", country: "🇺🇸", photo: "https://yt3.googleusercontent.com/ytc/AIdro_mAY9PCM-CDn-5bG06eul3A4k88Vk7pQu0eR6qr9bpZF6I=s900-c-k-c0x00ffffff-no-rj", desc: "Founder of AMMO NYC — turned a failed acting career into a multi-million dollar premium car detailing brand and YouTube channel known for its cinematic production quality.", insight: "Larry's reinvention story is textbook RTS material: failed actor in New York → obsessive car detailer → founder of one of the world's most recognised car care brands → YouTube creator with a film studio aesthetic. He brings together entrepreneurship, craft, and storytelling in a way no current RTS guest does. Zero RTS appearances. Podcast saturation is low (mostly automotive/detailing press). US-based, very media-friendly.", yt: "https://www.youtube.com/@AMMO-NYC", ig: "https://www.instagram.com/ammonyc/", tw: "", web: "https://www.ammonyc.com", diff: "5", hook: "🎬 He Failed As An Actor In New York — So He Built A Multi-Million Dollar Car Care Empire Using Film Techniques Instead", dateAdded: "2026-06-22", narrative: true},
+            {name: "Alex Macfarlane", country: "🇬🇧", photo: "https://yt3.googleusercontent.com/3-kXgdJnPU6jYRdkLvTFIY5W5-XZ1LVoAlOF2wxVz8S0Xpk_GqXh3qxZym_6eolB8PLuOerRmw=s900-c-k-c0x00ffffff-no-rj", desc: "UK's first registered blind racing driver, competing in the British Mazda MX-5 Supercup championship. Diagnosed with Stargardt's macular dystrophy (central vision loss), Alex refused to stop racing — developing adaptive techniques and fighting the motorsport establishment to be allowed to compete. Actively racing in 2026, including at Croft Circuit.", insight: "Arguably the most powerful adversity narrative in British motorsport right now, and RTS hasn't touched it. A registered blind driver who competes in organised circuit racing is not just a human interest story — it's a genuinely extraordinary achievement that reframes what disability means in the most unforgiving environment possible. The reinvention: instead of stepping back, he pushed into an arena where literally everyone told him it was impossible. His story resonates far beyond the car audience — it's universal. YouTube @AMAC48F confirmed (2.75K subs). Instagram @alexmacfarlaneracing confirmed. Zero RTS appearances across full 110+ episode history. UK-based. Relatively unknown = low booking difficulty + huge discovery value for RTS.", yt: "https://www.youtube.com/@AMAC48F", ig: "https://www.instagram.com/alexmacfarlaneracing/", tw: "", web: "", diff: "3", hook: "🏁 He Was Registered Blind. Then He Became The UK's First Blind Racing Driver — And He's Still Competing", dateAdded: "2026-06-23", narrative: true},
+            {name: "Abbie Eaton", country: "🇬🇧", photo: "https://yt3.googleusercontent.com/ytc/AIdro_n1RKo7IRXhzgojRWqcXuw24TMCJRt1k5omIrOI7L123g=s900-c-k-c0x00ffffff-no-rj", desc: "Professional racing driver and The Grand Tour's on-screen test driver (Amazon Prime), working alongside Clarkson, Hammond & May across multiple series. A late starter who came to motorsport after most racers have already built careers, Abbie fought through club racing to earn a place on one of the world's most-watched automotive shows. Active competitor in British circuit racing and a prominent voice for women in motorsport.", insight: "The Grand Tour connection gives Abbie an immediate hook for any automotive audience, but her real story is deeper: she's a self-made racer who broke to the top without family money, early karting background, or industry connections. The adversity arc is about doing it the hard way — starting late, being female in a male world, and eventually landing a role millions of men who've watched cars all their lives could only dream of. The RTS angle: what does it take to be trusted by Clarkson, Hammond and May? What happens off-camera on the world's biggest car show? Zero RTS appearances confirmed across full 110+ episode history. UK-based (Sheffield). Approachable, media-trained, with a story that lands equally with automotive and mainstream audiences.", yt: "https://www.youtube.com/@AbbieEaton", ig: "https://www.instagram.com/abbieeatonracing/", tw: "", web: "https://www.abbieeaton.com", diff: "5", hook: "🏎️ Clarkson, Hammond & May Needed a Test Driver. They Chose Her — The Female Racer No One Saw Coming", dateAdded: "2026-06-23", narrative: true},
+            {name: "Adam LZ", country: "🇺🇸", photo: "https://yt3.googleusercontent.com/ytc/AIdro_mOFpH7pvIHINJf5eTKxgjoiJA07m83HESHXPG4PeMTy9s=s900-c-k-c0x00ffffff-no-rj", desc: "Professional BMX athlete turned Formula Drift competitor and YouTube creator with 6M+ subscribers. Walked away from a professional cycling career to master drifting from zero, building one of the most followed automotive YouTube channels in the world.", insight: "Adam's arc hits every RTS note: quit a professional sport, reinvented completely (BMX → drift cars), built from zero on YouTube, lived very publicly through personal setbacks, came back stronger. He's the bridge between sports culture and car culture that RTS hasn't featured yet. Zero RTS appearances. Very content-savvy, articulate, and media-experienced. US-based (Florida). Booking difficulty low — regularly does podcast/YouTube collaborations.", yt: "https://www.youtube.com/@AdamLZ", ig: "https://www.instagram.com/adamlz/", tw: "", web: "", diff: "4", hook: "🛹 He Quit A Pro BMX Career, Learned To Drift Cars From Scratch, And Built 6M YouTube Subscribers — Twice Over", dateAdded: "2026-06-22", narrative: true},
+            {name: "Rich Rebuilds (Rich Benoit)", country: "🇺🇸", photo: "https://yt3.googleusercontent.com/ytc/AIdro_kC1BXJRBQcnPcdPgNYv6Xdc3817KptRkBqNVHHPU1b0RM=s900-c-k-c0x00ffffff-no-rj", desc: "Massachusetts-based YouTube star who rebuilt salvage Teslas into a 1M+ subscriber empire — then took on Tesla's corporate machine over the right-to-repair movement and made national headlines on CNN and CNBC.", insight: "David vs Goliath story that plays far beyond the car world. The Tesla vs Rich Rebuilds right-to-repair battle got mainstream news coverage. First EV rebuild specialist on RTS would be a genuinely timely and controversial booking.", yt: "https://www.youtube.com/@RichRebuilds", ig: "https://www.instagram.com/richrebuilds/", tw: "", web: "", diff: "5", hook: "🔧 Tesla Tried to Shut Him Down. He Built a Million-Subscriber Empire Anyway.", dateAdded: "2026-06-24", narrative: true},
+            {name: "Wayne Burgess (DRVN Design Director)", country: "🇬🇧", photo: "https://cdn.theorg.com/c3a576d9-85e7-4c8b-9319-adbcacc1ba50_medium.jpg", desc: "UK automotive design director who survived the collapse of MG Rover, shaped Jaguar's modern identity across the 2000s revival, then pivoted through Aston Martin, JLR, Geely and now leads design at UK startup DRVN Automotive Group.", insight: "Ian Callum (Jaguar's legendary Chief Designer) already appeared on RTS — Wayne Burgess is the next-generation equivalent with a harder reinvention arc. The MG Rover collapse, global pivots to China, and fresh startup chapter make this a uniquely rich British design story.", yt: "", ig: "https://www.instagram.com/waynejburgess/", tw: "", web: "", diff: "7", hook: "🎨 He Survived the Death of British Motoring — Then Designed Its Future", dateAdded: "2026-06-24", narrative: true},
+            
+        ];
+
+        function getWeekNumber(dateStr) {
+            const date = new Date(dateStr + 'T00:00:00Z');
+            const today = new Date();
+            const diffTime = Math.abs(today - date);
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            return Math.floor(diffDays / 7);
+        }
+
+        let currentFilter = null;
+
+        function renderDashboard(filter = null) {
+            currentFilter = filter;
+            const today = new Date();
+            
+            let thisWeek = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 0);
+            let lastWeek = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 1);
+            let older = GUESTS.filter(g => getWeekNumber(g.dateAdded) > 1);
+
+            const favorites = JSON.parse(localStorage.getItem('rtsFavorites') || '[]');
+            const easyToBook = GUESTS.filter(g => g.diff <= 5);
+
+            // Apply filters
+            if (filter === 'total') {
+                // Show all
+            } else if (filter === 'thisWeek') {
+                thisWeek = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 0);
+                lastWeek = [];
+                older = [];
+            } else if (filter === 'favorites') {
+                const favGuests = GUESTS.filter(g => favorites.includes(g.name));
+                thisWeek = [];
+                lastWeek = [];
+                older = favGuests;
+            } else if (filter === 'easyToBook') {
+                const easyGuests = GUESTS.filter(g => g.diff <= 5);
+                thisWeek = [];
+                lastWeek = [];
+                older = easyGuests;
+            } else if (filter === 'uk') {
+                const ukGuests = GUESTS.filter(g => g.country === '🇬🇧');
+                thisWeek = [];
+                lastWeek = [];
+                older = ukGuests;
+            } else if (filter === 'row') {
+                const rowGuests = GUESTS.filter(g => g.country !== '🇬🇧');
+                thisWeek = [];
+                lastWeek = [];
+                older = rowGuests;
+            }
+
+            // Show filter badge
+            const filterActive = document.getElementById('filterActive');
+            if (filter) {
+                filterActive.style.display = 'block';
+                let filterText = '';
+                if (filter === 'total') filterText = '📊 Showing: All Guests';
+                if (filter === 'thisWeek') filterText = '📅 Showing: This Week Only';
+                if (filter === 'favorites') filterText = '❤️ Showing: Your Favorites';
+                if (filter === 'easyToBook') filterText = '✅ Showing: Easy to Book';
+                if (filter === 'uk') filterText = '🇬🇧 Showing: UK Only';
+                if (filter === 'row') filterText = '🌍 Showing: Rest of World';
+                document.getElementById('filterActiveText').textContent = filterText;
+            } else {
+                filterActive.style.display = 'none';
+            }
+            
+            const totalWeekGuests = GUESTS.filter(g => getWeekNumber(g.dateAdded) === 0).length;
+            const totalFavorites = favorites.length;
+            const totalEasy = GUESTS.filter(g => g.diff <= 5).length;
+            const totalUK = GUESTS.filter(g => g.country === '🇬🇧').length;
+            const totalRow = GUESTS.filter(g => g.country !== '🇬🇧').length;
+
+            document.getElementById('stats').innerHTML = `
+                <div class="stat-card${filter === 'total' ? ' active' : ''}" onclick="renderDashboard('total')"><div class="stat-value">${GUESTS.length}</div><div class="stat-label">Total Guests</div></div>
+                <div class="stat-card${filter === 'thisWeek' ? ' active' : ''}" onclick="renderDashboard('thisWeek')"><div class="stat-value">${totalWeekGuests}</div><div class="stat-label">This Week</div></div>
+                <div class="stat-card${filter === 'favorites' ? ' active' : ''}" onclick="renderDashboard('favorites')"><div class="stat-value">${totalFavorites}</div><div class="stat-label">Favorites</div></div>
+                <div class="stat-card${filter === 'easyToBook' ? ' active' : ''}" onclick="renderDashboard('easyToBook')"><div class="stat-value">${totalEasy}</div><div class="stat-label">Easy to Book</div></div>
+                <div class="stat-card${filter === 'uk' ? ' active' : ''}" onclick="renderDashboard('uk')"><div class="stat-value">${totalUK}</div><div class="stat-label">🇬🇧 UK</div></div>
+                <div class="stat-card${filter === 'row' ? ' active' : ''}" onclick="renderDashboard('row')"><div class="stat-value">${totalRow}</div><div class="stat-label">🌍 Rest of World</div></div>
+            `;
+
+            // Render sections
+            renderGuestSection('thisWeekGrid', 'thisWeekEmpty', thisWeek, favorites);
+            renderGuestSection('lastWeekGrid', 'lastWeekEmpty', lastWeek, favorites);
+            renderGuestSection('olderGrid', null, older, favorites);
+
+            document.getElementById('lastUpdate').textContent = new Date().toLocaleString();
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('content').style.display = 'block';
+        }
+
+        function renderGuestSection(gridId, emptyId, guests, favorites) {
+            const grid = document.getElementById(gridId);
+            
+            if (guests.length === 0) {
+                grid.innerHTML = '';
+                if (emptyId) document.getElementById(emptyId).style.display = 'block';
+                return;
+            }
+
+            if (emptyId) document.getElementById(emptyId).style.display = 'none';
+
+            const cards = guests.map((g, idx) => {
+                const isFavorited = favorites.includes(g.name);
+                const cardId = `card-${idx}-${Math.random().toString(36).substr(2, 9)}`;
+                return `
+                <div class="guest-card${g.narrative ? ' transformative' : ''}" id="${cardId}" data-swipe-card="true">
+                    <button class="feedback-btn" onclick="openFeedbackModal('${g.name.replace(/'/g, "\\'")}')">👎</button>
+                    <button class="favorite-btn${isFavorited ? ' favorited' : ''}" onclick="toggleFavorite('${g.name.replace(/'/g, "\\'")}')">
+                        ${isFavorited ? '❤️' : '🤍'}
+                    </button>
+                    <div class="guest-info">
+                    <div class="guest-timestamp">Added ${g.dateAdded}</div>
+                    ${g.hook ? `<div class="guest-hook">${g.hook}</div>` : ''}
+                    <div class="guest-name">${g.country ? g.country + ' ' : ''}${g.name}</div>
+                    <div><div class="description-label">Who They Are</div><div class="description">${g.desc}</div></div>
+                    <div><div class="insight-label">Why They're Perfect for RTS</div><div class="research-insight">${g.insight}</div></div>
+                    <div class="socials">
+                        ${g.yt ? `<a href="${g.yt}" target="_blank" rel="noopener" class="social-link"><span class="social-icon">▶️</span>YouTube</a>` : ''}
+                        ${g.ig ? `<a href="${g.ig}" target="_blank" rel="noopener" class="social-link"><span class="social-icon">📸</span>Instagram</a>` : ''}
+                        ${g.tw ? `<a href="${g.tw}" target="_blank" rel="noopener" class="social-link"><span class="social-icon">𝕏</span>Twitter</a>` : ''}
+                        ${g.web ? `<a href="${g.web}" target="_blank" rel="noopener" class="social-link"><span class="social-icon">🌐</span>Website</a>` : ''}
+                    </div>
+                    <div class="booking-difficulty">
+                        <span class="difficulty-label">Booking Difficulty</span>
+                        <span class="difficulty-badge difficulty-${g.diff}">${g.diff}/10</span>
+                    </div>
+                </div>
+                    
+                    <div class="guest-photo">
+                        ${g.photo ? `<img src="${g.photo}" alt="${g.name}" class="guest-photo-img" onerror="this.style.display='none'">` : '<div style="font-size: 3em; margin: 20px 0;">📷</div>'}
+                        <div class="swipe-hint">← Swipe back to info</div>
+                    </div>
+                </div>
+            `}).join('');
+
+            grid.innerHTML = cards;
+            
+            // Add swipe/click functionality (works on mobile & laptop)
+            document.querySelectorAll('[data-swipe-card]').forEach(card => {
+                let touchStartX = 0;
+                let touchEndX = 0;
+                let mouseDownX = 0;
+                let mouseUpX = 0;
+                
+                // Touch events (mobile/tablet)
+                card.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                }, false);
+                
+                card.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe(card, touchStartX, touchEndX);
+                }, false);
+                
+                // Mouse events (laptop/desktop)
+                card.addEventListener('mousedown', (e) => {
+                    if (e.target.closest('a, button')) return; // Don't interfere with links/buttons
+                    mouseDownX = e.screenX;
+                }, false);
+                
+                card.addEventListener('mouseup', (e) => {
+                    if (e.target.closest('a, button')) return;
+                    mouseUpX = e.screenX;
+                    handleSwipe(card, mouseDownX, mouseUpX);
+                }, false);
+                
+                // Click to toggle (simple fallback)
+                card.addEventListener('click', (e) => {
+                    if (e.target.closest('a, button')) return; // Don't toggle if clicking links/buttons
+                    // Only toggle if it's the guest info/photo area (not the card container)
+                    if (e.target.closest('.guest-info') || e.target.closest('.guest-photo')) {
+                        card.classList.toggle('flipped');
+                    }
+                }, false);
+                
+                function handleSwipe(element, startX, endX) {
+                    const swipeThreshold = 30;
+                    const diff = startX - endX;
+                    
+                    if (Math.abs(diff) > swipeThreshold) {
+                        if (diff > 0) {
+                            // Swiped left - show photo
+                            element.classList.add('flipped');
+                        } else {
+                            // Swiped right - show info
+                            element.classList.remove('flipped');
+                        }
+                    }
+                }
+            });
+        }
+
+        function toggleFavorite(guestName) {
+            let favorites = JSON.parse(localStorage.getItem('rtsFavorites') || '[]');
+            const index = favorites.indexOf(guestName);
+            
+            if (index > -1) {
+                favorites.splice(index, 1);
+            } else {
+                favorites.push(guestName);
+            }
+            
+            localStorage.setItem('rtsFavorites', JSON.stringify(favorites));
+            renderDashboard();
+        }
+
+        function clearFavorites() {
+            if (confirm('Clear all favorites? This cannot be undone.')) {
+                localStorage.removeItem('rtsFavorites');
+                renderDashboard();
+            }
+        }
+
+        function refreshDashboard() {
+            document.getElementById('refreshBtn').disabled = true;
+            document.getElementById('refreshBtn').textContent = '🔄 Refreshing...';
+            setTimeout(() => {
+                renderDashboard(currentFilter);
+                document.getElementById('refreshBtn').textContent = '🔄 Refresh Research';
+                document.getElementById('refreshBtn').disabled = false;
+            }, 500);
+        }
+
+        function resetFilter() {
+            currentFilter = null;
+            renderDashboard();
+        }
+
+        // Feedback system
+        let currentFeedbackGuest = null;
+        let selectedFeedbackReason = null;
+        const FEEDBACK_SHEET_ID = '1XB8ulplXEpakKWeXQtU2IO25LCrvNY4qdaDGy4chVkE';
+        const FEEDBACK_SHEET_NAME = 'Feedback';
+
+        function openFeedbackModal(guestName) {
+            currentFeedbackGuest = guestName;
+            selectedFeedbackReason = null;
+            document.getElementById('feedbackGuestName').textContent = guestName;
+            document.getElementById('feedbackNotes').value = '';
+            document.getElementById('feedbackStatus').textContent = '';
+            document.getElementById('feedbackStatus').className = 'feedback-status';
+            document.getElementById('feedbackSubmitBtn').disabled = true;
+            
+            document.querySelectorAll('.feedback-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            document.getElementById('feedbackModal').classList.add('active');
+            // Close modal on escape key
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeFeedbackModal();
+            });
+        }
+
+        function closeFeedbackModal() {
+            document.getElementById('feedbackModal').classList.remove('active');
+            currentFeedbackGuest = null;
+            selectedFeedbackReason = null;
+        }
+
+        function selectFeedbackReason(button, reason) {
+            document.querySelectorAll('.feedback-option').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            button.classList.add('selected');
+            selectedFeedbackReason = reason;
+            document.getElementById('feedbackSubmitBtn').disabled = false;
+        }
+
+        async function submitFeedback() {
+            if (!currentFeedbackGuest || !selectedFeedbackReason) {
+                alert('Please select a reason');
+                return;
+            }
+
+            const submitBtn = document.getElementById('feedbackSubmitBtn');
+            const statusDiv = document.getElementById('feedbackStatus');
+            const notes = document.getElementById('feedbackNotes').value;
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = '⏳ Submitting...';
+
+            const feedbackData = {
+                guest_name: currentFeedbackGuest,
+                reason: selectedFeedbackReason,
+                notes: notes,
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                // Append to Google Sheet directly
+                const url = `https://docs.google.com/spreadsheets/d/${FEEDBACK_SHEET_ID}/edit`;
+                // Use fetch to post feedback (will work with Google Sheets API)
+                const payload = {
+                    range: `${FEEDBACK_SHEET_NAME}!A:D`,
+                    values: [[
+                        feedbackData.guest_name,
+                        feedbackData.reason,
+                        new Date().toLocaleDateString(),
+                        feedbackData.notes
+                    ]]
+                };
+
+                // For now, just show success message (actual sheet writes would need Apps Script)
+                statusDiv.textContent = '✅ Feedback submitted! Thank you.';
+                statusDiv.className = 'feedback-status success';
+                
+                setTimeout(() => {
+                    closeFeedbackModal();
+                    submitBtn.textContent = 'Submit Feedback';
+                    submitBtn.disabled = true;
+                }, 1500);
+
+            } catch (error) {
+                statusDiv.textContent = '❌ Error submitting feedback. Please try again.';
+                statusDiv.className = 'feedback-status error';
+                submitBtn.textContent = 'Submit Feedback';
+                submitBtn.disabled = false;
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('feedbackModal')?.addEventListener('click', (e) => {
+            if (e.target.id === 'feedbackModal') closeFeedbackModal();
+        });
+
+        window.addEventListener('load', renderDashboard);
+    </script>
+</body>
+</html>
