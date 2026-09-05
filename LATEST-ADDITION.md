@@ -1,8 +1,8 @@
 # Latest Addition to RTS Dashboard
 
-## Guest #100: Oliver Jarvis 🇬🇧
+## Guest #101: Sebastian Priaulx 🇬🇧
 
-**Date Added:** Friday 4 September 2026, 09:00 UTC
+**Date Added:** Saturday 5 September 2026, 09:00 UTC
 **Status:** ✅ Live on Dashboard & GitHub
 
 ---
@@ -11,46 +11,38 @@
 
 | Field | Value |
 |-------|-------|
-| **Name** | Oliver Richard Benjamin Jarvis |
-| **Age** | 42 (born 9 January 1984) |
-| **Nationality** | 🇬🇧 British (based Cambridgeshire, UK) |
-| **Primary Achievement** | 2022 IMSA SportsCar Champion; 2x Le Mans class winner (2017, 2024) |
-| **Unique Record** | 25 wins, 103 podiums, 363 starts across 20+ years endurance racing |
-| **Awards** | McLaren Autosport BRDC Young Driver of the Year Award 2005 (presented by Sir Stirling Moss) |
-| **Factory Affiliations** | Audi DTM (2008–2011), Audi LMP1 WEC (2013–2016), Mazda IMSA (2018–2021) |
-| **Current Programme (2026)** | ELMS LMP2 with United Autosports; IMSA LMP2 with Intersport Racing |
-| **Twitter/X** | @ollyjarvis (18.4K followers) |
-| **Instagram** | @oliverjarvis1 (18K followers) |
-| **Website** | oliverjarvis.com |
+| **Name** | Sebastian "Seb" Priaulx |
+| **Age** | 25 (born 18 January 2001) |
+| **Nationality** | 🇬🇧 British (Guernsey) |
+| **Primary Achievement** | 2021 Porsche Carrera Cup North America Champion (inaugural champion) |
+| **Factory Programme** | Ford Racing / Multimatic Motorsports (2025–present) |
+| **2026 Drive** | IMSA GTD Pro (#65 Ford Mustang GT3 Evo) + ELMS LMP2 + WEC LMGT3 |
+| **2027 Confirmed** | Ford Hypercar programme (FIA WEC) |
+| **Father** | Andy Priaulx (3x WTCC World Champion — added to dashboard Sep 3) |
+| **Twitter** | @SebPriaulx (2,830 followers) |
+| **Instagram** | @sebastianpriaulx (13.3K followers) |
+| **Website** | sebastianpriaulx.com |
 | **RTS Prior Appearances** | ZERO ✅ |
-
----
-
-### Milestone
-
-🎉 **Guest #100** — The dashboard reaches triple figures with Oliver Jarvis. A fitting milestone entry: a driver whose career demonstrates exactly the Road to Success ethos — adversity, reinvention, and sustained achievement over two decades.
 
 ---
 
 ### Narrative Arc
 
-**THE DRIVER WHO FOUND HIS OWN ROAD**
+**THE CHAMPION'S SON WHO BUILT HIS OWN ROAD**
 
-1. **FOUNDATION:** Burwell, Cambridgeshire. Father raced Formula Ford. Karted from age 8.
+1. **ADVERSITY:** Growing up as Andy Priaulx's son — the shadow of three world titles — while working in a car dealership during his Ginetta seasons to fund racing. One year in single-seaters (7th in F4 British, 2018) before making the decisive pivot to sportscars.
 
-2. **ACHIEVEMENT:** 2005 Formula Renault UK Champion (5 wins, dominant season). Receives McLaren Autosport BRDC Young Driver Award from Sir Stirling Moss. British F3 runner-up 2006 (beating Bruno Senna). Macau Grand Prix winner 2007.
+2. **ACHIEVEMENT:** First-ever Porsche Carrera Cup North America champion (2021). WEC race wins at Spa and Monza (LMGTE Am, 2022). Back-to-back IMSA wins at Laguna Seca and Detroit (2024). Ford factory driver wins at Detroit and Indianapolis (2025), 3rd in GTD Pro championship.
 
-3. **ADVERSITY:** Five seasons at Audi DTM (2008–2011). Podiums but no title. Dropped by Audi at end of 2011. Factory door closes without a ladder forward. The F1 path never materialised.
+3. **REINVENTION:** Karting → Ginetta → F4 → GT4 → WEC LMGTE Am → Porsche single-make → IMSA GTD → IMSA GTD Pro → ELMS LMP2 → WEC LMGT3 → confirmed WEC Hypercar (2027). Six full discipline changes in six years.
 
-4. **REINVENTION:** Pivots to sports cars. WEC with Audi LMP1. Runner-up in 2016 FIA WEC Championship. When Audi exits WEC (end of 2016): pivots again to IMSA with Mazda.
-
-5. **AUTHORITY NOW:** 2022 IMSA SportsCar Champion with Meyer Shank Racing (won 24 Hours of Daytona). 2024 Le Mans 24h LMP2 class winner. 2026: still racing ELMS + IMSA at age 42. Twitter bio: "Father, Husband, Racing Driver."
+4. **AUTHORITY NOW:** Named as one of Ford Racing's Hypercar programme drivers for 2027 at age 25. Still actively racing across three series simultaneously in 2026.
 
 ---
 
 ### The Hook
 
-🏁 **McLaren Autosport BRDC Young Driver Of The Year Award — Presented By Sir Stirling Moss. That Was 2005. Then Audi's Factory DTM Programme Let Him Go. Most People Would Have Stopped There. He Didn't. He Rebuilt His Career In Sports Cars. Won The 24 Hours Of Daytona. Won The IMSA Championship. Won Le Mans TWICE — 2017 AND 2024. He's 42. He's Still Racing. In 2026 He Was Seventh At Le Mans And Still Taking Wins. Oliver Jarvis: The British Driver Who Found His Own Road.**
+🏁 **His Dad Won 3 World Championships. Seb Watched From The Pit Wall As A Kid. Worked In A Car Dealership To Pay For His Ginetta Races. Won The First-Ever Porsche Carrera Cup North America Championship At 21. Led The IMSA GTD Pro Title With 4 Races To Go — Then Left For Ford's Factory Programme. Won At Detroit And Indianapolis In His First Factory Season. At 25, He's Just Been Named As A Ford Hypercar Driver. Andy Priaulx's Son Has Built His Own Road.**
 
 ---
 
@@ -58,33 +50,23 @@
 
 | Factor | Rating | Notes |
 |--------|--------|-------|
-| **Media Comfort** | ⭐⭐⭐ | ELMS/IMSA media circuit, Dinner With Racers podcast |
-| **UK Base** | ✅ Yes | Cambridgeshire |
-| **Accessibility** | ⭐⭐⭐⭐ | Low booking friction, independent driver |
-| **Controversy Risk** | ✅ ZERO | No red flags identified |
-| **Social Reach** | 18.4K X, 18K IG | Active, consistent posting |
-| **Overall Difficulty** | 3/10 | Accessible, podcast-comfortable, UK-based |
-
----
-
-### RTS Verification
-
-✅ **Zero prior appearances on Road to Success** (169 episodes checked)
-✅ **No UK business/success podcast appearances found**
-✅ **First-time guest potential confirmed**
-✅ **No conflicts with standing exclusion list**
-✅ **Not on Diary of a CEO, Cars & Money, or AutoAlex Podcast**
+| **Media Comfort** | ⭐⭐⭐ | Ford/Multimatic PR trained, active socials |
+| **UK Base** | ✅ Yes | Guernsey (Channel Islands) |
+| **Accessibility** | ⭐⭐⭐⭐⭐ | sebpriaulx@gmail.com listed publicly |
+| **Controversy Risk** | ✅ ZERO | No red flags |
+| **Family Link** | ✅ | Father Andy Priaulx added Sep 3 — natural booking link |
+| **Overall Difficulty** | 2/10 | Most accessible racing driver on dashboard |
 
 ---
 
 ### Dashboard Context
 
-- **Guests Before:** 99
-- **Guests After:** 100 🎉 CENTURY MILESTONE
+- **Guests Before:** 100
+- **Guests After:** 101
 - **Entry Position:** #1 (newest, at top of list)
-- **Andy Priaulx:** Moved from #1 to #2
+- **GitHub Commit:** 10efc5b
 - **Live URL:** https://hlake1.github.io/rts-dashboard/
 
 ---
 
-**Updated:** 2026-09-04 09:00 UTC | **Next Addition Target:** 2026-09-05
+**Updated:** 2026-09-05 09:00 UTC | **Next Addition Target:** 2026-09-06
