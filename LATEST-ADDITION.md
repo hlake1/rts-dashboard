@@ -1,9 +1,10 @@
 # Latest Addition to RTS Dashboard
 
-## Guest #101: Sebastian Priaulx 🇬🇧
+## Guest #102: Katherine Legge 🇺🇸
 
-**Date Added:** Saturday 5 September 2026, 09:00 UTC
-**Status:** ✅ Live on Dashboard & GitHub
+**Date Added:** Sunday 6 September 2026, 09:00 UTC  
+**Status:** ✅ Live on Dashboard & GitHub  
+**Commit:** 5e2b769
 
 ---
 
@@ -11,62 +12,46 @@
 
 | Field | Value |
 |-------|-------|
-| **Name** | Sebastian "Seb" Priaulx |
-| **Age** | 25 (born 18 January 2001) |
-| **Nationality** | 🇬🇧 British (Guernsey) |
-| **Primary Achievement** | 2021 Porsche Carrera Cup North America Champion (inaugural champion) |
-| **Factory Programme** | Ford Racing / Multimatic Motorsports (2025–present) |
-| **2026 Drive** | IMSA GTD Pro (#65 Ford Mustang GT3 Evo) + ELMS LMP2 + WEC LMGT3 |
-| **2027 Confirmed** | Ford Hypercar programme (FIA WEC) |
-| **Father** | Andy Priaulx (3x WTCC World Champion — added to dashboard Sep 3) |
-| **Twitter** | @SebPriaulx (2,830 followers) |
-| **Instagram** | @sebastianpriaulx (13.3K followers) |
-| **Website** | sebastianpriaulx.com |
+| **Name** | Katherine Anne Legge |
+| **Age** | 46 (born 12 July 1980, Guildford, Surrey) |
+| **Nationality** | 🇬🇧 British-born |
+| **Current Base** | 🇺🇸 Atlanta, Georgia, USA |
+| **Country Flag (Dashboard)** | 🇺🇸 (operates from USA) |
+| **Primary Achievement** | First woman to win a major open-wheel race in North America (2005); fastest qualifying lap by a woman in Indy 500 history (231.070 mph, 2023); first woman to attempt Indy 500 + Coke 600 Double (2026) |
+| **Current Status (2026)** | Active — NASCAR Cup + IndyCar |
+| **Social Media** | @katherineracing (IG, 72.3K), @katherinelegge (X, 40.1K) |
+| **Website** | katherinelegge.com |
 | **RTS Prior Appearances** | ZERO ✅ |
 
 ---
 
 ### Narrative Arc
 
-**THE CHAMPION'S SON WHO BUILT HIS OWN ROAD**
+**THE WOMAN WHO WROTE HER OWN INVITATION**
 
-1. **ADVERSITY:** Growing up as Andy Priaulx's son — the shadow of three world titles — while working in a car dealership during his Ginetta seasons to fund racing. One year in single-seaters (7th in F4 British, 2018) before making the decisive pivot to sportscars.
+1. **ADVERSITY:** No money, no family background in racing, no sponsor, no manufacturer backing. Repeated rejections from the F1 establishment. Serious crash in 2020 (broken wrist and leg). Death threats and abuse from NASCAR fans in 2025.
 
-2. **ACHIEVEMENT:** First-ever Porsche Carrera Cup North America champion (2021). WEC race wins at Spa and Monza (LMGTE Am, 2022). Back-to-back IMSA wins at Laguna Seca and Detroit (2024). Ford factory driver wins at Detroit and Indianapolis (2025), 3rd in GTD Pro championship.
+2. **ACHIEVEMENT:** First woman to win a major open-wheel race in North America (Atlantic, Long Beach 2005). F1 test with Minardi (first since Sarah Fisher, 2002). Champ Car, DTM, Formula E, IMSA, IndyCar, NASCAR Cup. 2023 Indy 500 women's qualifying record: 231.070 mph. 2025 NASCAR Cup top-20 finish at Chicago (best for a woman in 7 years). 2026 Indy 500 + Coke 600 Double (first woman ever, oldest driver ever at 45).
 
-3. **REINVENTION:** Karting → Ginetta → F4 → GT4 → WEC LMGTE Am → Porsche single-make → IMSA GTD → IMSA GTD Pro → ELMS LMP2 → WEC LMGT3 → confirmed WEC Hypercar (2027). Six full discipline changes in six years.
+3. **REINVENTION:** Formula Renault → Atlantic → Champ Car → DTM → IMSA → Formula E → NASCAR Xfinity → NASCAR Cup → IndyCar → The Double. Also hosts Throttle Therapy Podcast.
 
-4. **AUTHORITY NOW:** Named as one of Ford Racing's Hypercar programme drivers for 2027 at age 25. Still actively racing across three series simultaneously in 2026.
+4. **AUTHORITY NOW:** 46 years old, still racing in two series simultaneously, podcast host, active media personality, 72.3K Instagram, 40.1K Twitter.
 
 ---
 
 ### The Hook
 
-🏁 **His Dad Won 3 World Championships. Seb Watched From The Pit Wall As A Kid. Worked In A Car Dealership To Pay For His Ginetta Races. Won The First-Ever Porsche Carrera Cup North America Championship At 21. Led The IMSA GTD Pro Title With 4 Races To Go — Then Left For Ford's Factory Programme. Won At Detroit And Indianapolis In His First Factory Season. At 25, He's Just Been Named As A Ford Hypercar Driver. Andy Priaulx's Son Has Built His Own Road.**
-
----
-
-### Booking Info
-
-| Factor | Rating | Notes |
-|--------|--------|-------|
-| **Media Comfort** | ⭐⭐⭐ | Ford/Multimatic PR trained, active socials |
-| **UK Base** | ✅ Yes | Guernsey (Channel Islands) |
-| **Accessibility** | ⭐⭐⭐⭐⭐ | sebpriaulx@gmail.com listed publicly |
-| **Controversy Risk** | ✅ ZERO | No red flags |
-| **Family Link** | ✅ | Father Andy Priaulx added Sep 3 — natural booking link |
-| **Overall Difficulty** | 2/10 | Most accessible racing driver on dashboard |
+🏁 **No Money. No Sponsor. No Family Background In Racing. She Walked Into A CEO's Office Uninvited, Refused To Leave, And Talked Her Way Into A North American Drive. Won On Her First Atlantic Start. First Woman To Win A Major Open-Wheel Race In North America. Tested An F1 Car. Raced In DTM, IndyCar, NASCAR Cup, Formula E. Set The Fastest Qualifying Lap By A Woman In Indy 500 History In 2023. Made History As The First Woman To Attempt The Indy 500 + Coke 600 Double On The Same Day In 2026. She's 46. She's Still Racing. You've Probably Never Heard Of Her.**
 
 ---
 
 ### Dashboard Context
 
-- **Guests Before:** 100
-- **Guests After:** 101
-- **Entry Position:** #1 (newest, at top of list)
-- **GitHub Commit:** 10efc5b
+- **Guests Before:** 101
+- **Guests After:** 102
+- **GitHub Commit:** 5e2b769
 - **Live URL:** https://hlake1.github.io/rts-dashboard/
 
 ---
 
-**Updated:** 2026-09-05 09:00 UTC | **Next Addition Target:** 2026-09-06
+**Updated:** 2026-09-06 09:00 UTC | **Next Target:** See report for suggestions
