@@ -1,9 +1,9 @@
 # Latest Addition to RTS Dashboard
 
-## Guest #103: Derek Bell MBE 🇬🇧
+## Guest #113: Carlos Sainz Sr. 🇪🇸
 
-**Date Added:** Tuesday 8 September 2026, 09:00 UTC
-**Status:** ✅ Live on Dashboard & GitHub
+**Date Added:** Sunday 13 September 2026, 09:00 UTC  
+**Status:** ✅ Committed locally — ⚠️ PUSH PENDING (GitHub PAT expired, needs renewal — 6 commits now local-only)
 
 ---
 
@@ -11,86 +11,81 @@
 
 | Field | Value |
 |-------|-------|
-| **Name** | Derek Reginald Bell MBE |
-| **Age** | 84 (born 31 October 1941) |
-| **Nationality** | 🇬🇧 British (Chichester, West Sussex / Florida, USA) |
-| **Primary Achievement** | 5x Le Mans 24hr winner — British record, still stands |
-| **Other Records** | 3x Daytona 24hr winner, 2x World Sportscar Champion |
-| **F1 Career** | 12 Grands Prix: Ferrari, McLaren, Surtees, Tecno, Wheatcroft |
-| **Career Span** | 1964–1996 (racing); Goodwood ambassador 2000–present |
-| **Instagram** | @derekbellracing (14K followers) |
-| **Twitter/X** | @derekbell |
-| **Website** | derekbell.com |
+| **Name** | Carlos Sainz Cenamor (Carlos Sainz Sr.) |
+| **Age** | 64 (born 12 April 1962) |
+| **Nationality** | 🇪🇸 Spanish (born and based Madrid, Spain) |
+| **Primary Achievement** | 2x WRC World Champion (1990, 1992) + 4x Dakar Rally winner (2010, 2018, 2020, 2024) |
+| **WRC Wins** | 26 |
+| **Dakar** | 4 wins — last won at age 61 in 2024 (oldest Dakar winner in history) |
+| **Current Activity** | 64 years old, living in Madrid; active in motorsport ambassador and team (Acciona Sainz XE) roles |
+| **Website** | carlos-sainz.com |
 | **RTS Prior Appearances** | ZERO ✅ |
 
 ---
 
 ### Narrative Arc
 
-**THE FARM BOY FERRARI CHOSE — BUT DIDN'T KEEP**
+**THE MAN WHO GOT BETTER WITH AGE**
 
-1. **ADVERSITY:** Grew up on Church Farm, Pagham Harbour. Drove tractors. No racing background. Got into F1 (Ferrari debut at Monza 1968, Enzo personally interested). Yet only 12 F1 starts across five teams — the career never broke through despite the talent.
+1. **ADVERSITY:** Born in Madrid in 1962. Multiple pathways before settling on motorsport: football trial with Real Madrid at 15, Spanish squash champion at 16, began law studies at university (left mid-course). No obvious motorsport family. Started rallying in the Spanish SEAT Copa Panda — a budget one-make series for young drivers with no connections and no budget. Progressed through the Spanish Rally Championship the hard way.
 
-2. **ACHIEVEMENT:** Gave up on F1 → became the greatest British endurance racing driver of all time. 5x Le Mans (1975, 1981, 1982, 1986, 1987). 3x Daytona. 2x World Sportscar Champion. 246 mph on Mulsanne Straight. Raced with legends: Ickx, Stuck, Bellof, Holbert, Hailwood.
+2. **ACHIEVEMENT:**
+   - Won the Spanish Rally Championship 1987 and 1988 with Ford
+   - WRC debut 1987 with Ford
+   - 1990: First WRC World Championship (Toyota Celica GT-Four) — first non-Nordic driver to win the 1000 Lakes Rally in Finland
+   - 1991: Lost championship to Kankkunen by ONE POINT on the final rally (both had five wins)
+   - 1992: Second WRC World Championship
+   - 26 WRC rally victories in total (runner-up 4 times, 97 podiums)
+   - WRC career ended: 2005 Acropolis Rally (aged 43)
+   - DAKAR: Won 2010 (aged 47, Volkswagen), 2018 (aged 55, Peugeot), 2020 (aged 57, Mini/MINI John Cooper Works), 2024 (aged 61, Audi)
+   - **2024 Dakar win at 61: Oldest Dakar winner in the event's history**
+   - Voted Greatest WRC Driver of All Time in official WRC fan & journalist poll (May 2020)
+   - Princess of Asturias Sports Award 2020 (Spain's highest sporting honour)
 
-3. **REINVENTION:** Retired from factory racing → Goodwood ambassador, Bentley consultant (helped win Le Mans 2003), Spectre R42 chairman. Father-son Le Mans 1990 (raced with son Justin, finished 3rd in class).
+3. **ADVERSITY — LATE CAREER:** January 2023 Dakar Rally: Sainz suffered multiple spinal fractures in a crash. Surgeons said he was fortunate not to be paralysed. He was 60 years old. He came back. Twelve months later he won the 2024 Dakar at 61.
 
-4. **AUTHORITY NOW:** Age 84. Still at Goodwood. MBE. Instagram active. Splits time UK/Florida.
+4. **REINVENTION:** WRC → Dakar Rally → Extreme E team ownership (Acciona Sainz XE Team, 2021-2024). After retiring from WRC at 42, he did not retire from competition. He found a new world — rally raid — and became its oldest ever champion.
 
-**THE HOOK:** *Enzo Ferrari gave him a seat. F1 never gave him more. So he went and won Le Mans five times instead. British record. Still standing.*
+5. **AUTHORITY NOW:** His record as the Greatest WRC Driver (by fan vote) still stands. He is 64. His son Carlos Sainz Jr. is a Formula One driver (Williams 2026). The cross-generational story is entirely untold in English-language podcast format.
 
----
+### The Hook
 
-### Adversity Narrative Assessment
-
-**Score: ✅ PASSES RTS threshold**
-
-- Farm background with no racing connections ✅
-- Near-miss at the top (Ferrari F1 seat that never fully materialized) ✅
-- Reinvention: entire career discipline pivot ✅
-- Domination of reinvented discipline (unmatched in British history) ✅
-- Current authority and visibility ✅
-
----
-
-### Dashboard Context
-
-- **Guests Before:** 102
-- **Guests After:** 103
-- **Entry Position:** #1 (newest, at top of list)
-- **Katherine Legge:** Moved from #1 to #2
-- **Photo Source:** Wikipedia Commons (verified HTTP 200)
-- **GitHub Commit:** Pending
+🏁 **Real Madrid Trial At 15. Spanish Squash Champion At 16. Left University Mid-Course. Started Rallying In A Budget Cup For Young Drivers With No Money. Won The Spanish Rally Championship. Made It To The World Rally Championship. Won It In 1990. Lost It By ONE POINT In 1991. Won It Again In 1992. 26 WRC Wins. Runner-Up Four Times. Retired From WRC At 42. Didn't Retire From Competing. Won The Dakar Rally At 47. Then At 55. Then At 57. Broke Multiple Vertebrae In His Spine At The 2023 Dakar At Age 60. Doctors Said He Was Lucky Not To Be Paralysed. Came Back. Won The 2024 Dakar At 61 — The Oldest Dakar Winner In History. Greatest WRC Driver Of All Time (Fan Poll). Father Of A Formula One Driver. Still In The Sport In 2026 At 64. Carlos Sainz Sr.: The Man Who Got Better With Age.**
 
 ---
 
 ### RTS Verification
 
-✅ **Zero prior appearances on Road to Success**
-✅ **Not on dashboard previously**
-✅ **Not in PAST_RTS_GUESTS list**
-✅ **No conflicts with standing exclusion list**
+✅ **Zero prior appearances on Road to Success (full 301-item playlist scan via yt-dlp)**  
+✅ **Searched all 301 titles for "sainz", "carlos", "dakar" — ZERO results**  
+✅ **Not in dashboard before today**  
+✅ **Not in any known past guest list**
 
 ---
 
-### New Exclusions Discovered Today
+### Social / Photo Verification
 
-| Guest | RTS Episode Confirmed |
-|-------|----------------------|
-| Karun Chandhok | Confirmed via Podtail |
-| Jodie Kidd | "Top Gear's Fastest Celeb Opens Up On The TRUTH..." |
-| Tiff Needell | "The Truth about Fifth Gear, Top Gear & Clarkson" |
-
-*(All three added to PAST_RTS_GUESTS in index.html in prior sessions — confirmed present today)*
+- **Website:** `https://www.carlos-sainz.com` → ✅ active official site
+- **Profile photo:** `https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Carlos_Sainz_2014_Dakar.jpg/500px-Carlos_Sainz_2014_Dakar.jpg` → **HTTP 200, image/jpeg** ✅
+- **Instagram:** Handle not confirmed (Instagram returns 403 on lookup tools); not included
+- **Twitter/X:** Handle not confirmed; not included
+- **YouTube:** No personal channel found
 
 ---
 
-### Pipeline for Tomorrow (Sep 9)
+### GitHub Status
 
-**Primary:** Marino Franchitti 🇬🇧 — Dario's brother, GT racer in own right, team owner
-**Secondary:** Mark Higgins 🏴󠁧󠁢󠁷󠁬󠁳󠁿 — Isle of Man TT world record holder (rally driver)
-**Tertiary:** Derek Bell's son Justin Bell — but verify adversity arc first
+⚠️ **PUSH FAILED** — GitHub PAT for hlake1 expired  
+- Local commit: `16bc62e` — local only  
+- **6 commits now pending** (since 8 Sep 2026: Derek Bell, Emanuele Pirro, Marino Franchitti, Tanner Foust, Sébastien Loeb, Carlos Sainz Sr.)  
+
+**Herbie: This is now 6 commits behind. The live site is missing 6 guests. Please create a new PAT.**
+
+To push when PAT is available:
+```bash
+cd /data/.openclaw/workspace/rts-dashboard && git remote set-url origin https://hlake1:NEW_PAT@github.com/hlake1/rts-dashboard.git && git push origin main
+```
 
 ---
 
-**Updated:** 2026-09-08 09:00 UTC | **Next Addition Target:** 2026-09-09
+*Next session: Monday 14 September 2026, 09:00 UTC*
