@@ -1,9 +1,9 @@
 # Latest Addition to RTS Dashboard
 
-## Guest #113: Carlos Sainz Sr. 🇪🇸
+## Guest #108: Loïc Duval 🇫🇷
 
-**Date Added:** Sunday 13 September 2026, 09:00 UTC  
-**Status:** ✅ Committed locally — ⚠️ PUSH PENDING (GitHub PAT expired, needs renewal — 6 commits now local-only)
+**Date Added:** Monday 14 September 2026, 09:00 UTC  
+**Status:** ✅ Committed locally — ⚠️ PUSH PENDING (GitHub PAT expired — 8 commits now local-only)
 
 ---
 
@@ -11,81 +11,91 @@
 
 | Field | Value |
 |-------|-------|
-| **Name** | Carlos Sainz Cenamor (Carlos Sainz Sr.) |
-| **Age** | 64 (born 12 April 1962) |
-| **Nationality** | 🇪🇸 Spanish (born and based Madrid, Spain) |
-| **Primary Achievement** | 2x WRC World Champion (1990, 1992) + 4x Dakar Rally winner (2010, 2018, 2020, 2024) |
-| **WRC Wins** | 26 |
-| **Dakar** | 4 wins — last won at age 61 in 2024 (oldest Dakar winner in history) |
-| **Current Activity** | 64 years old, living in Madrid; active in motorsport ambassador and team (Acciona Sainz XE) roles |
-| **Website** | carlos-sainz.com |
+| **Name** | Loïc Duval |
+| **Age** | 44 (born 12 June 1982) |
+| **Nationality** | 🇫🇷 French (born Chartres; based France) |
+| **Primary Achievement** | 2013 Le Mans winner (Audi R18, with McNish + Kristensen), 2013 FIA WEC Champion |
+| **Current Activity** | Peugeot TotalEnergies Hypercar factory driver, FIA World Endurance Championship, 2026 |
+| **Social** | @LoicDuval (X/Twitter ✅) |
 | **RTS Prior Appearances** | ZERO ✅ |
 
 ---
 
 ### Narrative Arc
 
-**THE MAN WHO GOT BETTER WITH AGE**
+**THE DRIVER WHO CHOSE JAPAN OVER F1, WON LE MANS, CRASHED BEFORE THE NEXT ONE, AND CAME BACK AS A PEUGEOT HYPERCAR DRIVER**
 
-1. **ADVERSITY:** Born in Madrid in 1962. Multiple pathways before settling on motorsport: football trial with Real Madrid at 15, Spanish squash champion at 16, began law studies at university (left mid-course). No obvious motorsport family. Started rallying in the Spanish SEAT Copa Panda — a budget one-make series for young drivers with no connections and no budget. Progressed through the Spanish Rally Championship the hard way.
+1. **ADVERSITY (Origin):** Born in Chartres, France, 1982. Progressed through karting and French single-seaters, winning Formula Campus France (2002) and Formula Renault 2000 France (2003). Tested for the Renault F1 team in 2004 — the F1 door appeared to open. It didn't lead anywhere.
 
-2. **ACHIEVEMENT:**
-   - Won the Spanish Rally Championship 1987 and 1988 with Ford
-   - WRC debut 1987 with Ford
-   - 1990: First WRC World Championship (Toyota Celica GT-Four) — first non-Nordic driver to win the 1000 Lakes Rally in Finland
-   - 1991: Lost championship to Kankkunen by ONE POINT on the final rally (both had five wins)
-   - 1992: Second WRC World Championship
-   - 26 WRC rally victories in total (runner-up 4 times, 97 podiums)
-   - WRC career ended: 2005 Acropolis Rally (aged 43)
-   - DAKAR: Won 2010 (aged 47, Volkswagen), 2018 (aged 55, Peugeot), 2020 (aged 57, Mini/MINI John Cooper Works), 2024 (aged 61, Audi)
-   - **2024 Dakar win at 61: Oldest Dakar winner in the event's history**
-   - Voted Greatest WRC Driver of All Time in official WRC fan & journalist poll (May 2020)
-   - Princess of Asturias Sports Award 2020 (Spain's highest sporting honour)
+2. **UNCONVENTIONAL CHOICE (Reinvention #1):** Rather than wait for an F1 seat that might never materialise, Duval moved to Japan in 2006. Eight years in Formula Nippon and Super GT — a pathway dismissed by European racing insiders as a dead-end. He won the 2009 Formula Nippon Championship. He won the 2010 Super GT GT500 title. Two national championships in two consecutive seasons.
 
-3. **ADVERSITY — LATE CAREER:** January 2023 Dakar Rally: Sainz suffered multiple spinal fractures in a crash. Surgeons said he was fortunate not to be paralysed. He was 60 years old. He came back. Twelve months later he won the 2024 Dakar at 61.
+3. **ACHIEVEMENT:** Returned to Europe, joined Audi Sport Team Joest. In 2013, alongside Allan McNish and Tom Kristensen (the nine-time Le Mans winner), **won the 24 Hours of Le Mans outright** in the Audi R18 e-tron quattro. Audi also won the FIA World Endurance Championship that season — making Duval a Le Mans winner and a world endurance champion at 31.
 
-4. **REINVENTION:** WRC → Dakar Rally → Extreme E team ownership (Acciona Sainz XE Team, 2021-2024). After retiring from WRC at 42, he did not retire from competition. He found a new world — rally raid — and became its oldest ever champion.
+4. **ADVERSITY (Peak):** In 2014 Le Mans qualifying, 11 June — Duval lost control of the Audi No. 1 at high speed at the Circuit de la Sarthe. The car was destroyed. He was hospitalised. His Le Mans was over before the race even began. One year after winning it, he didn't even start it.
 
-5. **AUTHORITY NOW:** His record as the Greatest WRC Driver (by fan vote) still stands. He is 64. His son Carlos Sainz Jr. is a Formula One driver (Williams 2026). The cross-generational story is entirely untold in English-language podcast format.
+5. **REINVENTION (Post-Crash):** Rather than disappear, Duval rebuilt methodically: Formula E with Dragon Racing (2015-2016), DTM with Phoenix Racing (2017-2021), LMP2 endurance with TDS Racing. Each category a proof-of-competence in a new discipline. Peugeot Sport watched. When they returned to the WEC with the 9X8 Hypercar, they recruited Duval as a factory driver.
+
+6. **AUTHORITY NOW:** At 44, Loïc Duval is a Peugeot TotalEnergies Hypercar factory driver — competing at Le Mans, Spa, Monza, Fuji, and Bahrain in 2026. The same race that defined him twice (Le Mans 2013: victory; Le Mans 2014: crash before start) is now his annual proving ground again. He drives the No. 94. He is still there.
+
+---
 
 ### The Hook
 
-🏁 **Real Madrid Trial At 15. Spanish Squash Champion At 16. Left University Mid-Course. Started Rallying In A Budget Cup For Young Drivers With No Money. Won The Spanish Rally Championship. Made It To The World Rally Championship. Won It In 1990. Lost It By ONE POINT In 1991. Won It Again In 1992. 26 WRC Wins. Runner-Up Four Times. Retired From WRC At 42. Didn't Retire From Competing. Won The Dakar Rally At 47. Then At 55. Then At 57. Broke Multiple Vertebrae In His Spine At The 2023 Dakar At Age 60. Doctors Said He Was Lucky Not To Be Paralysed. Came Back. Won The 2024 Dakar At 61 — The Oldest Dakar Winner In History. Greatest WRC Driver Of All Time (Fan Poll). Father Of A Formula One Driver. Still In The Sport In 2026 At 64. Carlos Sainz Sr.: The Man Who Got Better With Age.**
+🏁 **Tested By Renault F1 At 22. Went To Japan Instead Of Waiting For A Seat That Might Never Come. Won The Formula Nippon Championship. Won The Super GT Championship. Came Back To Europe. Won Le Mans With Audi In 2013. Won The FIA World Endurance Championship. Then In 2014 Practice — Same Track, Same Team — Crashed At High Speed. Car Destroyed. Le Mans Over Before It Started. Rebuilt Through Formula E And DTM. Now A Peugeot Hypercar Driver In 2026 At 44. The Driver Who Proved The Unconventional Choice Is Sometimes The Right One.**
 
 ---
 
 ### RTS Verification
 
 ✅ **Zero prior appearances on Road to Success (full 301-item playlist scan via yt-dlp)**  
-✅ **Searched all 301 titles for "sainz", "carlos", "dakar" — ZERO results**  
-✅ **Not in dashboard before today**  
-✅ **Not in any known past guest list**
+✅ **Not in PAST_RTS_GUESTS list**  
+✅ **Not on dashboard before today**  
+✅ **Searched all episode titles: zero results for "Duval", "Loic", "Loïc"**
 
 ---
 
 ### Social / Photo Verification
 
-- **Website:** `https://www.carlos-sainz.com` → ✅ active official site
-- **Profile photo:** `https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Carlos_Sainz_2014_Dakar.jpg/500px-Carlos_Sainz_2014_Dakar.jpg` → **HTTP 200, image/jpeg** ✅
-- **Instagram:** Handle not confirmed (Instagram returns 403 on lookup tools); not included
-- **Twitter/X:** Handle not confirmed; not included
-- **YouTube:** No personal channel found
+- **Twitter/X:** `@LoicDuval` → **HTTP 200, image/jpeg, 23KB** ✅ (confirmed real account)
+- **Instagram:** Not confirmed — excluded  
+- **Profile photo used:** Wikipedia Commons — `https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Lo%C3%AFc_Duval.jpg/330px-Lo%C3%AFc_Duval.jpg` → **HTTP 200, image/jpeg** ✅
+- **Website:** None found — excluded
+
+---
+
+### Biographical Facts (Wikipedia-verified)
+
+| Fact | Source | Status |
+|------|--------|--------|
+| Born 12 June 1982, Chartres, France | Wikipedia infobox | ✅ |
+| Formula Campus France champion 2002 | Wikipedia | ✅ |
+| Formula Renault 2000 France champion 2003 | Wikipedia | ✅ |
+| Renault F1 test 2004 | Wikipedia | ✅ |
+| Formula Nippon championship 2009 (Nakajima Racing) | Wikipedia | ✅ |
+| Super GT GT500 title 2010 | Wikipedia | ✅ |
+| 24 Hours of Le Mans winner 2013 (Audi R18, McNish + Kristensen) | Wikipedia | ✅ |
+| FIA WEC Champion 2013 | Wikipedia | ✅ |
+| 2014 Le Mans practice crash — car destroyed, hospitalised | Wikipedia | ✅ |
+| Formula E Dragon Racing 2015-2016 | Wikipedia | ✅ |
+| DTM Phoenix Racing 2017+ | Wikipedia | ✅ |
+| Peugeot TotalEnergies factory Hypercar driver | Wikipedia (current) | ✅ |
+| No. 94 Peugeot, 24H Le Mans 2025 photo in Wikipedia | Wikipedia article | ✅ |
 
 ---
 
 ### GitHub Status
 
-⚠️ **PUSH FAILED** — GitHub PAT for hlake1 expired  
-- Local commit: `16bc62e` — local only  
-- **6 commits now pending** (since 8 Sep 2026: Derek Bell, Emanuele Pirro, Marino Franchitti, Tanner Foust, Sébastien Loeb, Carlos Sainz Sr.)  
+⚠️ **PUSH FAILED** — GitHub PAT for hlake1 expired (8th consecutive day)  
+- Local commit: `06c24cd`  
+- **8 commits pending** (since 8 Sep 2026): Derek Bell, Emanuele Pirro, Marino Franchitti, Tanner Foust, Sébastien Loeb, Carlos Sainz Sr., LATEST-ADDITION.md update, Loïc Duval  
+- Live GitHub Pages site is 7 guests behind local state
 
-**Herbie: This is now 6 commits behind. The live site is missing 6 guests. Please create a new PAT.**
-
-To push when PAT is available:
+**To push (requires PAT renewal):**
 ```bash
 cd /data/.openclaw/workspace/rts-dashboard && git remote set-url origin https://hlake1:NEW_PAT@github.com/hlake1/rts-dashboard.git && git push origin main
 ```
 
 ---
 
-*Next session: Monday 14 September 2026, 09:00 UTC*
+*Previous addition: Carlos Sainz Sr. 🇪🇸 (13 Sep 2026)*  
+*Next session: Tuesday 15 September 2026, 09:00 UTC*
