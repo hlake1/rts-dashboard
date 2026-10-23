@@ -1,26 +1,23 @@
-# Latest Addition: Tiago Monteiro 🇵🇹 (#117)
+# Latest Addition: Horacio Pagani 🇮🇹
 
-**Added:** 2026-09-23
+**Added:** 2026-10-23
 
-**Guest:** Tiago Monteiro
-**Country:** 🇵🇹 Portugal (first Portuguese guest on the dashboard)
-**Photo:** Wikipedia (Spa 2014, confirmed JPEG)
+**Guest:** Horacio Pagani (Founder, Chairman and Chief Designer, Pagani Automobili)
+**Country:** 🇮🇹 Italy (company based in San Cesario sul Panaro, Modena; born in Casilda, Argentina)
+**Photo:** Wikimedia Commons (HTTP 200, image/jpeg)
 
 ## The Story
-- F1 career 2005-2006: Jordan/Midland, 37 starts, 1 podium (3rd at 2005 US GP), 7 points, Autosport Rookie of the Year
-- WTCC/WTCR 2007-2022: 253 starts, 12 wins, 45 podiums, 11 poles
-- **2017:** Leading the WTCC championship after 12 rounds → brake failure at Barcelona testing → serious injuries → missed rest of season
-- **2018:** Body still recovering, returned at Suzuka in November
-- **2019:** Won home race in Portugal (WTCR Race of Portugal)
-- **2019 & 2020:** Nürburgring 24h TCR class champion
-- **Now:** Manager of António Félix da Costa (Formula E WC 2019-20) + son Noah
+- **Adversity:** Left rural Argentina for Italy in 1982, starting with basic jobs at Lamborghini; Lamborghini declined to buy an autoclave for carbon parts.
+- **Achievement:** Borrowed money and bought his own autoclave (late 1987), founded Modena Design (1991) and Pagani Automobili (1992); Zonda took seven years to reach production, followed by Huayra and Utopia.
+- **Reinvention:** Argentine engineer to Italian carbon-fibre consultant to hypercar maker.
+- **Authority now:** Still Chairman and Chief Designer; Huayra 70 series marks his 70th birthday (Huayra 70 Derecho premiered at Goodwood 2026).
 
-## Verification
-- ✅ NOT in RTS history (306-episode scan)
-- ✅ NOT previously in dashboard
-- ✅ Wikipedia standard article confirmed
-- ✅ Photo: Wikipedia JPEG (HTTP 200 confirmed)
-- ✅ 🇵🇹 FIRST Portuguese guest on the board
+## Ranking notes
+- Booking difficulty 9. Podcast saturation looks low: one 2024 Autofocus podcast found, otherwise written Q&As.
+- Follows the Zenvo / hypercar episode (15 Oct 2026).
+- Sources: Wikipedia, pagani.com Goodwood 2026 press release (7 Jul 2026), thespeedjournal Retromobile 2026.
 
-## Dashboard Count
-**117 guests** total (was 116)
+## Tomorrow's shortlist (leads, not yet verified)
+- Jim Glickenhaus (Scuderia Cameron Glickenhaus founder)
+- Mate Rimac (check podcast saturation first)
+- A team-boss or engineer insider from the 2026 F1/WEC season
