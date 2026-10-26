@@ -1,23 +1,23 @@
-# Latest Addition: Christian Horner 🇬🇧
+# Latest Addition: Mate Rimac 🇭🇷
 
-**Added:** 2026-10-25
+**Added:** 2026-10-26
 
-**Guest:** Christian Horner (former Red Bull Racing Team Principal and CEO; advisor, Oakley Capital)
-**Country:** 🇬🇧 England (born Leamington Spa; current residence not stated in sources checked)
+**Guest:** Mate Rimac (CEO, Bugatti Rimac; President, Bugatti Automobiles; founder, Rimac Automobili)
+**Country:** 🇭🇷 Croatia (Wikipedia; company based in Croatia)
 **Photo:** Wikimedia Commons (HTTP 200, image/jpeg)
 
 ## The Story
-- **Adversity:** Retired from driving at 25 after scoring no points in F3000; Arden was co-founded with his father on borrowed money; Prodrive's 1999 stake had to be bought back.
-- **Achievement:** Arden won three F3000 team titles; youngest F1 team principal at 31; 21 seasons at Red Bull with six constructors' and eight drivers' titles.
-- **Reinvention:** Driver to team owner to F1 CEO; after leaving Red Bull (July to September 2025), joined Oakley Capital in June 2026 and is looking at ownership-led F1 options.
-- **Authority now:** Book *Drive* published 22 Oct 2026; Sky Sports interview 20 Oct 2026.
+- **Adversity:** Family fled the Yugoslav Wars; the petrol engine in his BMW E30 racer failed; early funding was a struggle.
+- **Achievement:** Built Rimac Automobili (founded 2009, Concept One 2011) to over 1,000 employees with Porsche, Hyundai and Kia backing.
+- **Reinvention:** Teen electronics inventor to hypercar founder to head of Bugatti.
+- **Authority now:** CEO of Bugatti Rimac; takes over as President of Bugatti Automobiles after a HOF Capital-led consortium completed its purchase of Porsche's stakes (Bugatti press release, 9 Sep 2026).
 
 ## Ranking notes
-- Booking difficulty 7. Podcast saturation: not verified; likely elevated during book promotion.
-- Variety: last 10 cards were mostly drivers, so an insider/business-side pick.
-- Sources: Wikipedia, GPFans (9 Jun 2026), Sky Sports (20 Oct 2026), GrandPrix.com (22 Oct 2026).
+- Booking difficulty 9. Podcast saturation moderate: Bloomberg Hot Pursuit (Aug 2025), Top Gear magazine podcast (2022), OMR podcast; no 2026 podcast found (search listings only).
+- Social links left blank: Instagram/X pages could not be verified without login.
+- Sources: Bugatti newsroom press release (9 Sep 2026), Wikipedia (Mate Rimac), Yahoo Finance / Autoevolution (Feb 2026 role change, search listings).
 
 ## Tomorrow's shortlist (leads, not yet verified)
-- Zak Brown (McLaren CEO; check podcast saturation)
-- Jim Glickenhaus (check for a 2026 hook)
-- A WEC or IMSA team boss or engineer from the 2026 season
+- Jim Glickenhaus (no 2026 news found yet; needs a timely hook)
+- Frank Stephenson (designer; 2025 P1 Evo project, check 2026 activity)
+- A team-boss or engineer insider from the 2026 F1/WEC season
