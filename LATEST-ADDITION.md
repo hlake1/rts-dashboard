@@ -18,6 +18,6 @@
 - Sources: Bugatti newsroom press release (9 Sep 2026), Wikipedia (Mate Rimac), Yahoo Finance / Autoevolution (Feb 2026 role change, search listings).
 
 ## Tomorrow's shortlist (leads, not yet verified)
-- Jim Glickenhaus (no 2026 news found yet; needs a timely hook)
-- Frank Stephenson (designer; 2025 P1 Evo project, check 2026 activity)
-- A team-boss or engineer insider from the 2026 F1/WEC season
+- Victor Muller (Spyker revival, C8 Preliator XXV unveiled Aug 2026; needs fair handling of contested legal history and a confirmed country of residence)
+- Randy Nonnenberg (Bring a Trailer co-founder; UK launch March 2026; arc needs a clear adversity chapter)
+- Frank Stephenson (designer; still needs a 2026 hook)
