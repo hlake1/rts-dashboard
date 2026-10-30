@@ -19,6 +19,5 @@
 - Sources: Wikipedia (Victor Muller), NL Times (17 Aug 2026), Top Gear Netherlands Spyker dossier, AutoRAI (14 Oct 2025), spykercars.com.
 
 ## Tomorrow's shortlist (leads, not yet verified)
-- Randy Nonnenberg (Bring a Trailer co-founder; UK launch March 2026; arc needs a clear adversity chapter)
-- Frank Stephenson (designer, Frank Stephenson Design, UK; Reo Motors design announcement 21 Sep 2026 needs a primary source; adversity chapter not yet verified)
-- A dealer or creator pick to keep the mix away from drivers
+- 2026-10-30 run added no new guest. Checked and set aside: Randy Nonnenberg (many podcast appearances, no clear adversity chapter), Frank Stephenson (no verified adversity chapter; Reo Motors announcement 21 Sep 2026 confirmed by Carscoops), Adrian Reynard (strong arc but no 2026 source for a current role).
+- Still wanted: a dealer, creator or engineer with a verifiable setback-to-achievement arc and a 2026 current role, to keep the mix away from drivers.
