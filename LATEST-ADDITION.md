@@ -1,23 +1,24 @@
-# Latest Addition: Victor Muller 🇳🇱
+# Latest Addition: Robert Bollinger 🇺🇸
 
-**Added:** 2026-10-28
+**Added:** 2026-11-07
 
-**Guest:** Victor Muller (owner and CEO, Spyker; former chairman of Saab Automobile's owner)
-**Country:** 🇳🇱 Netherlands (Spyker is a Dutch company per NL Times, 17 Aug 2026; no source found stating where he personally lives)
-**Photo:** Wikimedia Commons (HTTP 200, image/jpeg)
+**Guest:** Robert Bollinger (founder of Bollinger Motors; now owner of the original B1/B2 IP and prototypes via Robert Bollinger Design LLC)
+**Country:** 🇺🇸 United States (Detroit News via GMToday, 25 Mar 2026: lives in the Pittsburgh area, plans to return to Detroit)
+**Photo:** none found (no portrait on Wikimedia Commons or an official page); left blank
 
 ## The Story
-- **Adversity:** Saab (bought from GM in 2010) was declared bankrupt in December 2011; Spyker N.V. was declared bankrupt in December 2014; years of legal disputes followed, and a 2020-21 relaunch with Russian financiers did not reach production.
-- **Achievement:** Revived the dormant Spyker name (1999-2000) into a Dutch hand-built sports car maker and bought Saab from GM.
-- **Reinvention:** Lawyer to carmaker; third attempt with Ukrainian investor Volodymyr Nosov.
-- **Authority now:** Unveiled the C8 Preliator XXV (V8, 25 cars, about 1.5m euros) at The Quail, Monterey Car Week, August 2026.
+- **Adversity:** Financing dispute with Mullen Automotive, receivership in May 2025, company closed late 2025 and re-entered receivership.
+- **Achievement:** Founded Bollinger Motors (2014), built the B1/B2 prototypes; Mullen bought 60% for US$148.2m in 2022.
+- **Reinvention:** Hair-care entrepreneur (per InsideEVs interview description) turned EV founder; now starting again from the IP.
+- **Authority now:** Court-approved purchase (March 2026, $248,300) of the core IP, B1/B2 prototypes, a B4 truck and equipment; says he will share "what comes next".
 
 ## Ranking notes
-- Booking difficulty 6. Podcast saturation low: one 2025 Dutch podcast (Doorzetters), none found in 2026 (episodes not opened).
-- Social links left blank: only Spyker company accounts found, not his own. Website is the company site.
-- Handle fairly: Muller was acquitted in Sweden and a US court upheld GM's contractual right to block the Chinese Saab deal; commentators note he often attributes setbacks to others. His claim that 19 of 25 cars sold is unverified.
-- Sources: Wikipedia (Victor Muller), NL Times (17 Aug 2026), Top Gear Netherlands Spyker dossier, AutoRAI (14 Oct 2025), spykercars.com.
+- Booking difficulty 5. Podcast saturation low for 2026: earlier Autoblog and Global Player episodes (dates not confirmed, not opened), nothing found in 2026.
+- Social links and photo left blank (not verified).
+- Handle fairly: the Mullen dispute is contested; keep the angle on what he learned and what he wants to build.
+- Sources: Wikipedia (Bollinger Motors), GMToday/Detroit News (25 Mar 2026), Carscoops (28 Apr 2026), InsideEVs interview page. A search snippet claiming a new CEO in Aug 2026 was a 2024 announcement, so it was not used.
 
 ## Tomorrow's shortlist (leads, not yet verified)
-- 2026-10-30 run added no new guest. Checked and set aside: Randy Nonnenberg (many podcast appearances, no clear adversity chapter), Frank Stephenson (no verified adversity chapter; Reo Motors announcement 21 Sep 2026 confirmed by Carscoops), Adrian Reynard (strong arc but no 2026 source for a current role).
-- Still wanted: a dealer, creator or engineer with a verifiable setback-to-achievement arc and a 2026 current role, to keep the mix away from drivers.
+- Adrian Reynard (strong arc, still no 2026 source for a current role).
+- Frank Stephenson (needs a verified adversity chapter).
+- Still wanted: a dealer, creator or engineer with a 2026 current role, to keep the mix away from drivers.
