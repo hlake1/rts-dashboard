@@ -1,23 +1,23 @@
-# Latest Addition: Ross Brawn 🇬🇧
+# Latest Addition: Andy Palmer 🇬🇧
 
-**Added:** 2026-11-10
+**Added:** 2026-11-11
 
-**Guest:** Ross Brawn (engineer and former team principal; non-executive board member at Pramac Racing, MotoGP, since late May 2026)
-**Country:** 🇬🇧 United Kingdom (Wikipedia: lives in Stoke Row, near Henley-on-Thames)
-**Photo:** Wikimedia Commons, Goodwood Festival of Speed 2016
+**Guest:** Dr Andy Palmer (co-founder and CEO of Palmer Energy Technology; former Aston Martin Lagonda CEO)
+**Country:** 🇬🇧 United Kingdom (PETL is a UK group per electrive and the IMI; residence not separately verified)
+**Photo:** none found (left blank)
 
 ## The Story
-- **Adversity:** Honda announced its F1 withdrawal in late 2008, leaving the team he ran without a future unless a buyer was found.
-- **Achievement:** Led the March 2009 buyout (54% stake); Brawn GP won the 2009 Constructors' title and Jenson Button the Drivers' title. Earlier, technical director at Benetton and Ferrari, credited behind Schumacher's seven titles.
-- **Reinvention:** Retired from F1 on 28 Nov 2022; returned in a different sport as a Pramac Racing board member.
-- **Authority now:** Non-executive board member and strategic adviser to team principal Paolo Campinoti (Speedcafe, News.gp, May 2026).
+- **Adversity:** Stepped down as Aston Martin's President and Group CEO on 26 May 2020, amid a share-price slump reported by the press.
+- **Achievement:** Over almost six years renewed the core range (DB11, Vantage, DBS Superleggera), readied the DBX and developed the Valkyrie (Aston Martin announcement).
+- **Reinvention:** Moved from supercars to clean energy and battery technology as a founder.
+- **Authority now:** Co-founder and CEO of PETL, which bought Kleandrive out of administration on 2 June 2026 (electrive, 3 June 2026); IMI President's Award 2026 (IMI listing, search result only).
 
 ## Ranking notes
-- Booking difficulty 7. Podcast saturation low to moderate: one long-form 2026 episode seen in search (Historic Racing News, June 2026; not opened), plus a 2019 Beyond The Grid special.
-- Social links left blank (none found on Wikipedia; not verified elsewhere).
-- Sources opened: Wikipedia (Ross Brawn), Speedcafe and News.gp (Pramac announcement; they differ on date, 26 vs 27 May, so the entry says "late May 2026"). The motorsport.com article returned an error.
+- Booking difficulty 6. Podcast saturation moderate to high; appearances found were undated, so the 12-month count is unconfirmed.
+- Social links and photo not verified, left blank.
+- Sources opened: astonmartin.com release (26 May 2020), electrive (3 June 2026). IMI, Scotsman and Techxplore were seen as search results only; IMI page returned 503.
 
 ## Tomorrow's shortlist (leads, not yet verified)
-- Frank Stephenson (designer; 2026 Reo Motors design role found, but no verified adversity chapter yet).
+- Frank Stephenson (designer; needs a verified adversity chapter and 2026 role).
 - Adrian Reynard (strong arc, still no 2026 source for a current role).
-- Still wanted: a dealer, creator or founder with a 2026 current role, to keep the mix away from drivers and team bosses.
+- Scott Painter (TrueCar founder, returned as CEO after the 2025 take-private; US founder, needs a 2026 source check).
