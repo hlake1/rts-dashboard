@@ -1,22 +1,22 @@
-# Latest Addition: Ernie Garcia III (Carvana) 🇺🇸
+# Latest Addition: Adrian Reynard 🇬🇧
 
-**Added:** 2026-11-22
+**Added:** 2026-11-23
 
-**Guest:** Ernie Garcia III, co-founder and CEO of Carvana
-**Country:** 🇺🇸 United States (Wikipedia: lives in Phoenix, Arizona; undated)
-**Photo:** Wikimedia Commons (Gage Skidmore, 2020)
+**Guest:** Adrian Reynard, founder of Reynard Racing Cars; subject of the 2026 documentary *The Engineer*
+**Country:** 🇬🇧 UK (flag based on career and UK events; residence not stated in sources)
+**Photo:** none found yet
 
 ## The Story
-- **Adversity:** May 2022 layoffs of about 12% of staff (WSJ, via Wikipedia); Bloomberg reported his wealth fell 98% in 2022 amid bankruptcy concerns.
-- **Achievement:** Co-founded Carvana in 2012 and took it public in 2017 (Wikipedia).
-- **Reinvention:** Shift from growth to cost cutting: headcount down by more than 4,000 and $1.1B of annualised expenses removed (CNBC, Feb 2024, via Wikipedia).
-- **Authority now:** CEO. 2025: 596,641 retail units (+43%), $20.3B revenue, 11% adjusted EBITDA margin; 2026 outlook is significant growth (WardsAuto, 6 Mar 2026).
+- **Adversity:** A Reynard F1 project in 1990-91 nearly bankrupted the firm and he sold personal assets (Wikipedia, Formula 1); company went into receivership in 2002 (Autosport).
+- **Achievement:** British F3 (1986-88) and F3000 (1988-89) titles; first race win in every major single-seater series entered (Formula 1, Jul 2025).
+- **Reinvention:** Helped create BAR (1999), relaunched Reynard Racing Cars (2009), Virgin Galactic flight (Sep 2023).
+- **Authority now:** *The Engineer* documentary screened at Oxford Brookes on 15 May 2026, following his land speed record attempt (Brookes, 19 May 2026); IMechE Adrian Reynard Award presented Feb 2026.
 
 ## Ranking notes
-- Booking difficulty 8. 12-month podcast count unconfirmed; no regular podcast circuit found.
-- Social and web links left blank (LinkedIn blocked the check, X handle 404, carvana.com returned 403).
+- Booking difficulty 5. At least two long-form podcasts found (F1 Beyond The Grid, Jul 2025; Autosport retrospective); 12-month count not confirmed.
+- Only web link verified (adrianreynard.com). Social links left blank.
 
 ## Tomorrow's shortlist (leads, not yet verified)
-- Jim Wright (new Fortescue Zero team principal, Racer, 23 Sep 2026; needs a verified adversity chapter).
-- Adrian Reynard (strong arc; only a 2025 source so far, needs a 2026 role).
-- Frank Stephenson (designer; no 2026 source found).
+- Jim Wright (Fortescue Zero team principal; needs a verified adversity chapter).
+- Frank Stephenson (designer; needs a 2026 source).
+- Pat Symonds (Cadillac F1 consultant; check podcast saturation).
