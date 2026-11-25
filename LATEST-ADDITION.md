@@ -1,22 +1,22 @@
-# Latest Addition: Adrian Reynard 🇬🇧
+# Latest Addition: Pat Symonds 🇬🇧
 
-**Added:** 2026-11-23
+**Added:** 2026-11-25
 
-**Guest:** Adrian Reynard, founder of Reynard Racing Cars; subject of the 2026 documentary *The Engineer*
-**Country:** 🇬🇧 UK (flag based on career and UK events; residence not stated in sources)
-**Photo:** none found yet
+**Guest:** Pat Symonds, Executive Engineering Consultant, Cadillac F1; former Formula 1 Chief Technical Officer
+**Country:** 🇬🇧 UK (Cadillac's engineering base is Silverstone; residence not stated in sources)
+**Photo:** Wikimedia Commons (Symonds in 2015)
 
 ## The Story
-- **Adversity:** A Reynard F1 project in 1990-91 nearly bankrupted the firm and he sold personal assets (Wikipedia, Formula 1); company went into receivership in 2002 (Autosport).
-- **Achievement:** British F3 (1986-88) and F3000 (1988-89) titles; first race win in every major single-seater series entered (Formula 1, Jul 2025).
-- **Reinvention:** Helped create BAR (1999), relaunched Reynard Racing Cars (2009), Virgin Galactic flight (Sep 2023).
-- **Authority now:** *The Engineer* documentary screened at Oxford Brookes on 15 May 2026, following his land speed record attempt (Brookes, 19 May 2026); IMechE Adrian Reynard Award presented Feb 2026.
+- **Adversity:** Left Renault in Sept 2009 after the 2008 Singapore GP race-fixing affair; FIA ban overturned by a French court in Jan 2010 (Wikipedia). Earlier, the failed Reynard F1 project (1991).
+- **Achievement:** Race engineer to Schumacher's 1994-95 titles; Alonso's 2005-06 titles; three Constructors' titles.
+- **Reinvention:** Virgin/Marussia, Williams CTO (2013-16), F1 CTO (2017-24).
+- **Authority now:** Cadillac F1 executive engineering consultant; Jan 2026 PlanetF1 interview on moving manufacturing to the US.
 
 ## Ranking notes
-- Booking difficulty 5. At least two long-form podcasts found (F1 Beyond The Grid, Jul 2025; Autosport retrospective); 12-month count not confirmed.
-- Only web link verified (adrianreynard.com). Social links left blank.
+- Booking difficulty 6. Moderate podcast saturation (Autocar My Week In Cars Dec 2025, Beyond The Grid 2024, Motor Sport); 12-month count not confirmed.
+- Social links left blank (could not verify).
 
 ## Tomorrow's shortlist (leads, not yet verified)
 - Jim Wright (Fortescue Zero team principal; needs a verified adversity chapter).
 - Frank Stephenson (designer; needs a 2026 source).
-- Pat Symonds (Cadillac F1 consultant; check podcast saturation).
+- A non-motorsport pick: UK or US dealer or YouTuber founder, for variety.
