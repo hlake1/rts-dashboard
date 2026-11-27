@@ -1,22 +1,25 @@
-# Latest Addition: Pat Symonds 🇬🇧
+# Latest Addition: Tom Leathes 🇬🇧
 
-**Added:** 2026-11-25
+**Added:** 2026-11-27
 
-**Guest:** Pat Symonds, Executive Engineering Consultant, Cadillac F1; former Formula 1 Chief Technical Officer
-**Country:** 🇬🇧 UK (Cadillac's engineering base is Silverstone; residence not stated in sources)
-**Photo:** Wikimedia Commons (Symonds in 2015)
+**Guest:** Tom Leathes, co-founder and CEO of Motorway (online used-car marketplace)
+**Country:** 🇬🇧 UK (Motorway is headquartered in London per City AM; personal residence not stated)
+**Photo:** none verified (gap)
 
 ## The Story
-- **Adversity:** Left Renault in Sept 2009 after the 2008 Singapore GP race-fixing affair; FIA ban overturned by a French court in Jan 2010 (Wikipedia). Earlier, the failed Reynard F1 project (1991).
-- **Achievement:** Race engineer to Schumacher's 1994-95 titles; Alonso's 2005-06 titles; three Constructors' titles.
-- **Reinvention:** Virgin/Marussia, Williams CTO (2013-16), F1 CTO (2017-24).
-- **Authority now:** Cadillac F1 executive engineering consultant; Jan 2026 PlanetF1 interview on moving manufacturing to the US.
+- **Adversity:** Top10 hotel app raised about $12.4M, was undercut by Booking.com and hotel brands' own apps, and shut in 2015 (Fortune, 19 Nov 2026).
+- **Achievement:** Motorway valued at $1bn in 2021; 2025 revenue £78M, up 18%.
+- **Reinvention:** From generic web ventures (fifth business with Harry Jones and Alex Buttle) to automotive retail.
+- **Authority now:** CEO expecting first profit in 2026; open to an IPO but no immediate plans.
 
 ## Ranking notes
-- Booking difficulty 6. Moderate podcast saturation (Autocar My Week In Cars Dec 2025, Beyond The Grid 2024, Motor Sport); 12-month count not confirmed.
-- Social links left blank (could not verify).
+- Booking difficulty 5. High podcast saturation (Sifted, How to Be a CEO, Evening Standard, Harvey Nash, City AM and others), mostly business shows rather than automotive storytelling.
+- Social links left blank (LinkedIn blocked automated check; X returns 200 for any handle so it cannot confirm identity).
+
+## Sources
+Fortune 2026-11-19; City AM 2025-06-16; Harvey Nash podcast page; motorway.co.uk.
 
 ## Tomorrow's shortlist (leads, not yet verified)
-- Jim Wright (Fortescue Zero team principal; needs a verified adversity chapter).
+- Jim Wright (Fortescue Zero Formula E team principal, appointed Sept 2026; needs a verified adversity chapter).
 - Frank Stephenson (designer; needs a 2026 source).
-- A non-motorsport pick: UK or US dealer or YouTuber founder, for variety.
+- Monte Ahuja (Transtar founder, returned as CEO in 2026; needs verification).
